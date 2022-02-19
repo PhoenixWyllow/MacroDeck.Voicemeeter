@@ -1,7 +1,7 @@
-﻿{
-	"Attribution": "PhoenixWyllow",
-	"Language": "English",
-	"PluginName": "Voicemeeter plugin",
-	"PluginDescription": "A soundboard plugin for Macro Deck",
-	"SyncButtonState": "Sync button state"
+{
+    "Attribution": "PhoenixWyllow",
+    "Language": "English",
+    "PluginDescription": "A Voicemeeter plugin for Macro Deck",
+    "VoiceMeeterConnected": "Voicemeeter Connected",
+    "VoiceMeeterDisconnected": "Voicemeeter Disconnected"
 }
