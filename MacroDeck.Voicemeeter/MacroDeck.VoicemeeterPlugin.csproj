@@ -36,9 +36,11 @@
 			<HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-	
+
 	<Import Project="..\..\..\Dynamic-wrapper-for-unmanaged-dll\dll wrapper base\dll wrapper base.projitems" Label="Shared" />
+
 	<Import Project="..\..\..\Voicemeeter-Remote-API-dll-dynamic-wrapper\voicemeeter remote api wrap\voicemeeter remote api wrap.projitems" Label="Shared" />
+
 	<Import Project="..\..\..\voicemeeter-remote-api-extended\voicemeeter remote api extended\voicemeeter remote api extended.projitems" Label="Shared" />
 	
 	<ItemGroup>
@@ -78,7 +80,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!--<PluginFiles Include="$(OutDir)\Plugin.xml;$(OutDir)\$(TargetFileName);$(OutDir)\PW.VoicemeeterRemoteAPI.dll" />-->
 		<PluginFiles Include="$(OutDir)\Plugin.xml;$(OutDir)\$(TargetFileName)" />
 	</ItemGroup>
 

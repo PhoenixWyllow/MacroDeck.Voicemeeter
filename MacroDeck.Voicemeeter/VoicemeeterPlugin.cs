@@ -6,6 +6,7 @@ using System;
 using PW.MacroDeck.VoicemeeterPlugin.Properties;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using PW.MacroDeck.VoicemeeterPlugin.Services;
+using VoicemeeterControl = PW.MacroDeck.VoicemeeterPlugin.Services.Voicemeeter.Control;
 
 namespace PW.MacroDeck.VoicemeeterPlugin
 {
@@ -22,18 +23,21 @@ namespace PW.MacroDeck.VoicemeeterPlugin
 
         public override Image Icon => Resources.MacroDeckVoicemeeter;
 
-        public override bool CanConfigure => false;
+        public override bool CanConfigure => false;//true;
 
         /// <summary>
         /// Gets called when Macro Deck enables the plugin
         /// </summary>
         public override void Enable()
         {
-            PluginInstance.VoicemeeterControl = new VoicemeeterControl();
+            //optimised initilization - this adds 2s to program startup!
+            //PluginInstance.VoicemeeterControl = new VoicemeeterControl();
+            new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new VoicemeeterControl()).Start();
 
             Actions = new List<PluginAction>
             {
                 new DeviceMuteAction(),
+                new AdvancedAction(),
             };
         }
 
@@ -42,6 +46,7 @@ namespace PW.MacroDeck.VoicemeeterPlugin
         /// </summary>
         public override void OpenConfigurator()
         {
+            //new Views.VoicemeeterGlobalConfigView(this).ShowDialog();
         }
 
         public VoicemeeterPlugin()

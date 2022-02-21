@@ -1,5 +1,7 @@
-﻿using PW.MacroDeck.VoicemeeterPlugin.Properties;
+﻿using PW.MacroDeck.VoicemeeterPlugin.Models;
+using PW.MacroDeck.VoicemeeterPlugin.Properties;
 using PW.MacroDeck.VoicemeeterPlugin.Services;
+using PW.MacroDeck.VoicemeeterPlugin.Services.Voicemeeter;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
@@ -9,6 +11,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using VoicemeeterControl = PW.MacroDeck.VoicemeeterPlugin.Services.Voicemeeter.Control;
 
 namespace PW.MacroDeck.VoicemeeterPlugin.Views
 {
@@ -20,7 +23,7 @@ namespace PW.MacroDeck.VoicemeeterPlugin.Views
             _statusToolTip = new ToolTip();
             UpdateStatusButton();
             Click += StatusButton_Click;
-            PluginInstance.VoicemeeterControl.OnUpdating += (_, __) => UpdateStatusButton();
+            VoicemeeterControl.OnUpdating += (_, __) => UpdateStatusButton();
         }
 
         private void StatusButton_Click(object sender, EventArgs e)
@@ -40,7 +43,10 @@ namespace PW.MacroDeck.VoicemeeterPlugin.Views
             }
 
             BackgroundImage = connected ? Resources.VoiceMeeterConnected : Resources.VoiceMeeterDisconnected;
-            _statusToolTip.SetToolTip(this, connected ? $"{LocalizationManager.Instance.VoiceMeeterConnected} {connectedVersion}" : LocalizationManager.Instance.VoiceMeeterDisconnected);
+            string toolip = connected
+                          ? $"{LocalizationManager.Instance.VoiceMeeterConnected}{Environment.NewLine}{connectedVersion} ({AvailableValues.ConnectedType})"
+                          : LocalizationManager.Instance.VoiceMeeterDisconnected;
+            _statusToolTip.SetToolTip(this, toolip);
         }
     }
 }

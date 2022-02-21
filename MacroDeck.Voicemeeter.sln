@@ -5,13 +5,13 @@ VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacroDeck.VoicemeeterPlugin", "MacroDeck.Voicemeeter\MacroDeck.VoicemeeterPlugin.csproj", "{9537541E-0E36-4D33-AE31-941226C0D707}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "voicemeeter remote api extended", "..\..\voicemeeter-remote-api-extended\voicemeeter remote api extended\voicemeeter remote api extended.shproj", "{0D179400-35B3-43D7-A751-40691E184EF3}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "voicemeeter remote api wrap", "..\..\Voicemeeter-Remote-API-dll-dynamic-wrapper\voicemeeter remote api wrap\voicemeeter remote api wrap.shproj", "{28B74DFA-514F-49AB-B226-A3E5535E73DB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VoicemeeterRemoteWrapper", "VoicemeeterRemoteWrapper", "{61F09C38-419F-427D-A6D8-5A41ED472887}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "dll wrapper base", "..\..\Dynamic-wrapper-for-unmanaged-dll\dll wrapper base\dll wrapper base.shproj", "{466A7E5A-F2E3-450B-9D21-C0623F459EA7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VMRemoteApiSharedProjects", "VMRemoteApiSharedProjects", "{1F2B800C-F8DA-4B1D-917B-439F7EDEC84B}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "voicemeeter remote api wrap", "..\..\Voicemeeter-Remote-API-dll-dynamic-wrapper\voicemeeter remote api wrap\voicemeeter remote api wrap.shproj", "{28B74DFA-514F-49AB-B226-A3E5535E73DB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "voicemeeter remote api extended", "..\..\voicemeeter-remote-api-extended\voicemeeter remote api extended\voicemeeter remote api extended.shproj", "{0D179400-35B3-43D7-A751-40691E184EF3}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -31,18 +31,14 @@ Global
 		{9537541E-0E36-4D33-AE31-941226C0D707}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9537541E-0E36-4D33-AE31-941226C0D707}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9537541E-0E36-4D33-AE31-941226C0D707}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24BB1C46-6973-4060-97C8-8C291F9E4A3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24BB1C46-6973-4060-97C8-8C291F9E4A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24BB1C46-6973-4060-97C8-8C291F9E4A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24BB1C46-6973-4060-97C8-8C291F9E4A3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0D179400-35B3-43D7-A751-40691E184EF3} = {1F2B800C-F8DA-4B1D-917B-439F7EDEC84B}
-		{28B74DFA-514F-49AB-B226-A3E5535E73DB} = {1F2B800C-F8DA-4B1D-917B-439F7EDEC84B}
-		{466A7E5A-F2E3-450B-9D21-C0623F459EA7} = {1F2B800C-F8DA-4B1D-917B-439F7EDEC84B}
+		{466A7E5A-F2E3-450B-9D21-C0623F459EA7} = {61F09C38-419F-427D-A6D8-5A41ED472887}
+		{28B74DFA-514F-49AB-B226-A3E5535E73DB} = {61F09C38-419F-427D-A6D8-5A41ED472887}
+		{0D179400-35B3-43D7-A751-40691E184EF3} = {61F09C38-419F-427D-A6D8-5A41ED472887}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0EAFE3-2921-4D5A-B63C-5A615DCD04AF}
