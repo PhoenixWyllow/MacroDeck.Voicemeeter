@@ -19,10 +19,6 @@ namespace PW.VoicemeeterPlugin
 
     public class VoicemeeterPlugin : MacroDeckPlugin
     {
-        public override string Description => LocalizationManager.Instance.PluginDescription;
-
-        public override Image Icon => Resources.MacroDeckVoicemeeter;
-
         public override bool CanConfigure => false;//true;
 
         /// <summary>
