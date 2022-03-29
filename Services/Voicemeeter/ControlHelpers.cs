@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
-    internal static class VoicemeeterControlHelpers
+    internal static class ControlHelpers
     {
         public static string ErrorStr = "Communication Error";
 

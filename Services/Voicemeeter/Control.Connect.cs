@@ -13,7 +13,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
     {
 
         private Timer timer;
-        private string ConnectedVersion => TryGetVoicemeeterVersion(out string version) ? version : VoicemeeterControlHelpers.ErrorStr;
+        private string ConnectedVersion => TryGetVoicemeeterVersion(out string version) ? version : ControlHelpers.ErrorStr;
         private VoicemeeterType ConnectedType
         {
             get
@@ -58,7 +58,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         private void Login()
         {
-            VoicemeeterControlHelpers.TestLogin(VmrApi.Login(), RunVoicemeeter);
+            ControlHelpers.TestLogin(VmrApi.Login(), RunVoicemeeter);
         }
 
         private void RunVoicemeeter()
@@ -112,12 +112,12 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         public static bool CheckConnected(out string connectedVersion)
         {
             bool connected = false;
-            connectedVersion = VoicemeeterControlHelpers.ErrorStr;
+            connectedVersion = ControlHelpers.ErrorStr;
 
             if (PluginInstance.VoicemeeterControl != null)
             {
                 connectedVersion = PluginInstance.VoicemeeterControl.ConnectedVersion;
-                connected = !connectedVersion.Equals(VoicemeeterControlHelpers.ErrorStr);
+                connected = !connectedVersion.Equals(ControlHelpers.ErrorStr);
             }
             return connected;
         }

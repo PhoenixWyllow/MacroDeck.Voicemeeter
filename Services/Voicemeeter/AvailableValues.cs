@@ -1,5 +1,6 @@
 ﻿using AtgDev.Voicemeeter.Types;
 using PW.VoicemeeterPlugin;
+using PW.VoicemeeterPlugin.Models;
 using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Variables;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PW.VoicemeeterPlugin.Models
+namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
     enum Type { Strip, Bus }
 
@@ -71,7 +72,7 @@ namespace PW.VoicemeeterPlugin.Models
             {
                 try
                 {
-                    Services.Voicemeeter.VoicemeeterControlHelpers.TestResultThrow(vmrApi.GetParameter($"{channel.Id}.Label", out string label));
+                    Services.Voicemeeter.ControlHelpers.TestResultThrow(vmrApi.GetParameter($"{channel.Id}.Label", out string label));
                     channel.Name = label;
                     IOInfo.Add(channel);
                 }

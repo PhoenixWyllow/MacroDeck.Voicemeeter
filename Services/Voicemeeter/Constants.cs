@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
-    public static class VoicemeeterValues
+    public static class Constants
     {
         public const float Off = 0;
         public const float On = 1;

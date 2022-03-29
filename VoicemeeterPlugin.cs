@@ -26,7 +26,7 @@ namespace PW.VoicemeeterPlugin
         /// </summary>
         public override void Enable()
         {
-            //optimised initilization - this adds 2s to program startup!
+            //optimised initilization - commented code adds 2s to program startup!
             //PluginInstance.VoicemeeterControl = new VoicemeeterControl();
             new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new VoicemeeterControl()).Start();
 
@@ -47,10 +47,6 @@ namespace PW.VoicemeeterPlugin
 
         public VoicemeeterPlugin()
         {
-            foreach (var option in Models.AvailableValues.Options)
-            {
-                SuchByte.MacroDeck.Variables.VariableManager.DeleteVariable($"vm_{option.AsParameter}");
-            }
             PluginInstance.Plugin ??= this;
 
             LocalizationManager.CreateInstance();
@@ -67,8 +63,6 @@ namespace PW.VoicemeeterPlugin
                 contentButton = new Views.StatusButtonControl();
                 mainWindow.contentButtonPanel.Controls.Add(contentButton);
             }
-
-            SuchByte.MacroDeck.Logging.MacroDeckLogger.Trace(PluginInstance.Plugin, "loaded button");
         }
 
     }

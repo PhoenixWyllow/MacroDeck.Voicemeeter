@@ -33,7 +33,10 @@ namespace PW.VoicemeeterPlugin.Views
 
         private void StatusButton_Click(object sender, EventArgs e)
         {
-            //TODO placeholder
+            if (PluginInstance.Plugin.CanConfigure)
+            {
+                PluginInstance.Plugin.OpenConfigurator();
+            }
         }
 
         private void VoicemeeterControl_Polling(object sender, EventArgs e) => UpdateStatusButton();

@@ -1,4 +1,4 @@
-﻿using PW.VoicemeeterPlugin.Models;
+﻿using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
 using System.Collections.Generic;

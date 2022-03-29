@@ -16,7 +16,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <returns></returns>
         public string GetTextParameter(string parameter)
         {
-            VoicemeeterControlHelpers.TestResult(VmrApi.GetParameter(parameter, out string buffer));
+            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out string buffer));
             return buffer;
         }
 
@@ -28,7 +28,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <returns></returns>
         public void SetTextParameter(string parameter, string value)
         {
-            VoicemeeterControlHelpers.TestResult(VmrApi.SetParameter(parameter, value));
+            ControlHelpers.TestResult(VmrApi.SetParameter(parameter, value));
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <returns>float value</returns>
         public float GetParameter(string parameter)
         {
-            VoicemeeterControlHelpers.TestResult(VmrApi.GetParameter(parameter, out float value));
+            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out float value));
             return value;
         }
 
@@ -49,7 +49,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <param name="value">float value</param>
         public void SetParameter(string parameter, float value)
         {
-            VoicemeeterControlHelpers.TestResult(VmrApi.SetParameter(parameter, value));
+            ControlHelpers.TestResult(VmrApi.SetParameter(parameter, value));
         }
 
 
@@ -59,17 +59,17 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <param name="parameters">One or more instructions separated by comma, semicolon or newline</param>
         public void SetParameters(string parameters)
         {
-            VoicemeeterControlHelpers.TestResult(VmrApi.SetParameters(parameters));
+            ControlHelpers.TestResult(VmrApi.SetParameters(parameters));
         }
 
         public void GetLevel(ref VoicemeeterLevel type)
         {
-            VoicemeeterControlHelpers.TestLevelResult(VmrApi.GetLevel(ref type));
+            ControlHelpers.TestLevelResult(VmrApi.GetLevel(ref type));
         }
 
         public float GetLevel(VoicemeeterLevelType type, VoicemeeterChannel channel)
         {
-            VoicemeeterControlHelpers.TestLevelResult(VmrApi.GetLevel(type, channel, out float value));
+            ControlHelpers.TestLevelResult(VmrApi.GetLevel(type, channel, out float value));
             return value;
         }
     }

@@ -39,21 +39,41 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             AvailableValues.ConnectedType = ConnectedType;
             AvailableValues.InitIOInfo(VmrApi);
             AvailableValues.InitOptions();
+            //RemoveUnavailableVariables();
+        }
+
+        private static void RemoveUnavailableVariables()
+        {
+            bool unavailableVariables(Variable v) => v.Creator.Equals("Voicemeeter Plugin")
+                                                     && !AvailableValues.Options.Any(o => o.AsVariable.Equals(v.Name));
+            var variablesNotFound = VariableManager.Variables.Where(unavailableVariables).Select(v => v.Name).ToArray();
+            if (variablesNotFound.Length > 0)
+            {
+                int removedCount = VariableManager.Variables.RemoveAll(unavailableVariables);
+                if (removedCount > 0)
+                {
+                    MacroDeckLogger.Info(PluginInstance.Plugin, $"Deleted {removedCount} variable(s): {string.Join(", ", variablesNotFound)}");
+                }
+                //foreach (var variable in variablesNotFound)
+                //{
+                //    VariableManager.DeleteVariable(variable);
+                //}
+            }
         }
 
         private void UpdateVariables()
         {
             foreach (var option in AvailableValues.Options)
             {
-                SetVariable(option.AsVariable, option.Type);
+                SetVariable(option.AsParameter, option.AsVariable, option.Type);
             }
         }
 
-        private void SetVariable(string variable, VariableType type)
+        private void SetVariable(string parameter, string variable, VariableType type)
         {
-            if (TryGetValue(variable, type, out object val))
+            if (TryGetValue(parameter, type, out object val))
             {
-                VariableManager.SetValue($"{variable}", val, type, PluginInstance.Plugin);
+                VariableManager.SetValue(variable, val, type, PluginInstance.Plugin);
             }
         }
 
@@ -69,7 +89,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                     val = GetTextParameter(variable);
                     break;
                 case VariableType.Bool:
-                    val = GetParameter(variable) == VoicemeeterValues.On;
+                    val = GetParameter(variable) == Constants.On;
                     break;
                 default:
                     val = null;

@@ -46,7 +46,7 @@ namespace PW.VoicemeeterPlugin.Actions
 
             //DeviceManager.ToggleMute(Configuration, actionButton);
 
-            PluginInstance.VoicemeeterControl.SetParameter("Strip(0).Mute", VoicemeeterValues.On);
+            PluginInstance.VoicemeeterControl.SetParameter("Strip(0).Mute", Constants.On);
         }
     }
 }
