@@ -14,7 +14,7 @@ namespace PW.VoicemeeterPlugin.Models
         public VariableType Type { get; set; }
 
         public string AsParameter => $"{Id}.{Option}";
-        public string AsVariable => $"vm_{Id}_{Option}".ToLower();
+        public string AsVariable => VariableManager.ConvertNameString($"vm_{Id}_{Option}");
 
         private string GetDebuggerDisplay()
         {

@@ -28,22 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.commandsBox = new System.Windows.Forms.TextBox();
+            this.labelCommands = new System.Windows.Forms.Label();
+            this.commandsBox = new SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox();
             this.SuspendLayout();
             // 
-            // commandsBox
+            // labelCommands
             // 
-            this.commandsBox.Location = new System.Drawing.Point(3, 65);
+            this.labelCommands.AutoSize = true;
+            this.labelCommands.Location = new System.Drawing.Point(40, 35);
+            this.labelCommands.Name = "labelCommands";
+            this.labelCommands.Size = new System.Drawing.Size(84, 23);
+            this.labelCommands.TabIndex = 0;
+            this.labelCommands.Text = "Commands";
+            this.labelCommands.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // commandsBox
+            //
+            this.commandsBox.Location = new System.Drawing.Point(60, 65);
             this.commandsBox.Multiline = true;
             this.commandsBox.Name = "commandsBox";
             this.commandsBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.commandsBox.Size = new System.Drawing.Size(400, 356);
+            this.commandsBox.Size = new System.Drawing.Size(550, 356);
+            this.commandsBox.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.commandsBox.TabIndex = 0;
             // 
             // AdvancedActionConfigView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.labelCommands);
             this.Controls.Add(this.commandsBox);
             this.Name = "AdvancedActionConfigView";
             this.ResumeLayout(false);
@@ -53,6 +66,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox commandsBox;
+        private System.Windows.Forms.Label labelCommands;
+        private SuchByte.MacroDeck.GUI.CustomControls.RoundedTextBox commandsBox;
     }
 }

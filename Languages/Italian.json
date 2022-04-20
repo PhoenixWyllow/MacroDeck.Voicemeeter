@@ -1,7 +1,14 @@
 {
-    "Attribution": "PhoenixWyllow",
-    "Language": "Italiano",
-    "PluginDescription": "Un plugin per Voicemeeter",
-    "VoiceMeeterConnected": "Voicemeeter Connesso",
-    "VoiceMeeterDisconnected": "Voicemeeter Disconnesso"
+  "Attribution": "PhoenixWyllow",
+  "Language": "Italiano",
+  "PluginDescription": "Un plugin per Voicemeeter",
+  "VoiceMeeterConnected": "Voicemeeter Connesso",
+  "VoiceMeeterDisconnected": "Voicemeeter Disconnesso",
+  "ToggleActionName": "Attiva/disattiva dispositivo",
+  "ToggleActionDescription": "Attiva o disattiva un opzione su un dispositivo",
+  "Device": "Dispositivo",
+  "Action": "Azione",
+  "AdvancedActionName": "Avanzato/Custom",
+  "AdvancedActionDescription": "Opzioni avanzate per controllare Voicemeeter tramite il linguaggio di Voicemeeter. Leggi la documentazione di Voicemeeter per info.",
+  "Commands": "Comandi (separati da ';' o nuova riga)"
 }

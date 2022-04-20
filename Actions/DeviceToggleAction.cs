@@ -1,22 +1,27 @@
-﻿using PW.VoicemeeterPlugin.Services.Voicemeeter;
+﻿using PW.VoicemeeterPlugin.Models;
+using PW.VoicemeeterPlugin.Services;
+using PW.VoicemeeterPlugin.Services.Voicemeeter;
+using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
+using SuchByte.MacroDeck.Variables;
+using System;
 
 namespace PW.VoicemeeterPlugin.Actions
 {
-    public class DeviceMuteAction : PluginAction
+    public class DeviceToggleAction : PluginAction
     {
         /// <summary>
         /// Name of the action
         /// </summary>
-        public override string Name => "^name";
+        public override string Name => LocalizationManager.Instance.ToggleActionName;
 
         /// <summary>
         /// A short description what this action does
         /// </summary>
-        public override string Description => "^description";
+        public override string Description => LocalizationManager.Instance.ToggleActionDescription;
 
         /// <summary>
         /// Set true if the plugin can be configured.
@@ -29,7 +34,7 @@ namespace PW.VoicemeeterPlugin.Actions
         /// <returns></returns>
         public override ActionConfigControl GetActionConfigControl(ActionConfigurator actionConfigurator)
         {
-            return new Views.DeviceSelectorConfigView();
+            return new Views.DeviceSelectorConfigView(new DeviceToggleViewModel(this));
         }
 
         /// <summary>
@@ -39,14 +44,13 @@ namespace PW.VoicemeeterPlugin.Actions
         /// <param name="actionButton">Returns the pressed action button</param>
         public override void Trigger(string clientId, ActionButton actionButton)
         {
-            //if (string.IsNullOrWhiteSpace(Configuration))
-            //{
-            //    return;
-            //}
-
-            //DeviceManager.ToggleMute(Configuration, actionButton);
-
-            PluginInstance.VoicemeeterControl.SetParameter("Strip(0).Mute", Constants.On);
+            if (string.IsNullOrWhiteSpace(Configuration))
+            {
+                return;
+            }
+            var config = DeviceConfigModel.Deserialize(Configuration);
+            var value = VariableManager.Variables.Find(v => v.Name.Equals(config.Option.AsVariable, StringComparison.OrdinalIgnoreCase));
+            PluginInstance.VoicemeeterControl.SetParameter(config.Option.AsParameter, value.Value.Equals(bool.FalseString) ? Constants.On : Constants.Off);
         }
     }
 }

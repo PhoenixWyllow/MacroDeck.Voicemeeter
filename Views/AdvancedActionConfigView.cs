@@ -1,4 +1,5 @@
 ﻿using PW.VoicemeeterPlugin.Actions;
+using PW.VoicemeeterPlugin.Services;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,14 @@ namespace PW.VoicemeeterPlugin.Views
         {
             _action = action;
             InitializeComponent();
+            ApplyLocalization();
 
             commandsBox.Text = action.Configuration;
+        }
+
+        private void ApplyLocalization()
+        {
+            labelCommands.Text = LocalizationManager.Instance.Commands;
         }
 
         public override bool OnActionSave()

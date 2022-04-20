@@ -10,8 +10,6 @@ using System.Text;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
-    enum Type { Strip, Bus }
-
     internal static class AvailableValues
     {
         public static VoicemeeterType ConnectedType { get; set; }
@@ -34,45 +32,21 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         public static int MaxPhysicalStrips => MaxStrips - (int)ConnectedType;
         public static int MaxPhysicalBuses => MaxBuses - (int)ConnectedType;
 
-        public static List<string> StripToggles => GetStripToggles();
-
-        private static List<string> GetStripToggles()
-        {
-            //List<string> vs = from _op
-            List<string> toggles = new List<string>
-            {
-                "Mute",
-                "A1",
-                "B1"
-            };
-
-            if (ConnectedType == VoicemeeterType.Banana || ConnectedType == VoicemeeterType.Potato)
-            {
-                toggles.Add("A2");
-                toggles.Add("A3");
-                toggles.Add("B2");
-
-                if (ConnectedType == VoicemeeterType.Potato)
-                {
-                    toggles.Add("A4");
-                    toggles.Add("A5");
-                    toggles.Add("B3");
-                }
-            }
-
-            toggles.Sort();
-            return toggles;
-        }
-
         public static List<VmIOInfo> IOInfo { get; private set; }
 
         internal static void InitIOInfo(AtgDev.Voicemeeter.RemoteApiExtender vmrApi)
         {
-            void AddChannelInfo(VmIOInfo channel)
+            void AddChannel(VmIOType type, int num)
             {
                 try
                 {
-                    Services.Voicemeeter.ControlHelpers.TestResultThrow(vmrApi.GetParameter($"{channel.Id}.Label", out string label));
+                    VmIOInfo channel = new VmIOInfo
+                    {
+                        Id = $"{type}({num})",
+                        Type = type,
+                        IsPhysical = num < (type == VmIOType.Strip ? MaxPhysicalStrips : MaxPhysicalBuses),
+                    };
+                    ControlHelpers.TestResultThrow(vmrApi.GetParameter($"{channel.Id}.Label", out string label));
                     channel.Name = label;
                     IOInfo.Add(channel);
                 }
@@ -87,12 +61,12 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                 IOInfo = new List<VmIOInfo>();
                 for (int i = 0; i < MaxStrips; i++)
                 {
-                    AddChannelInfo(new VmIOInfo { Id = $"Strip({i})" });
+                    AddChannel(VmIOType.Strip, i);
                 }
 
                 for (int i = 0; i < MaxBuses; i++)
                 {
-                    AddChannelInfo(new VmIOInfo { Id = $"Bus({i})" });
+                    AddChannel(VmIOType.Bus, i);
                 }
 
             }
@@ -105,12 +79,19 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             if (Options is null)
             {
                 Options = new List<VmIOOptions>();
-                foreach (string channelId in IOInfo.Select(c => c.Id))
+                foreach (var channel in IOInfo)
                 {
+                    string channelId = channel.Id;
                     Options.Add(new VmIOOptions { Id = channelId, Option = "Mute", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = channelId, Option = "Mono", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = channelId, Option = "Gain", Type = VariableType.Float });
-                    if (channelId.StartsWith("Strip"))
+                    if (channel.Type == VmIOType.Strip)
                     {
+                        if (channel.IsPhysical)
+                        {
+                            Options.Add(new VmIOOptions { Id = channelId, Option = "Solo", Type = VariableType.Bool });
+                        }
+
                         int maxPhysical = MaxPhysicalBuses;
                         for (int i = 1; i <= MaxBuses; i++)
                         {
@@ -118,10 +99,18 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                             Options.Add(new VmIOOptions { Id = channelId, Option = busOut, Type = VariableType.Bool });
                         }
                     }
-                    //else if (channelId.StartsWith("Bus"))
-                    //{
+                    else
+                    {
+                        if (ConnectedType == VoicemeeterType.Banana || ConnectedType == VoicemeeterType.Potato)
+                        {
+                            Options.Add(new VmIOOptions { Id = channelId, Option = "EQ.on", Type = VariableType.Bool });
 
-                    //}
+                            if (ConnectedType == VoicemeeterType.Potato)
+                            {
+                                Options.Add(new VmIOOptions { Id = channelId, Option = "Sel", Type = VariableType.Bool });
+                            }
+                        }
+                    }
                 }
             }
         }

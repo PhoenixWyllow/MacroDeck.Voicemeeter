@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PW.VoicemeeterPlugin.ViewModels
 {
-    public class VoicemeeterGlobalConfigViewModel : ISoundboardBaseConfigViewModel
+    public class VoicemeeterGlobalConfigViewModel : ISavableConfigViewModel
     {
         private readonly MacroDeckPlugin _plugin;
         private VoicemeeterGlobalConfigModel OutputConfiguration { get; }
@@ -19,7 +19,7 @@ namespace PW.VoicemeeterPlugin.ViewModels
             OutputConfiguration = VoicemeeterGlobalConfigModel.Deserialize(PluginConfiguration.GetValue(plugin, nameof(VoicemeeterGlobalConfigModel)));
         }
 
-        ISerializableConfiguration ISoundboardBaseConfigViewModel.SerializableConfiguration => OutputConfiguration;
+        ISerializableConfiguration ISavableConfigViewModel.SerializableConfiguration => OutputConfiguration;
 
         public bool RunVoicemeeter { get => OutputConfiguration.RunVoicemeeter; set => OutputConfiguration.RunVoicemeeter = value; }
 

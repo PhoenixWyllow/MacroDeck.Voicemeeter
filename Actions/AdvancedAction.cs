@@ -4,6 +4,7 @@ using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
+using PW.VoicemeeterPlugin.Services;
 
 namespace PW.VoicemeeterPlugin.Actions
 {
@@ -12,12 +13,12 @@ namespace PW.VoicemeeterPlugin.Actions
         /// <summary>
         /// Name of the action
         /// </summary>
-        public override string Name => "^advanced";
+        public override string Name => LocalizationManager.Instance.AdvancedActionName;
 
         /// <summary>
         /// A short description what this action does
         /// </summary>
-        public override string Description => "^description";
+        public override string Description => LocalizationManager.Instance.AdvancedActionDescription;
 
         /// <summary>
         /// Set true if the plugin can be configured.

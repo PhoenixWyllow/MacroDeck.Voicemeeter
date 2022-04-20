@@ -11,8 +11,12 @@ Create a button and configure how you want to control Voicemeeter.
 ***
 ## Features
 
-| Action | Description | Function |
+| Action | Function | Description |
 | --- | --- | --- |
+| Toggle | Toggle a button on a strip or bus | The most common toggles are implemented and can be selected by device name and option (Mute, A1-B3, etc) |
+| Slider control | coming soon... | not implemented yet! |
+| Program commands | coming soon... | not implemented yet! |
+| Advanced/Custom | Send a custom command to Voicemeeter | This option allows configuring custom commands using the Voicemeeter API language, like controlling the Cassette (Voicemeeter Banana and Potato). <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
 
 More features/actions coming soon...
 
@@ -36,5 +40,4 @@ This plugin makes use of:
 - [Voicemeeter Remote API dll C# dynamic wrapper (MIT)](https://github.com/A-tG/Voicemeeter-Remote-API-dll-dynamic-wrapper)
 - [Dynamic wrapper for unmanaged dll (MIT)](https://github.com/A-tG/Dynamic-wrapper-for-unmanaged-dll)
 
-Icon is a merge of the Macro Deck 2 icon by SuchByte and sound blaster by Anatolii Babii from the Noun Project.
 ***

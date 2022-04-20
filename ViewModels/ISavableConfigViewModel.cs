@@ -2,7 +2,7 @@
 
 namespace PW.VoicemeeterPlugin.ViewModels
 {
-    public interface ISoundboardBaseConfigViewModel
+    public interface ISavableConfigViewModel
     {
         protected ISerializableConfiguration SerializableConfiguration { get; }
 

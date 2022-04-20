@@ -1,4 +1,6 @@
-﻿using PW.VoicemeeterPlugin.Services.Voicemeeter;
+﻿using PW.VoicemeeterPlugin.Services;
+using PW.VoicemeeterPlugin.Services.Voicemeeter;
+using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
 using System.Collections.Generic;
@@ -13,11 +15,43 @@ namespace PW.VoicemeeterPlugin.Views
 {
     public partial class DeviceSelectorConfigView : ActionConfigControl
     {
-        public DeviceSelectorConfigView()
-        {
-            InitializeComponent();
+        private readonly DeviceSelectorViewModel _viewModel;
 
-            deviceSelectorBox.Items.AddRange(AvailableValues.IOInfo.Select(c => c.Name).ToArray());
+        public DeviceSelectorConfigView(DeviceSelectorViewModel viewModel)
+        {
+            _viewModel = viewModel;
+
+            InitializeComponent();
+            ApplyLocalization();
+
+            deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.Select(c => c.Name).ToArray());
+            deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice.Name;
+            actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
+        }
+
+        private void ApplyLocalization()
+        {
+            labelAction.Text = LocalizationManager.Instance.Action;
+            labelDevice.Text = LocalizationManager.Instance.Device;
+        }
+
+        public override bool OnActionSave()
+        {
+            _viewModel.SaveConfig();
+
+            return base.OnActionSave();
+        }
+
+        private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _viewModel.ChangeDevice((string)deviceSelectorBox.SelectedItem);
+            actionSelectorBox.Items.Clear();
+            actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
+        }
+
+        private void ActionSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _viewModel.ChangeAction((string)actionSelectorBox.SelectedItem);
         }
     }
 }
