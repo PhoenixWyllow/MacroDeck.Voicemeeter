@@ -1,14 +1,14 @@
 {
-  "Attribution": "PhoenixWyllow",
-  "Language": "English",
-  "PluginDescription": "A Voicemeeter plugin for Macro Deck",
-  "VoiceMeeterConnected": "Voicemeeter Connected",
-  "VoiceMeeterDisconnected": "Voicemeeter Disconnected",
-  "ToggleActionName": "Toggle device",
-  "ToggleActionDescription": "Toggle an option on a strip or bus",
-  "Device": "Device",
-  "Action": "Action",
-  "AdvancedActionName": "Advanced/Custom",
-  "AdvancedActionDescription": "Advanced/Custom options for controlling Voicemeeter using the Voicemeeter API language. Please read the Voicemeeter docs for instructions.",
-  "Commands": "Commands (separated by ';' or new line)"
+    "Attribution": "PhoenixWyllow",
+    "Language": "English",
+    "PluginDescription": "A Voicemeeter plugin for Macro Deck",
+    "VoiceMeeterConnected": "Voicemeeter Connected",
+    "VoiceMeeterDisconnected": "Voicemeeter Disconnected",
+    "ToggleActionName": "Toggle device",
+    "ToggleActionDescription": "Toggle an option on a strip or bus",
+    "Device": "Device",
+    "Action": "Action",
+    "AdvancedActionName": "Advanced/Custom",
+    "AdvancedActionDescription": "Advanced/Custom options for controlling Voicemeeter using the Voicemeeter API language.\nPlease read the Voicemeeter docs for instructions.",
+    "Commands": "Commands (separated by ',', ';' or new line)"
 }
