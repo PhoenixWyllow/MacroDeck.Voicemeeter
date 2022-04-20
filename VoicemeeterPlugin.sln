@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoicemeeterPlugin", "VoicemeeterPlugin.csproj", "{9537541E-0E36-4D33-AE31-941226C0D707}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9537541E-0E36-4D33-AE31-941226C0D707}.Debug|Any CPU.ActiveCfg = Debug|ARM64
+		{9537541E-0E36-4D33-AE31-941226C0D707}.Debug|Any CPU.Build.0 = Debug|ARM64
+		{9537541E-0E36-4D33-AE31-941226C0D707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9537541E-0E36-4D33-AE31-941226C0D707}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC0EAFE3-2921-4D5A-B63C-5A615DCD04AF}
+	EndGlobalSection
+EndGlobal

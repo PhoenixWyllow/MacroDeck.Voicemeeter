@@ -1,0 +1,96 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionPatch>0</VersionPatch>
+		<VersionRevision Condition="'$(VersionRevision)' == ''">$([System.DateTime]::UtcNow.ToString("yy"))$([System.DateTime]::UtcNow.DayOfYear.ToString("000")).$([System.DateTime]::UtcNow.ToString("HHmm"))</VersionRevision>
+		<Platforms>AnyCPU;ARM64</Platforms>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AssemblyName>Voicemeeter Plugin</AssemblyName>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<RootNamespace>PW.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/PhoenixWyllow/MacroDeck.Voicemeeter</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/PhoenixWyllow/MacroDeck.Voicemeeter/releases</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Authors>PhoenixWyllow (pw.dev@outlook.com)</Authors>
+		<Copyright>PhoenixWyllow (pw.dev@outlook.com)</Copyright>
+		<Description>A Voicemeeter plugin for Macro Deck 2</Description>
+		<AssemblyVersion>$(VersionMajor).$(VersionMinor).$(VersionRevision)</AssemblyVersion>
+		<FileVersion>$(AssemblyVersion)</FileVersion>
+		<Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
+		<IsPublishable>False</IsPublishable>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="a-tg.VmrapiDynWrapExt" Version="1.1.3" />
+	  <PackageReference Include="System.Drawing.Common" Version="5.0.3" ExcludeAssets="runtime" />
+	  <PackageReference Include="System.Text.Json" Version="5.0.0" ExcludeAssets="runtime" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Macro Deck 2">
+			<HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Include="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="ExtensionManifest.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="ExtensionIcon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<EmbeddedResource Include="Languages\*.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PluginFiles Include="$(OutDir)\*.dll;$(OutDir)\ExtensionManifest.json;$(OutDir)\ExtensionIcon.png" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy DestinationFolder="$(AppData)\Macro Deck\plugins\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" SourceFiles="@(PluginFiles)" />
+	</Target>
+
+	<Target Name="PostBuildZipRelease" AfterTargets="PostBuildEvent" Condition="'$(ConfigurationName)' == 'Release'">
+		<Copy DestinationFolder="$(SolutionDir)releases\temp\" SourceFiles="@(PluginFiles)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
+		<ZipDirectory SourceDirectory="$(SolutionDir)releases\temp\" DestinationFile="$(SolutionDir)releases\$(TargetName.Replace(' ', '')_$(Version).zip" Overwrite="true" />
+		<RemoveDir Directories="$(SolutionDir)releases\temp\" />
+	</Target>
+</Project>
