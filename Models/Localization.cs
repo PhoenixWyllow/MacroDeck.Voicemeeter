@@ -14,7 +14,7 @@ namespace PW.VoicemeeterPlugin.Models
         public string ToggleActionName { get; set; } = "Toggle device";
         public string ToggleActionDescription { get; set; } = "Toggle an option on a strip or bus";
         public string AdvancedActionName { get; set; } = "Advanced/Custom";
-        public string AdvancedActionDescription { get; set; } = "Advanced/Custom options for controlling Voicemeeter using the Voicemeeter API language. /n Please read the Voicemeeter docs for instructions.";
+        public string AdvancedActionDescription { get; set; } = "Advanced/Custom options for controlling Voicemeeter using the Voicemeeter API language. \nPlease read the Voicemeeter docs for instructions.";
         public string Commands { get; set; } = "Commands (separated by ';' or new line)";
     }
 }
