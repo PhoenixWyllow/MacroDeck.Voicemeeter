@@ -21,10 +21,12 @@ namespace PW.VoicemeeterPlugin.ViewModels
         {
             _action = action;
             configuration = DeviceConfigModel.Deserialize(action.Configuration);
-
-            SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Id.Equals(configuration.Option.Id));
-            AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
-            ChangeAction(configuration.Action);
+            if (configuration.Option != null)
+            {
+                SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Id.Equals(configuration.Option.Id));
+                AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
+                ChangeAction(configuration.Action);
+            }
         }
 
         public string[] AvailableActions { get; private set; }
