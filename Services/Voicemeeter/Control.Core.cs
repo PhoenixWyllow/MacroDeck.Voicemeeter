@@ -1,36 +1,47 @@
 ﻿using AtgDev.Voicemeeter;
-using PW.VoicemeeterPlugin;
 using PW.VoicemeeterPlugin.Models;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using SuchByte.MacroDeck.Logging;
+using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Timers;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
     public sealed partial class Control
     {
         private RemoteApiExtender VmrApi { get; }
+        private VoicemeeterGlobalConfigModel Config { get; }
 
         public Control()
         {
-            try
+            Config = VoicemeeterGlobalConfigModel.Deserialize(PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(VoicemeeterGlobalConfigModel)));
+            for (; ; )
             {
-                VmrApi = new RemoteApiExtender(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
-                Login();
-                AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-                InitAvailableValues();
-                Start();
-            }
-            catch (Exception ex)
-            {
-                MacroDeckLogger.Error(PluginInstance.Plugin, ex.Message);
-                MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
+                int errors = 0;
+                try
+                {
+                    AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+                    VmrApi = new RemoteApiExtender(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
+                    Login();
+                    InitAvailableValues();
+                    StartPolling();
+                }
+                catch (Exception ex)
+                {
+                    errors++;
+                    MacroDeckLogger.Error(PluginInstance.Plugin, ex.Message);
+                    MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
+                }
+                if (loginCalled && errors == 1 && Config.TryReconnectOnError)
+                {
+                    AppDomain.CurrentDomain.ProcessExit -= CurrentDomain_ProcessExit;
+                    Close();
+                }
+                else
+                {
+                    break;
+                }
             }
         }
 

@@ -18,6 +18,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             VoicemeeterType.Standard => 3,
             VoicemeeterType.Banana => 5,
             VoicemeeterType.Potato => 8,
+            VoicemeeterType.Potato64 => 8,
             _ => 0,
         };
 
@@ -26,11 +27,27 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             VoicemeeterType.Standard => 2,
             VoicemeeterType.Banana => 5,
             VoicemeeterType.Potato => 8,
+            VoicemeeterType.Potato64 => 8,
             _ => 0,
         };
 
-        public static int MaxPhysicalStrips => MaxStrips - (int)ConnectedType;
-        public static int MaxPhysicalBuses => MaxBuses - (int)ConnectedType;
+        public static int MaxPhysicalStrips => ConnectedType switch
+        {
+            VoicemeeterType.Standard => 2,
+            VoicemeeterType.Banana => 3,
+            VoicemeeterType.Potato => 5,
+            VoicemeeterType.Potato64 => 5,
+            _ => 0,
+        };
+
+        public static int MaxPhysicalBuses => ConnectedType switch
+        {
+            VoicemeeterType.Standard => 1,
+            VoicemeeterType.Banana => 3,
+            VoicemeeterType.Potato => 5,
+            VoicemeeterType.Potato64 => 5,
+            _ => 0,
+        };
 
         public static List<VmIOInfo> IOInfo { get; private set; }
 
@@ -101,11 +118,11 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                     }
                     else
                     {
-                        if (ConnectedType == VoicemeeterType.Banana || ConnectedType == VoicemeeterType.Potato)
+                        if (ConnectedType == VoicemeeterType.Banana || ConnectedType == VoicemeeterType.Potato || ConnectedType == VoicemeeterType.Potato64)
                         {
                             Options.Add(new VmIOOptions { Id = channelId, Option = "EQ.on", Type = VariableType.Bool });
 
-                            if (ConnectedType == VoicemeeterType.Potato)
+                            if (ConnectedType == VoicemeeterType.Potato || ConnectedType == VoicemeeterType.Potato64)
                             {
                                 Options.Add(new VmIOOptions { Id = channelId, Option = "Sel", Type = VariableType.Bool });
                             }

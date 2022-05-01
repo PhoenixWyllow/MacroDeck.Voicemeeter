@@ -11,7 +11,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
     public sealed partial class Control
     {
-
+        private bool loginCalled;
         private Timer timer;
         private string ConnectedVersion => TryGetVoicemeeterVersion(out string version) ? version : ControlHelpers.ErrorStr;
         private VoicemeeterType ConnectedType
@@ -22,8 +22,9 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                 {
                     return VoicemeeterType.None;
                 }
-                VmrApi.GetVoicemeeterVersion(out VoicemeeterVersion version);
-                return (VoicemeeterType)version.v1;
+                
+                ControlHelpers.TestResult(VmrApi.GetVoicemeeterType(out VoicemeeterType type));
+                return type;
             }
         }
 
@@ -58,6 +59,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         private void Login()
         {
+            loginCalled = true;
             ControlHelpers.TestLogin(VmrApi.Login(), RunVoicemeeter);
         }
 
@@ -71,8 +73,9 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             }
             else if (vmTypeRes == ResultCodes.OkVmNotLaunched)
             {
-                if (VoicemeeterGlobalConfigModel.Deserialize(PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(VoicemeeterGlobalConfigModel))).RunVoicemeeter)
+                if (Config.RunVoicemeeter)
                 {
+                    System.Threading.Thread.Sleep(100);
                     VmrApi.RunVoicemeeter(type);
                 }
                 return;
@@ -82,7 +85,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             throw new Exception("An error occurred. Manually start Voicemeeter and try again.");
         }
 
-        private void Start()
+        private void StartPolling()
         {
             timer ??= new Timer
             {
