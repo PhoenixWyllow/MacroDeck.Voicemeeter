@@ -25,7 +25,11 @@ namespace PW.VoicemeeterPlugin.Views
             ApplyLocalization();
 
             deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.Select(c => c.Name).ToArray());
-            deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice.Name;
+            if (_viewModel.SelectedDevice != null)
+            {
+                deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice.Name;
+            }
+            if (_viewModel.SelectedAction != null)
             actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
         }
 
