@@ -9,6 +9,7 @@ namespace PW.VoicemeeterPlugin.Models
     public class VoicemeeterGlobalConfigModel : ISerializableConfiguration
     {
         public bool RunVoicemeeter { get; set; }
+        public bool TryReconnectOnError { get; set; } = true;
 
         public string Serialize()
         {

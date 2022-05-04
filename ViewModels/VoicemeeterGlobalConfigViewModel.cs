@@ -23,6 +23,8 @@ namespace PW.VoicemeeterPlugin.ViewModels
 
         public bool RunVoicemeeter { get => OutputConfiguration.RunVoicemeeter; set => OutputConfiguration.RunVoicemeeter = value; }
 
+        public bool TryReconnectOnError { get => OutputConfiguration.TryReconnectOnError; set => OutputConfiguration.TryReconnectOnError = value; }
+
         public void SaveConfig()
         {
             try
