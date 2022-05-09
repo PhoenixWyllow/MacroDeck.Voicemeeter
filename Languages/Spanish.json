@@ -1,0 +1,14 @@
+{
+    "Attribution": "Danivar",
+    "Language": "Español",
+    "PluginDescription": "Un complemento de Voicemeeter para Macro Deck",
+    "VoiceMeeterConnected": "Voicemeeter conectado",
+    "VoiceMeeterDisconnected": "Voicemeeter desconectado",
+    "ToggleActionName": "Cambiar dispositivo",
+    "ToggleActionDescription": "Alternar una opción en una tira o Bus",
+    "Device": "Dispositivo",
+    "Action": "acción",
+    "AdvancedActionName": "Avanzado/Personalizado",
+    "AdvancedActionDescription": "Opciones avanzadas/personalizadas para controlar Voicemeeter usando el lenguaje API de Voicemeeter.\nPor favor Lea los documentos de Voicemeeter para obtener instrucciones.",
+    "Commands": "Comandos (separados por ',', ';' o nueva línea)"
+}

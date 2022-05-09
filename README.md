@@ -31,6 +31,7 @@ If your language is missing or incomplete, please consider [helping me out by tr
 Currently available languages:
 - English
 - Italian
+- Spanish (by Danivar)
 
 ***
 ## Third party licenses
