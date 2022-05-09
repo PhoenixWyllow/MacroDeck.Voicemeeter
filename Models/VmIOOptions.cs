@@ -1,8 +1,6 @@
 ﻿using SuchByte.MacroDeck.Variables;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Text.Json.Serialization;
 
 namespace PW.VoicemeeterPlugin.Models
 {
@@ -13,8 +11,11 @@ namespace PW.VoicemeeterPlugin.Models
         public string Option { get; set; }
         public VariableType Type { get; set; }
 
+        [JsonIgnore]
         public string AsParameter => $"{Id}.{Option}";
-        public string AsVariable => VariableManager.ConvertNameString($"vm_{Id}_{Option}");
+
+        [JsonIgnore]
+        public string AsVariable => VariableManager.ConvertNameString($"vm_{Id.Replace("(", null).Replace(")", null)}_{Option}");
 
         private string GetDebuggerDisplay()
         {

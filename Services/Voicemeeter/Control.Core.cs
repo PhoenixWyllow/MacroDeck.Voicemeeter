@@ -50,7 +50,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             AvailableValues.ConnectedType = ConnectedType;
             AvailableValues.InitIOInfo(VmrApi);
             AvailableValues.InitOptions();
-            //RemoveUnavailableVariables();
+            RemoveUnavailableVariables();
         }
 
         private static void RemoveUnavailableVariables()
