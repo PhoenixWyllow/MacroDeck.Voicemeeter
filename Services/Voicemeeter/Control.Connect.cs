@@ -23,7 +23,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                     return VoicemeeterType.None;
                 }
                 
-                ControlHelpers.TestResult(VmrApi.GetVoicemeeterType(out VoicemeeterType type));
+                ControlHelpers.TestResultInfo(VmrApi.GetVoicemeeterType(out VoicemeeterType type));
                 return type;
             }
         }
@@ -60,30 +60,29 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         private void Login()
         {
             loginCalled = true;
-            ControlHelpers.TestLogin(VmrApi.Login(), RunVoicemeeter);
+            ControlHelpers.TestLogin(VmrApi.Login());//, RunVoicemeeter);
         }
 
-        private void RunVoicemeeter()
-        {
-            int runRes = ResultCodes.Ok;
-            int vmTypeRes = VmrApi.GetVoicemeeterType(out VoicemeeterType type);
-            if (vmTypeRes == ResultCodes.Ok)
-            {
-                return;
-            }
-            else if (vmTypeRes == ResultCodes.OkVmNotLaunched)
-            {
-                if (Config.RunVoicemeeter)
-                {
-                    System.Threading.Thread.Sleep(100);
-                    VmrApi.RunVoicemeeter(type);
-                }
-                return;
-            }
+        //private void RunVoicemeeter(int loginResult)
+        //{
+        //    int runRes = VmrApi.GetVoicemeeterType(out VoicemeeterType type);
 
-            SuchByte.MacroDeck.Logging.MacroDeckLogger.Trace(PluginInstance.Plugin, $"{nameof(RunVoicemeeter)}: {vmTypeRes}, {type}, {runRes}");
-            throw new Exception("An error occurred. Manually start Voicemeeter and try again.");
-        }
+        //    if (runRes == ResultCodes.Ok && loginResult == ResultCodes.OkVmNotLaunched)
+        //    {
+        //        if (Config.RunVoicemeeter)
+        //        {
+        //            System.Threading.Thread.Sleep(100);
+        //            runRes = VmrApi.RunVoicemeeter(type);
+        //        }
+        //    }
+
+        //    SuchByte.MacroDeck.Logging.MacroDeckLogger.Trace(PluginInstance.Plugin, $"{nameof(RunVoicemeeter)}: Type:{runRes}, {type}, Login Result:{loginResult}");
+        //    if (runRes == ResultCodes.Ok)
+        //    {
+        //        return;
+        //    }
+        //    throw new Exception("An error occurred. Manually start Voicemeeter and try again.");
+        //}
 
         private void StartPolling()
         {

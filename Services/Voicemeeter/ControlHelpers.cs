@@ -12,14 +12,13 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
     {
         public static string ErrorStr = "Communication Error";
 
-        public static void TestLogin(int loginResult, Action onSuccessfulLogin = null)
+        public static void TestLogin(int loginResult, Action<int> onSuccessfulLogin = null)
         {
             switch (loginResult)
             {
                 case ResultCodes.Ok:
-                    onSuccessfulLogin?.Invoke();
-                    break;
                 case ResultCodes.OkVmNotLaunched:
+                    onSuccessfulLogin?.Invoke(loginResult);
                     break;
                 case ResultCodes.Error:
                     throw new Exception("Not installed or could not connect.");
@@ -60,6 +59,23 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             catch (Exception ex)
             {
                 MacroDeckLogger.Warning(PluginInstance.Plugin, typeof(Control), $"{callerName}: {ex.Message}");
+            }
+        }
+
+        //0: OK(no error).
+        //-1: error
+        //-2: no server.
+        //-3: unknown parameter
+        //-4: structure mismatch
+        internal static void TestResultInfo(int result, [CallerMemberName] string callerName = "")
+        {
+            try
+            {
+                TestResultThrow(result);
+            }
+            catch (Exception ex)
+            {
+                MacroDeckLogger.Info(PluginInstance.Plugin, typeof(Control), $"{callerName}: {ex.Message}");
             }
         }
 
