@@ -95,6 +95,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         {
             if (Options is null)
             {
+                int maxPhysical = MaxPhysicalBuses;
                 Options = new List<VmIOOptions>();
                 foreach (var channel in IOInfo)
                 {
@@ -109,7 +110,6 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                             Options.Add(new VmIOOptions { Id = channelId, Option = "Solo", Type = VariableType.Bool });
                         }
 
-                        int maxPhysical = MaxPhysicalBuses;
                         for (int i = 1; i <= MaxBuses; i++)
                         {
                             string busOut = i <= maxPhysical ? $"A{i}" : $"B{i - maxPhysical}";
@@ -130,6 +130,22 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                     }
                 }
 
+                //Add Recorder options
+                if (ConnectedType != VoicemeeterType.None || ConnectedType != VoicemeeterType.Standard)
+                {
+                    for (int i = 1; i <= MaxBuses; i++)
+                    {
+                        string busOut = i <= maxPhysical ? $"A{i}" : $"B{i - maxPhysical}";
+                        Options.Add(new VmIOOptions { Id = "Recorder", Option = busOut, Type = VariableType.Bool });
+                    }
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Stop", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Play", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "FF", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Rew", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Record", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Pause", Type = VariableType.Bool });
+                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Gain", Type = VariableType.Float });
+                }
 
                 var config = SuchByte.MacroDeck.Plugins.PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(AdditionalVariablesModel));
                 var variables = string.IsNullOrEmpty(config) ? null : AdditionalVariablesModel.Deserialize(config);
