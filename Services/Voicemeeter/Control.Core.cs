@@ -88,25 +88,29 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             }
         }
 
-        public bool TryGetValue(string parameter, VariableType type, out object val, bool log = true)
+        public bool TryGetValue(string parameter, VariableType type, out object val, bool infoOnly = false)
         {
+            bool ok;
             switch (type)
             {
                 case VariableType.Integer:
                 case VariableType.Float:
-                    val = GetParameter(parameter, log);
+                    ok = GetParameter(parameter, out float valr, infoOnly);
+                    val = valr;
                     break;
                 case VariableType.String:
-                    val = GetTextParameter(parameter, log);
+                    ok = GetTextParameter(parameter, out string vals, infoOnly);
+                    val = vals;
                     break;
                 case VariableType.Bool:
-                    val = GetParameter(parameter, log) == Constants.On;
+                    ok = GetParameter(parameter, out float valb, infoOnly);
+                    val = valb == Constants.On;
                     break;
                 default:
                     val = null;
                     return false;
             }
-            return true;
+            return ok;
         }
     }
 }

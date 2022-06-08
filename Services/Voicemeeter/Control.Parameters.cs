@@ -14,10 +14,12 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public string GetTextParameter(string parameter, bool log = true)
+        public bool GetTextParameter(string parameter, out string buffer, bool infoOnly = false)
         {
-            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out string buffer), log, parameter);
-            return buffer;
+            bool ok = infoOnly
+                ? ControlHelpers.TestResultInfo(VmrApi.GetParameter(parameter, out buffer), parameter)
+                : ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out buffer), parameter);
+            return ok;
         }
 
         /// <summary>
@@ -36,10 +38,12 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// </summary>
         /// <param name="parameter">Parameter name</param>
         /// <returns>float value</returns>
-        public float GetParameter(string parameter, bool log = true)
+        public bool GetParameter(string parameter, out float value, bool infoOnly = false)
         {
-            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out float value), log, parameter);
-            return value;
+            bool ok = infoOnly
+                ? ControlHelpers.TestResultInfo(VmrApi.GetParameter(parameter, out value), parameter)
+                : ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out value), parameter);
+            return ok;
         }
 
         /// <summary>

@@ -20,5 +20,7 @@ namespace PW.VoicemeeterPlugin.Models
         public string LabelParameter { get; set; } = "Parameter";
         public string ParameterError { get; set; } = "An error occurred while validating the parameter.";
         public string ParameterExists { get; set; } = "This parameter already exists.";
+        public string NoCommandsMsg { get; set; } = "No commands to execute";
+        public string NCommandsMsg { get; set; } = "{0} commands";
     }
 }
