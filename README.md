@@ -18,17 +18,24 @@ Create a button and configure how you want to control Voicemeeter.
 | Program commands | coming soon... | not implemented yet! |
 | Advanced/Custom | Send a custom command to Voicemeeter | This option allows configuring custom commands using the Voicemeeter API language, like controlling the Cassette (Voicemeeter Banana and Potato). <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
 
+##### Available parameters/variables
+
+| Panel | Toggles | Ranges |
+| --- | --- | --- |
+| Strip | Mute, Mono, Solo, A1-B3* | Gain |
+| Bus | Mute, Mono, Eq.On*, Sel* | Gain |
+| Recorder* | Stop, Play, Record, Pause | Gain |
+
+**Availablity of these varies with your Voicemeeter installation. Some features can only be accessed with Banana or Potato*
+
 ##### Add custom parameters to variables
 
-Any parameter in Voicemeeter that you want to monitor can be added with the same syntax as the Advanced/Custom action.
-<br/>Access this window from the Plugin Configuration button or by clicking the status icon.
-<br/>
+Any parameter in Voicemeeter that you want to monitor can be added with the same syntax as the Advanced/Custom action.\
+Access this window from the Plugin Configuration button or by clicking the status icon.\
 ![Addtional Parameters](addtionalParameters.png)
 
-Clicking on an option that you've already included allows you to edit or delete it. To add a new parameter, you must provide the Parameter and the Type. 
-<br/>
-(Check the API docs: 0 or 1 values are bool, ranges are almost always float)
-<br/>
+Clicking on an option that you've already included allows you to edit or delete it. To add a new parameter, you must provide the Parameter and the Type. \
+(Check the API docs: 0 or 1 values are bool, ranges are almost always float)\
 *Make sure to use the New, Save and Delete buttons before you click Ok.*
 
 ***More features/actions coming soon...***

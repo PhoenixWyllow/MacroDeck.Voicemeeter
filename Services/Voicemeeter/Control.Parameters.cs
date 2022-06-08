@@ -16,7 +16,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <returns></returns>
         public string GetTextParameter(string parameter, bool log = true)
         {
-            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out string buffer), log);
+            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out string buffer), log, parameter);
             return buffer;
         }
 
@@ -38,7 +38,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <returns>float value</returns>
         public float GetParameter(string parameter, bool log = true)
         {
-            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out float value), log);
+            ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out float value), log, parameter);
             return value;
         }
 
