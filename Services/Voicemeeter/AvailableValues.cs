@@ -140,13 +140,12 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                     }
                     Options.Add(new VmIOOptions { Id = "Recorder", Option = "Stop", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = "Recorder", Option = "Play", Type = VariableType.Bool });
-                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "FF", Type = VariableType.Bool });
-                    Options.Add(new VmIOOptions { Id = "Recorder", Option = "Rew", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = "Recorder", Option = "Record", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = "Recorder", Option = "Pause", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = "Recorder", Option = "Gain", Type = VariableType.Float });
                 }
 
+                //Additional variables
                 var config = SuchByte.MacroDeck.Plugins.PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(AdditionalVariablesModel));
                 var variables = string.IsNullOrEmpty(config) ? null : AdditionalVariablesModel.Deserialize(config);
                 if (variables != null)

@@ -1,19 +1,12 @@
-﻿using PW.VoicemeeterPlugin.Actions;
-using PW.VoicemeeterPlugin.Models;
+﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using SuchByte.MacroDeck.GUI.CustomControls;
-using SuchByte.MacroDeck.GUI.Dialogs;
 using SuchByte.MacroDeck.Language;
 using SuchByte.MacroDeck.Variables;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace PW.VoicemeeterPlugin.Views
 {
