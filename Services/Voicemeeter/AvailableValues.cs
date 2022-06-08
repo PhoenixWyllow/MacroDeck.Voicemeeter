@@ -129,6 +129,20 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                         }
                     }
                 }
+
+
+                var config = SuchByte.MacroDeck.Plugins.PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(AdditionalVariablesModel));
+                var variables = string.IsNullOrEmpty(config) ? null : AdditionalVariablesModel.Deserialize(config);
+                if (variables != null)
+                {
+                    foreach (var addedVariable in variables.Options)
+                    {
+                        if (!Options.Contains(addedVariable))
+                        {
+                            Options.Add(addedVariable);
+                        }
+                    }
+                }
             }
         }
 

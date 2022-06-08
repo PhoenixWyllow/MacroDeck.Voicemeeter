@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Reflection.Metadata;
+using System.Text.Json.Serialization;
 
 namespace PW.VoicemeeterPlugin.Models
 {
@@ -16,5 +17,8 @@ namespace PW.VoicemeeterPlugin.Models
         public string AdvancedActionName { get; set; } = "Advanced/Custom";
         public string AdvancedActionDescription { get; set; } = "Advanced/Custom options for controlling Voicemeeter using the Voicemeeter API language. \nPlease read the Voicemeeter docs for instructions.";
         public string Commands { get; set; } = "Commands (separated by ';' or new line)";
+        public string LabelParameter { get; set; } = "Parameter";
+        public string ParameterError { get; set; } = "An error occurred while validating the parameter.";
+        public string ParameterExists { get; set; } = "This parameter already exists.";
     }
 }
