@@ -19,7 +19,7 @@ namespace PW.VoicemeeterPlugin
 
     public class VoicemeeterPlugin : MacroDeckPlugin
     {
-        public override bool CanConfigure => false;//true;
+        public override bool CanConfigure => true;
 
         /// <summary>
         /// Gets called when Macro Deck enables the plugin
@@ -42,7 +42,9 @@ namespace PW.VoicemeeterPlugin
         /// </summary>
         public override void OpenConfigurator()
         {
-            //new Views.VoicemeeterGlobalConfigView(this).ShowDialog();
+            //using var config = new Views.VoicemeeterGlobalConfigView(this);
+            using var config = new Views.AddAdditionalVariablesConfigView();
+            config.ShowDialog();
         }
 
         public VoicemeeterPlugin()

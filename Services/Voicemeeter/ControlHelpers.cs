@@ -50,7 +50,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         //-2: no server.
         //-3: unknown parameter
         //-4: structure mismatch
-        public static void TestResult(int result, [CallerMemberName] string callerName = "")
+        public static void TestResult(int result, bool log = true, [CallerMemberName] string callerName = "")
         {
             try
             {
@@ -58,7 +58,10 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             }
             catch (Exception ex)
             {
-                MacroDeckLogger.Warning(PluginInstance.Plugin, typeof(Control), $"{callerName}: {ex.Message}");
+                if (log)
+                {
+                    MacroDeckLogger.Warning(PluginInstance.Plugin, typeof(Control), $"{callerName}: {ex.Message}");
+                }
             }
         }
 
