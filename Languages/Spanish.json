@@ -13,5 +13,7 @@
     "Commands": "Comandos (separados por ',', ';' o nueva línea)",
     "LabelParameter": "Parameter",
     "ParameterError": "An error occurred while validating the parameter.",
-    "ParameterExists": "This parameter already exists."
+    "ParameterExists": "This parameter already exists.",
+    "NoCommandsMsg": "No commands to execute",
+    "NCommandsMsg": "{0} commands"
 }
