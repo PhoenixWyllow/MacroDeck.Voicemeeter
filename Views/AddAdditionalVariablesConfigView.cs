@@ -52,7 +52,7 @@ namespace PW.VoicemeeterPlugin.Views
             {
                 return false;
             }
-            if (!PluginInstance.VoicemeeterControl.TryGetValue(opt.AsParameter, opt.Type, out _, log: false))
+            if (!PluginInstance.VoicemeeterControl.TryGetValue(opt.AsParameter, opt.Type, out _, infoOnly: true))
             {
                 return false;
             }
