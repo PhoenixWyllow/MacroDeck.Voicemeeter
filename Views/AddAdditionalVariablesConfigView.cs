@@ -46,7 +46,7 @@ namespace PW.VoicemeeterPlugin.Views
 
         private bool CheckOption(VmIOOptions opt)
         {
-            opt.Id = opt.Id.Replace('[', '(').Replace('{', '(').Replace('}', ')').Replace('}', ')');
+            opt.Id = opt.Id.Replace('[', '(').Replace('{', '(').Replace(']', ')').Replace('}', ')');
             opt.Option = opt.Option.Split(';')[0];
             if (!int.TryParse(opt.Id.Substring(opt.Id.IndexOf('(')+1, 1), out _))
             {
@@ -63,7 +63,7 @@ namespace PW.VoicemeeterPlugin.Views
         {
             //test parameter
             var param = parameterValue.Text.Split('.');
-            var opt = new VmIOOptions() { Id = param[0], Option = param[1], Type = Enum.Parse<VariableType>(variableType.Text) };
+            var opt = new VmIOOptions() { Id = param[0], Option = string.Join('.', param[1..]), Type = Enum.Parse<VariableType>(variableType.Text) };
             if (!CheckOption(opt))
             {
                 using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
