@@ -35,9 +35,9 @@ namespace PW.VoicemeeterPlugin.Views
             var commands = _action.Configuration.Split(new string[] { Environment.NewLine, ";", "," }, StringSplitOptions.RemoveEmptyEntries);
             _action.ConfigurationSummary = commands.Length switch
             {
-                0 => "^no commands no execute",
+                0 => LocalizationManager.Instance.NoCommandsMsg,
                 1 => commands[0],
-                _ => string.Format("^{0} commands", commands.Length),
+                _ => string.Format(LocalizationManager.Instance.NCommandsMsg, commands.Length),
             };
             return true;
         }
