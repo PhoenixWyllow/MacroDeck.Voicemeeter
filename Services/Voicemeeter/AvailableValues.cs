@@ -103,6 +103,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                     Options.Add(new VmIOOptions { Id = channelId, Option = "Mute", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = channelId, Option = "Mono", Type = VariableType.Bool });
                     Options.Add(new VmIOOptions { Id = channelId, Option = "Gain", Type = VariableType.Float });
+                    Options.Add(new VmIOOptions { Id = channelId, Option = "Label", Type = VariableType.String });
                     if (channel.Type == VmIOType.Strip)
                     {
                         if (channel.IsPhysical)
