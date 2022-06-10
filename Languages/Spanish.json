@@ -10,5 +10,10 @@
     "Action": "acción",
     "AdvancedActionName": "Avanzado/Personalizado",
     "AdvancedActionDescription": "Opciones avanzadas/personalizadas para controlar Voicemeeter usando el lenguaje API de Voicemeeter.\nPor favor Lea los documentos de Voicemeeter para obtener instrucciones.",
-    "Commands": "Comandos (separados por ',', ';' o nueva línea)"
+    "Commands": "Comandos (separados por ',', ';' o nueva línea)",
+    "LabelParameter": "Parameter",
+    "ParameterError": "An error occurred while validating the parameter.",
+    "ParameterExists": "This parameter already exists.",
+    "NoCommandsMsg": "No commands to execute",
+    "NCommandsMsg": "{0} commands"
 }
