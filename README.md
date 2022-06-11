@@ -8,6 +8,8 @@
 ## Control Voicemeeter from Macro Deck
 Create a button and configure how you want to control Voicemeeter.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/S6S87RY9H)
+
 ***
 ## Features
 #### Available actions
