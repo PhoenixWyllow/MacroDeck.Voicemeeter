@@ -1,4 +1,5 @@
-﻿using PW.VoicemeeterPlugin.Services;
+﻿using PW.VoicemeeterPlugin.Models;
+using PW.VoicemeeterPlugin.Services;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
@@ -24,13 +25,15 @@ namespace PW.VoicemeeterPlugin.Views
             InitializeComponent();
             ApplyLocalization();
 
-            deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.Select(c => c.Name).ToArray());
+            deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
             if (_viewModel.SelectedDevice != null)
             {
-                deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice.Name;
+                deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;
             }
             if (_viewModel.SelectedAction != null)
-            actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
+            {
+                actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
+            }
         }
 
         private void ApplyLocalization()
@@ -48,7 +51,7 @@ namespace PW.VoicemeeterPlugin.Views
 
         private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _viewModel.ChangeDevice((string)deviceSelectorBox.SelectedItem);
+            _viewModel.ChangeDevice((VmIOInfo)deviceSelectorBox.SelectedItem);
             actionSelectorBox.Items.Clear();
             actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
         }

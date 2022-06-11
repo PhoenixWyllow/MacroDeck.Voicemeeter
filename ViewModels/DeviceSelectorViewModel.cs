@@ -34,9 +34,9 @@ namespace PW.VoicemeeterPlugin.ViewModels
         public VmIOInfo SelectedDevice { get; private set; }
         public string SelectedAction { get; private set; }
 
-        public void ChangeDevice(string selectedDevice)
+        public void ChangeDevice(VmIOInfo selectedDevice)
         {
-            SelectedDevice = AvailableDevices.FirstOrDefault(device => device.Name.Equals(selectedDevice));
+            SelectedDevice = AvailableDevices.FirstOrDefault(device => device.Equals(selectedDevice));
             AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
         }
 
@@ -63,7 +63,7 @@ namespace PW.VoicemeeterPlugin.ViewModels
 
         public void SetConfig()
         {
-            configuration.Name = SelectedDevice.Name;
+            configuration.Name = SelectedDevice.ToString();
             configuration.Action = SelectedAction;
             configuration.Option = AvailableValues.Options.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
 
