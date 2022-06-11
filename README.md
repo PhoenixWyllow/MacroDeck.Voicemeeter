@@ -24,7 +24,7 @@ Create a button and configure how you want to control Voicemeeter.
 #### Available parameters/variables
 
 | Device | Toggles | Ranges | Strings |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | Strip | Mute, Mono, Solo, A1-B3* | Gain | Label |
 | Bus | Mute, Mono, Eq.On*, Sel* | Gain | Label |
 | Recorder* | Stop, Play, Record, Pause | Gain | - |
