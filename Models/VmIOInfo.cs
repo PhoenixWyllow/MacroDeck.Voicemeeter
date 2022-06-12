@@ -47,5 +47,5 @@ namespace PW.VoicemeeterPlugin.Models
         }
     }
 
-    public enum VmIOType { Strip, Bus }
+    public enum VmIOType { Strip, Bus, Recorder }
 }

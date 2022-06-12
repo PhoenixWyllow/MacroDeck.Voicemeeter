@@ -16,10 +16,10 @@ Create a button and configure how you want to control Voicemeeter.
 
 | Action | Function | Description |
 | --- | --- | --- |
-| Toggle | Toggle a button on a strip or bus | The most common toggles are implemented and can be selected by device name and option (Mute, A1-B3, etc) |
+| Toggle | Toggle a button on a strip, a bus, or the recorder(cassette) | The most common toggles are implemented and can be selected by device name and option <br/> (Mute, A1-B3, Record/Play/Stop cassette, etc) |
 | Slider control | coming soon... | not implemented yet! |
-| Program commands | coming soon... | not implemented yet! |
-| Advanced/Custom | Send a custom command to Voicemeeter | This option allows configuring custom commands using the Voicemeeter API language, like controlling the Cassette (Voicemeeter Banana and Potato). <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
+| Program commands | Execute Voicemeeter commands | Shutdown, Restart, Show, Reset/Load/Save configuration, Load/Eject cassette |
+| Advanced/Custom | Send a custom command to Voicemeeter | This option allows configuring custom commands using the Voicemeeter API language. <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
 
 #### Available parameters/variables
 
@@ -42,10 +42,8 @@ Clicking on an option that you've already included allows you to edit or delete 
 
 >- Check the API docs: 0 or 1 values are generally used as bool, ranges are almost always float, strings are...strings.
 >- Make sure to use the New, Save and Delete buttons before you click Ok.
->- **Restart Macro Deck** to activate the variables
+>- **Restart Macro Deck** to refresh with the variables you've added or removed
 >- I can only provide minimal support for this since it's all your own stuff being added. Use it wisely.
-
-
 
 *More features/actions coming soon...*
 
