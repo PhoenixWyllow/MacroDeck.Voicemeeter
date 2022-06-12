@@ -15,5 +15,10 @@
     "ParameterError": "Errore di validazione del parametro.",
     "ParameterExists": "Questo parametro esiste già.",
     "NoCommandsMsg": "Nessun commando da eseguire",
-    "NCommandsMsg": "{0} commandi"
+    "NCommandsMsg": "{0} commandi",
+    "CommandActionName": "Esegui comando",
+    "CommandActionDescription": "Seleziona un comando di Voicemeeter da eseguire",
+    "Command": "Comando",
+    "CommandValue": "Valore del comando",
+    "CommandError": "Errore di validazione del comando."
 }

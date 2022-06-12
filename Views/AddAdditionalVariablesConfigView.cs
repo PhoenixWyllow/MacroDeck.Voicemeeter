@@ -48,7 +48,8 @@ namespace PW.VoicemeeterPlugin.Views
         {
             opt.Id = opt.Id.Replace('[', '(').Replace('{', '(').Replace(']', ')').Replace('}', ')');
             opt.Option = opt.Option.Split(';')[0];
-            if (!int.TryParse(opt.Id.Substring(opt.Id.IndexOf('(')+1, 1), out _))
+            int idxBracket = opt.Id.IndexOf('(');
+            if (idxBracket < -1 && !int.TryParse(opt.Id.Substring(idxBracket + 1, 1), out _))
             {
                 return false;
             }

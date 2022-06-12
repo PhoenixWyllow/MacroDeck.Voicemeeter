@@ -33,6 +33,7 @@ namespace PW.VoicemeeterPlugin
             Actions = new List<PluginAction>
             {
                 new DeviceToggleAction(),
+                new CommandAction(),
                 new AdvancedAction(),
             };
         }

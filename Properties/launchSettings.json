@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "VoicemeeterPlugin": {
+      "commandName": "Project"
+    },
+    "MacroDeck": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Macro Deck\\Macro Deck 2.exe",
+      "commandLineArgs": "--show"
+    }
+  }
+}

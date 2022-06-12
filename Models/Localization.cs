@@ -22,5 +22,10 @@ namespace PW.VoicemeeterPlugin.Models
         public string ParameterExists { get; set; } = "This parameter already exists.";
         public string NoCommandsMsg { get; set; } = "No commands to execute";
         public string NCommandsMsg { get; set; } = "{0} commands";
+        public string CommandActionName { get; set; } = "Execute command";
+        public string CommandActionDescription { get; set; } = "Select a command to execute";
+        public string Command { get; set; } = "Command";
+        public string CommandValue { get; set; } = "Command value";
+        public string CommandError { get; set; } = "An error occurred while validating the command.";
     }
 }
