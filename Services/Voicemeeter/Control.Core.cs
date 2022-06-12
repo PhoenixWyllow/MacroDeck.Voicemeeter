@@ -60,15 +60,15 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             var variablesNotFound = VariableManager.Variables.Where(unavailableVariables).Select(v => v.Name).ToArray();
             if (variablesNotFound.Length > 0)
             {
-                int removedCount = VariableManager.Variables.RemoveAll(unavailableVariables);
-                if (removedCount > 0)
-                {
-                    MacroDeckLogger.Info(PluginInstance.Plugin, $"Deleted {removedCount} variable(s): {string.Join(", ", variablesNotFound)}");
-                }
-                //foreach (var variable in variablesNotFound)
+                //int removedCount = VariableManager.Variables.RemoveAll(unavailableVariables);
+                //if (removedCount > 0)
                 //{
-                //    VariableManager.DeleteVariable(variable);
+                //    MacroDeckLogger.Info(PluginInstance.Plugin, $"Deleted {removedCount} variable(s): {string.Join(", ", variablesNotFound)}");
                 //}
+                foreach (var variable in variablesNotFound)
+                {
+                    VariableManager.DeleteVariable(variable);
+                }
             }
         }
 
