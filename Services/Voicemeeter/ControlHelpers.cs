@@ -12,18 +12,21 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
     {
         public static string ErrorStr = "Communication Error";
 
-        public static void TestLogin(int loginResult, Action<int> onSuccessfulLogin = null)
+        public static void TestLogin(int loginResult, Action<int> onLoginSuccess = null, Action onLoginFail = null)
         {
             switch (loginResult)
             {
                 case ResultCodes.Ok:
                 case ResultCodes.OkVmNotLaunched:
-                    onSuccessfulLogin?.Invoke(loginResult);
+                    onLoginSuccess?.Invoke(loginResult);
                     break;
                 case ResultCodes.Error:
-                    throw new Exception("Not installed or could not connect.");
+                    MacroDeckLogger.Trace(PluginInstance.Plugin, "Not installed or could not connect.");
+                    break;//throw new Exception("Not installed or could not connect.");
                 default:
-                    throw new Exception("Unexpected connection. Connection was not correctly closed previously.");
+                    onLoginFail?.Invoke();
+                    MacroDeckLogger.Trace(PluginInstance.Plugin, "Unexpected connection. Connection was not correctly closed previously.");
+                    break;//throw new Exception("Unexpected connection. Connection was not correctly closed previously.");
             }
         }
 

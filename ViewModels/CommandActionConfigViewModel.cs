@@ -27,7 +27,7 @@ namespace PW.VoicemeeterPlugin.ViewModels
                 CommandValue = configuration.CommandValue;
             }
         }
-        public IEnumerable<VmIOCommand> AvailableCommands { get; } = AvailableValues.AvailableCommands;
+        public IEnumerable<VmIOCommand> AvailableCommands { get; } = AvailableValues.IOCommands;
         public VmIOCommand SelectedCommand { get; private set; } = new VmIOCommand();
         public string CommandValue { get; set; }
 
