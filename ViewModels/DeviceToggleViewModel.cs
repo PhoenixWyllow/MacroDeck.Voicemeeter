@@ -18,7 +18,7 @@ namespace PW.VoicemeeterPlugin.ViewModels
 
         protected override string[] GetAvailableActionsForDevice(VmIOInfo device)
         {
-            return AvailableValues.Options.Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Bool)
+            return AvailableValues.IOOptions.Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Bool)
                                           .Select(opt => opt.Option)
                                           .ToArray();
             //return device.Type switch

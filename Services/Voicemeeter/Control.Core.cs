@@ -5,6 +5,7 @@ using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 using System;
 using System.Linq;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
@@ -16,47 +17,43 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         public Control()
         {
             Config = VoicemeeterGlobalConfigModel.Deserialize(PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(VoicemeeterGlobalConfigModel)));
-            for (; ; )
+            try
             {
-                int errors = 0;
-                try
-                {
-                    AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-                    VmrApi = new RemoteApiExtender(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
-                    Login();
-                    InitAvailableValues();
-                    StartPolling();
-                }
-                catch (Exception ex)
-                {
-                    errors++;
-                    MacroDeckLogger.Error(PluginInstance.Plugin, ex.Message);
-                    MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
-                }
-                if (loginCalled && errors == 1 && Config.TryReconnectOnError)
-                {
-                    AppDomain.CurrentDomain.ProcessExit -= CurrentDomain_ProcessExit;
-                    Close();
-                }
-                else
-                {
-                    break;
-                }
+                AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+                VmrApi = new RemoteApiExtender(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
+                StartPolling();
+            }
+            catch (Exception ex)
+            {
+                MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
+                MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
             }
         }
 
         private void InitAvailableValues()
         {
             AvailableValues.ConnectedType = ConnectedType;
-            AvailableValues.InitIOInfo(VmrApi);
-            AvailableValues.InitOptions();
-            RemoveUnavailableVariables();
+            if (!connected)
+            {
+                AvailableValues.Reset();
+                return;
+            }
+            bool initValues = AvailableValues.IOInfo == null;
+            if (initValues)
+            {
+                AvailableValues.InitIOInfo(VmrApi);
+            }
+            if (initValues && AvailableValues.IOInfo != null)
+            {
+                AvailableValues.InitIOOptions();
+                RemoveUnavailableVariables();
+            }
         }
 
         private static void RemoveUnavailableVariables()
         {
             bool unavailableVariables(Variable v) => v.Creator.Equals("Voicemeeter Plugin")
-                                                     && !AvailableValues.Options.Any(o => o.AsVariable.Equals(v.Name));
+                                                     && !AvailableValues.IOOptions.Any(o => o.AsVariable.Equals(v.Name));
             var variablesNotFound = VariableManager.Variables.Where(unavailableVariables).Select(v => v.Name).ToArray();
             if (variablesNotFound.Length > 0)
             {
@@ -74,15 +71,23 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         private void UpdateVariables()
         {
-            foreach (var option in AvailableValues.Options)
+            if (AvailableValues.IOOptions is null)
             {
+                return;
+            }
+            foreach (var option in AvailableValues.IOOptions)
+            {
+                if (!connected)
+                {
+                    break;
+                }
                 SetVariable(option.AsParameter, option.AsVariable, option.Type);
             }
         }
 
         private void SetVariable(string parameter, string variable, VariableType type)
         {
-            if (TryGetValue(parameter, type, out object val))
+            if ((connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object val, infoOnly: true))
             {
                 VariableManager.SetValue(variable, val, type, PluginInstance.Plugin);
             }

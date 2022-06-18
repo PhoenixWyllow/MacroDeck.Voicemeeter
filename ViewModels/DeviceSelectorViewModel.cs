@@ -65,7 +65,7 @@ namespace PW.VoicemeeterPlugin.ViewModels
         {
             configuration.Name = SelectedDevice.ToString();
             configuration.Action = SelectedAction;
-            configuration.Option = AvailableValues.Options.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
+            configuration.Option = AvailableValues.IOOptions.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
 
             _action.ConfigurationSummary = configuration.ToString();
             _action.Configuration = configuration.Serialize();

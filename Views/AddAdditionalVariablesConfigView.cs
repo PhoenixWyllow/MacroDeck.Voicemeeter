@@ -72,7 +72,7 @@ namespace PW.VoicemeeterPlugin.Views
                 return;
             }
 
-            if (listParameters.Items.Contains(opt) || AvailableValues.Options.Contains(opt))
+            if (listParameters.Items.Contains(opt) || AvailableValues.IOOptions.Contains(opt))
             {
                 using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
                 _ = msgBox.ShowDialog(LanguageManager.Strings.Info, LocalizationManager.Instance.ParameterExists, MessageBoxButtons.OK);
