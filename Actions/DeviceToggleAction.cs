@@ -49,7 +49,7 @@ namespace PW.VoicemeeterPlugin.Actions
                 return;
             }
             var config = DeviceConfigModel.Deserialize(Configuration);
-            var value = VariableManager.Variables.Find(v => v.Name.Equals(config.Option.AsVariable, StringComparison.OrdinalIgnoreCase));
+            var value = VariableManager.ListVariables.FirstOrDefault(v => v.Name == config.Option.AsVariable);
             PluginInstance.VoicemeeterControl.SetParameter(config.Option.AsParameter, value.Value.Equals(bool.FalseString) ? Constants.On : Constants.Off);
         }
     }
