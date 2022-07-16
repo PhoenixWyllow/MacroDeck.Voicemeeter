@@ -21,12 +21,6 @@ namespace PW.VoicemeeterPlugin.ViewModels
             return AvailableValues.IOOptions.Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Bool)
                                           .Select(opt => opt.Option)
                                           .ToArray();
-            //return device.Type switch
-            //{
-            //    VmIOType.Strip => AvailableValues.StripToggles.ToArray(),
-            //    VmIOType.Bus => AvailableValues.BusToggles.ToArray(),
-            //    _ => Array.Empty<string>(),
-            //};   
         }
     }
 }

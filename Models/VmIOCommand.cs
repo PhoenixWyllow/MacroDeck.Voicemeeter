@@ -27,16 +27,6 @@ namespace PW.VoicemeeterPlugin.Models
             return HashCode.Combine(CommandType);
         }
 
-        //public static bool operator ==(VmIOCommand left, VmIOCommand right)
-        //{
-        //    return left.Equals(right);
-        //}
-
-        //public static bool operator !=(VmIOCommand left, VmIOCommand right)
-        //{
-        //    return !(left == right);
-        //}
-
         public override string ToString()
         {
             return CommandType.GetType()

@@ -61,14 +61,6 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             {
                 VariableManager.DeleteVariable(variable);
             }
-            //if (variablesNotFound.Any())
-            //{
-            //    int removedCount = VariableManager.Variables.RemoveAll(unavailableVariables);
-            //    if (removedCount > 0)
-            //    {
-            //        MacroDeckLogger.Info(PluginInstance.Plugin, $"Deleted {removedCount} variable(s): {string.Join(", ", variablesNotFound)}");
-            //    }
-            //}
         }
 
         private void UpdateVariables()
