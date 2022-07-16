@@ -180,7 +180,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         public static List<VmIOCommand> IOCommands { get; private set; }
 
-        private static void InitIOCommands()
+        internal static void InitIOCommands()
         {
             if (IOCommands is null)
             {

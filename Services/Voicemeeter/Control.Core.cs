@@ -32,6 +32,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         private void InitAvailableValues()
         {
+            AvailableValues.InitIOCommands();
             AvailableValues.ConnectedType = ConnectedType;
             if (!connected)
             {
