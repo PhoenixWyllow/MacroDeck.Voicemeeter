@@ -69,6 +69,7 @@ namespace PW.VoicemeeterPlugin.ViewModels
 
             _action.ConfigurationSummary = configuration.ToString();
             _action.Configuration = configuration.Serialize();
+            _action.BindableVariable = configuration.Option.AsVariable;
         }
     }
 }
