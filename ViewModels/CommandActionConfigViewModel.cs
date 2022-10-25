@@ -5,7 +5,6 @@ using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PW.VoicemeeterPlugin.ViewModels
 {
@@ -13,25 +12,25 @@ namespace PW.VoicemeeterPlugin.ViewModels
     {
         private readonly PluginAction _action;
 
-        private readonly CommandActionConfigModel configuration;
+        private readonly CommandActionConfigModel _configuration;
 
-        ISerializableConfiguration ISavableConfigViewModel.SerializableConfiguration => configuration;
+        ISerializableConfiguration ISavableConfigViewModel.SerializableConfiguration => _configuration;
 
         public CommandActionConfigViewModel(PluginAction action)
         {
             _action = action;
-            configuration = CommandActionConfigModel.Deserialize(action.Configuration);
-            if (configuration.Command != null)
+            _configuration = CommandActionConfigModel.Deserialize(action.Configuration);
+            if (_configuration.Command != null)
             {
-                ChangeCommand(configuration.Command);
-                CommandValue = configuration.CommandValue;
+                ChangeCommand(_configuration.Command);
+                CommandValue = _configuration.CommandValue;
             }
         }
-        public IEnumerable<VmIOCommand> AvailableCommands { get; } = AvailableValues.IOCommands;
-        public VmIOCommand SelectedCommand { get; private set; } = new VmIOCommand();
+        public IEnumerable<VmIoCommand> AvailableCommands { get; } = AvailableValues.IoCommands;
+        public VmIoCommand SelectedCommand { get; private set; } = new();
         public string CommandValue { get; set; }
 
-        public void ChangeCommand(VmIOCommand selectedCommand)
+        public void ChangeCommand(VmIoCommand selectedCommand)
         {
             if (selectedCommand.CommandType is null)
             {
@@ -46,16 +45,16 @@ namespace PW.VoicemeeterPlugin.ViewModels
 
         public void SetConfig()
         {
-            ValidConfig = !(SelectedCommand.CommandType is null) || !SelectedCommand.RequiresValue || !string.IsNullOrWhiteSpace(CommandValue);
+            ValidConfig = SelectedCommand.CommandType is not null || !SelectedCommand.RequiresValue || !string.IsNullOrWhiteSpace(CommandValue);
             if (!ValidConfig)
             {
                 return;
             }
-            configuration.Command = SelectedCommand;
-            configuration.CommandValue = CommandValue;
+            _configuration.Command = SelectedCommand;
+            _configuration.CommandValue = CommandValue;
 
-            _action.ConfigurationSummary = configuration.ToString();
-            _action.Configuration = configuration.Serialize();
+            _action.ConfigurationSummary = _configuration.ToString();
+            _action.Configuration = _configuration.Serialize();
         }
 
         public void SaveConfig()

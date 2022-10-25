@@ -1,16 +1,12 @@
 ﻿using SuchByte.MacroDeck.Plugins;
-using System.Collections.Generic;
-using System.Drawing;
 using PW.VoicemeeterPlugin.Actions;
 using System;
-using PW.VoicemeeterPlugin.Properties;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using VoicemeeterControl = PW.VoicemeeterPlugin.Services.Voicemeeter.Control;
 using PW.VoicemeeterPlugin.Services;
 
 namespace PW.VoicemeeterPlugin
 {
-
     internal static class PluginInstance
     {
         public static MacroDeckPlugin Plugin { get; set; }
@@ -28,9 +24,9 @@ namespace PW.VoicemeeterPlugin
         {
             //optimised initilization - commented code adds 2s to program startup!
             //PluginInstance.VoicemeeterControl = new VoicemeeterControl();
-            new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new VoicemeeterControl()).Start();
+            new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new()).Start();
 
-            Actions = new List<PluginAction>
+            Actions = new()
             {
                 new DeviceToggleAction(),
                 new CommandAction(),
@@ -57,14 +53,13 @@ namespace PW.VoicemeeterPlugin
             SuchByte.MacroDeck.MacroDeck.OnMainWindowLoad += MacroDeck_OnMainWindowLoad;
         }
 
-        private ContentSelectorButton contentButton;
+        private ContentSelectorButton _contentButton;
         private void MacroDeck_OnMainWindowLoad(object sender, EventArgs e)
         {
-            if (sender != null &&
-                sender is SuchByte.MacroDeck.GUI.MainWindow mainWindow)
+            if (sender is SuchByte.MacroDeck.GUI.MainWindow mainWindow)
             {
-                contentButton = new Views.StatusButtonControl();
-                mainWindow.contentButtonPanel.Controls.Add(contentButton);
+                _contentButton = new Views.StatusButtonControl();
+                mainWindow.contentButtonPanel.Controls.Add(_contentButton);
             }
         }
 

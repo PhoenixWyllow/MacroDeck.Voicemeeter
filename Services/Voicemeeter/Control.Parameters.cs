@@ -1,9 +1,4 @@
 ﻿using AtgDev.Voicemeeter.Types;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using SuchByte.MacroDeck.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
@@ -13,6 +8,8 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// Gets a text value
         /// </summary>
         /// <param name="parameter"></param>
+        /// <param name="buffer"></param>
+        /// <param name="infoOnly"></param>
         /// <returns></returns>
         public bool GetTextParameter(string parameter, out string buffer, bool infoOnly = false)
         {
@@ -37,6 +34,8 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// Get a named parameter
         /// </summary>
         /// <param name="parameter">Parameter name</param>
+        /// <param name="value"></param>
+        /// <param name="infoOnly"></param>
         /// <returns>float value</returns>
         public bool GetParameter(string parameter, out float value, bool infoOnly = false)
         {

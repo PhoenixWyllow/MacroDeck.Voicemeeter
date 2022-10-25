@@ -5,7 +5,6 @@ using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PW.VoicemeeterPlugin.ViewModels
 {
@@ -13,34 +12,34 @@ namespace PW.VoicemeeterPlugin.ViewModels
     {
         private readonly PluginAction _action;
 
-        private readonly DeviceConfigModel configuration;
+        private readonly DeviceConfigModel _configuration;
 
-        ISerializableConfiguration ISavableConfigViewModel.SerializableConfiguration => configuration;
+        ISerializableConfiguration ISavableConfigViewModel.SerializableConfiguration => _configuration;
 
         protected DeviceSelectorViewModel(PluginAction action)
         {
             _action = action;
-            configuration = DeviceConfigModel.Deserialize(action.Configuration);
-            if (configuration.Option != null)
+            _configuration = DeviceConfigModel.Deserialize(action.Configuration);
+            if (_configuration.Option != null)
             {
-                SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Id.Equals(configuration.Option.Id));
+                SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Id.Equals(_configuration.Option.Id));
                 AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
-                ChangeAction(configuration.Action);
+                ChangeAction(_configuration.Action);
             }
         }
 
         public string[] AvailableActions { get; private set; }
-        public IEnumerable<VmIOInfo> AvailableDevices { get; } = AvailableValues.IOInfo;
-        public VmIOInfo SelectedDevice { get; private set; }
+        public IEnumerable<VmIoInfo> AvailableDevices { get; } = AvailableValues.IoInfo;
+        public VmIoInfo SelectedDevice { get; private set; }
         public string SelectedAction { get; private set; }
 
-        public void ChangeDevice(VmIOInfo selectedDevice)
+        public void ChangeDevice(VmIoInfo selectedDevice)
         {
             SelectedDevice = AvailableDevices.FirstOrDefault(device => device.Equals(selectedDevice));
             AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
         }
 
-        protected abstract string[] GetAvailableActionsForDevice(VmIOInfo device);
+        protected abstract string[] GetAvailableActionsForDevice(VmIoInfo device);
 
         public void ChangeAction(string selectedAction)
         {
@@ -63,13 +62,13 @@ namespace PW.VoicemeeterPlugin.ViewModels
 
         public void SetConfig()
         {
-            configuration.Name = SelectedDevice.ToString();
-            configuration.Action = SelectedAction;
-            configuration.Option = AvailableValues.IOOptions.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
+            _configuration.Name = SelectedDevice.ToString();
+            _configuration.Action = SelectedAction;
+            _configuration.Option = AvailableValues.IoOptions.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
 
-            _action.ConfigurationSummary = configuration.ToString();
-            _action.Configuration = configuration.Serialize();
-            _action.BindableVariable = configuration.Option.AsVariable;
+            _action.ConfigurationSummary = _configuration.ToString();
+            _action.Configuration = _configuration.Serialize();
+            _action.BindableVariable = _configuration.Option.AsVariable;
         }
     }
 }

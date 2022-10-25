@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PW.VoicemeeterPlugin.Services.Voicemeeter
+﻿namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
     public static class Constants
     {

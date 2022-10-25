@@ -3,16 +3,12 @@ using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.Plugins;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using PW.VoicemeeterPlugin.ViewModels;
 using PW.VoicemeeterPlugin.Models;
 using SuchByte.MacroDeck.Logging;
 
 namespace PW.VoicemeeterPlugin.Actions
 {
-    public class CommandAction : PluginAction
+    public sealed class CommandAction : PluginAction
     {
         public override string Name => LocalizationManager.Instance.CommandActionName;
 
@@ -22,7 +18,7 @@ namespace PW.VoicemeeterPlugin.Actions
 
         public override ActionConfigControl GetActionConfigControl(ActionConfigurator actionConfigurator)
         {
-            return new Views.CommandActionConfigView(new CommandActionConfigViewModel(this));
+            return new Views.CommandActionConfigView(new(this));
         }
 
         public override void Trigger(string clientId, ActionButton actionButton)

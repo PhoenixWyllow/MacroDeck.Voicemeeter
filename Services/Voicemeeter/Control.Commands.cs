@@ -1,8 +1,4 @@
 ﻿using PW.VoicemeeterPlugin.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
@@ -11,7 +7,6 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         /// <summary>
         /// Shutdown VoiceMeeter
         /// </summary>
-        /// <param name="voicemeeterType">The Voicemeeter program to run</param>
         public void Shutdown() => SetParameter(VoicemeeterCommand.Shutdown, 1);
 
         /// <summary>
@@ -30,7 +25,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
         public void Reset() => SetParameter(VoicemeeterCommand.Reset, 1);
 
         /// <summary>
-        /// Load a configuation by file name (xml)
+        /// Load a configuration by file name (xml)
         /// </summary>
         /// <param name="configurationFileName">Full path to file</param>
         public void Load(string configurationFileName) => SetTextParameter(VoicemeeterCommand.Load, configurationFileName);

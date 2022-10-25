@@ -1,16 +1,13 @@
 ﻿using AtgDev.Voicemeeter;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using PW.VoicemeeterPlugin;
 using SuchByte.MacroDeck.Logging;
 using System;
-using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
     internal static class ControlHelpers
     {
-        public static string ErrorStr = "Communication Error";
+        public const string ErrorStr = "Communication Error";
 
         public static void TestLogin(int loginResult, Action<int> onLoginSuccess = null, Action onLoginFail = null)
         {
@@ -40,8 +37,8 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             switch (result)
             {
                 case ResultCodes.Ok: break;
-                case ResultCodes.Error: throw new Exception("Error");
-                case ResultCodes.NoServer: throw new Exception("Not Connected");
+                case ResultCodes.Error: throw new("Error");
+                case ResultCodes.NoServer: throw new("Not Connected");
                 case ResultCodes.NoLevelAvailable: break;
                 case -4: throw new ArgumentException("Channel out of range");
                 default: throw UnknownError(result);
@@ -96,14 +93,14 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             switch (result)
             {
                 case ResultCodes.Ok: break;
-                case ResultCodes.Error: throw new Exception("Parameter Error");
-                case ResultCodes.NoServer: throw new Exception("Not Connected");
+                case ResultCodes.Error: throw new("Parameter Error");
+                case ResultCodes.NoServer: throw new("Not Connected");
                 case ResultCodes.UnexpectedError1: throw new ArgumentException("Parameter not found");
-                case ResultCodes.UnexpectedError2: throw new Exception("Structure mismatch");
+                case ResultCodes.UnexpectedError2: throw new("Structure mismatch");
                 default: throw UnknownError(result);
             }
         }
 
-        private static Exception UnknownError(int result) => new Exception($"Unknown ({result})");
+        private static Exception UnknownError(int result) => new($"Unknown ({result})");
     }
 }

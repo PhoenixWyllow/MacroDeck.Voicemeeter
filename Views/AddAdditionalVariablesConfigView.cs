@@ -5,14 +5,13 @@ using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Language;
 using SuchByte.MacroDeck.Variables;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace PW.VoicemeeterPlugin.Views
 {
     public partial class AddAdditionalVariablesConfigView : DialogForm
     {
-        private int activeIndex;
+        private int _activeIndex;
         public AddAdditionalVariablesConfigView()
         {
             InitializeComponent();
@@ -44,12 +43,12 @@ namespace PW.VoicemeeterPlugin.Views
             Reset();
         }
 
-        private bool CheckOption(VmIOOptions opt)
+        private bool CheckOption(VmIoOptions opt)
         {
             opt.Id = opt.Id.Replace('[', '(').Replace('{', '(').Replace(']', ')').Replace('}', ')');
             opt.Option = opt.Option.Split(';')[0];
             int idxBracket = opt.Id.IndexOf('(');
-            if (idxBracket < -1 && !int.TryParse(opt.Id.Substring(idxBracket + 1, 1), out _))
+            if (idxBracket < -1 && !int.TryParse(opt.Id.AsSpan(idxBracket + 1, 1), out _))
             {
                 return false;
             }
@@ -64,7 +63,7 @@ namespace PW.VoicemeeterPlugin.Views
         {
             //test parameter
             var param = parameterValue.Text.Split('.');
-            var opt = new VmIOOptions() { Id = param[0], Option = string.Join('.', param[1..]), Type = Enum.Parse<VariableType>(variableType.Text) };
+            var opt = new VmIoOptions() { Id = param[0], Option = string.Join('.', param[1..]), Type = Enum.Parse<VariableType>(variableType.Text) };
             if (!CheckOption(opt))
             {
                 using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
@@ -72,7 +71,7 @@ namespace PW.VoicemeeterPlugin.Views
                 return;
             }
 
-            if (listParameters.Items.Contains(opt) || AvailableValues.IOOptions.Contains(opt))
+            if (listParameters.Items.Contains(opt) || AvailableValues.IoOptions.Contains(opt))
             {
                 using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
                 _ = msgBox.ShowDialog(LanguageManager.Strings.Info, LocalizationManager.Instance.ParameterExists, MessageBoxButtons.OK);
@@ -80,9 +79,9 @@ namespace PW.VoicemeeterPlugin.Views
             }
 
             //not returned early - valid
-            if (activeIndex >= 0)
+            if (_activeIndex >= 0)
             {
-                listParameters.Items[activeIndex] = opt;
+                listParameters.Items[_activeIndex] = opt;
             }
             else
             {
@@ -95,24 +94,24 @@ namespace PW.VoicemeeterPlugin.Views
         {
             parameterValue.Text = string.Empty;
             variableType.SelectedIndex = 0;
-            activeIndex = -100;
+            _activeIndex = -100;
         }
 
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
-            if (activeIndex >= 0)
+            if (_activeIndex >= 0)
             {
-                listParameters.Items.RemoveAt(activeIndex);
+                listParameters.Items.RemoveAt(_activeIndex);
             }
             Reset();
         }
 
         private void ListParameters_SelectedIndexChanged(object sender, EventArgs e)
         {
-            activeIndex = listParameters.SelectedIndex;
-            if (activeIndex >= 0)
+            _activeIndex = listParameters.SelectedIndex;
+            if (_activeIndex >= 0)
             {
-                var opt = listParameters.Items[activeIndex] as VmIOOptions;
+                var opt = listParameters.Items[_activeIndex] as VmIoOptions;
                 parameterValue.Text = opt.AsParameter;
                 variableType.SelectedItem = Enum.GetName(typeof(VariableType), opt.Type);
             }
@@ -120,13 +119,13 @@ namespace PW.VoicemeeterPlugin.Views
 
         private void ButtonOk_Click(object sender, EventArgs e)
         {
-            AdditionalVariablesModel variables = new AdditionalVariablesModel
+            AdditionalVariablesModel variables = new()
             {
-                Options = new List<VmIOOptions>()
+                Options = new()
             };
             foreach (var item in listParameters.Items)
             {
-                variables.Options.Add((VmIOOptions)item);
+                variables.Options.Add((VmIoOptions)item);
             }
             SuchByte.MacroDeck.Plugins.PluginConfiguration.SetValue(PluginInstance.Plugin, nameof(AdditionalVariablesModel), variables.Serialize());
 

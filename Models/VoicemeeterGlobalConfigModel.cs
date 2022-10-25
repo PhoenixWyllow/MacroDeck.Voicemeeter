@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace PW.VoicemeeterPlugin.Models
 {
 
-    public class VoicemeeterGlobalConfigModel : ISerializableConfiguration
+    public sealed class VoicemeeterGlobalConfigModel : ISerializableConfiguration
     {
         public bool RunVoicemeeter { get; set; }
         public bool TryReconnectOnError { get; set; } = true;

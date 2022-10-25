@@ -1,9 +1,5 @@
 ﻿using AtgDev.Voicemeeter;
 using AtgDev.Voicemeeter.Types;
-using PW.VoicemeeterPlugin;
-using PW.VoicemeeterPlugin.Models;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Timers;
 
@@ -11,10 +7,10 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 {
     public sealed partial class Control
     {
-        private static readonly object key = new object();
-        private bool loginCalled;
-        private bool connected;
-        private Timer timer;
+        private static readonly object key = new();
+        private bool _loginCalled;
+        private bool _connected;
+        private Timer _timer;
         private string ConnectedVersion => TryGetVoicemeeterVersion(out string version) ? version : ControlHelpers.ErrorStr;
         private VoicemeeterType ConnectedType
         {
@@ -44,31 +40,31 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         private void Close()
         {
-            timer?.Stop();
-            timer?.Dispose();
+            _timer?.Stop();
+            _timer?.Dispose();
             Logout();
             VmrApi?.Dispose();
         }
 
         private void Logout()
         {
-            if (loginCalled)
+            if (_loginCalled)
             {
                 VmrApi?.Logout();
-                loginCalled = false;
+                _loginCalled = false;
             }
         }
 
         private void Login()
         {
-            if (!connected && !loginCalled)
+            if (!_connected && !_loginCalled)
             {
                 ControlHelpers.TestLogin(
                     VmrApi.Login(),
-                    onLoginSuccess: (_) => loginCalled = true, //RunVoicemeeter,
+                    onLoginSuccess: (_) => _loginCalled = true, //RunVoicemeeter,
                     onLoginFail: Logout);
             }
-            connected = CheckConnected(out _);
+            _connected = CheckConnected(out _);
         }
 
         //private void RunVoicemeeter(int loginResult)
@@ -95,13 +91,13 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
 
         private void StartPolling()
         {
-            timer ??= new Timer
+            _timer ??= new()
             {
                 Interval = 300,
                 AutoReset = true,
             };
-            timer.Elapsed += Poll;
-            timer.Start();
+            _timer.Elapsed += Poll;
+            _timer.Start();
         }
 
         private void Poll(object sender, ElapsedEventArgs e)
@@ -109,7 +105,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
             if (VmrApi is null)
             {
                 Close();
-                SuchByte.MacroDeck.Logging.MacroDeckLogger.Warning(PluginInstance.Plugin, "Voicemeter plugin has stopped. You will need to restart Macro Deck to use the features.");
+                SuchByte.MacroDeck.Logging.MacroDeckLogger.Warning(PluginInstance.Plugin, "Voicemeeter plugin has stopped. You will need to restart Macro Deck to use the features.");
                 return;
             }
             lock (key)
@@ -118,7 +114,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter
                 InitAvailableValues();
             }
             Polling?.Invoke(this, null);
-            if (connected && VmrApi.IsParametersDirty() > 0)
+            if (_connected && VmrApi.IsParametersDirty() > 0)
             {
                 UpdateVariables();
             }

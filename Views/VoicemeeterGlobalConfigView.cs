@@ -2,12 +2,6 @@
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace PW.VoicemeeterPlugin.Views
 {
@@ -16,7 +10,7 @@ namespace PW.VoicemeeterPlugin.Views
         private readonly VoicemeeterGlobalConfigViewModel _viewModel;
         public VoicemeeterGlobalConfigView(MacroDeckPlugin plugin)
         {
-            _viewModel = new VoicemeeterGlobalConfigViewModel(plugin);
+            _viewModel = new(plugin);
             InitializeComponent();
             ApplyLocalization();
         }
@@ -30,7 +24,7 @@ namespace PW.VoicemeeterPlugin.Views
             checkBoxRunVoicemeeter.Checked = _viewModel.RunVoicemeeter;
         }
 
-        private void ButtonOK_Click(object sender, System.EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             _viewModel.RunVoicemeeter = checkBoxRunVoicemeeter.Checked;
             _viewModel.SaveConfig();

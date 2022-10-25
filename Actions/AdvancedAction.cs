@@ -1,6 +1,4 @@
-﻿using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using PW.VoicemeeterPlugin;
-using SuchByte.MacroDeck.ActionButton;
+﻿using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
@@ -8,7 +6,7 @@ using PW.VoicemeeterPlugin.Services;
 
 namespace PW.VoicemeeterPlugin.Actions
 {
-    public class AdvancedAction : PluginAction
+    public sealed class AdvancedAction : PluginAction
     {
         /// <summary>
         /// Name of the action

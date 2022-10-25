@@ -1,18 +1,13 @@
-﻿using AtgDev.Voicemeeter.Types;
-using SuchByte.MacroDeck.Variables;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace PW.VoicemeeterPlugin.Models
 {
     [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-    public class AdditionalVariablesModel : ISerializableConfiguration
+    public sealed class AdditionalVariablesModel : ISerializableConfiguration
     {
-        public List<VmIOOptions> Options { get; set; }
+        public List<VmIoOptions> Options { get; init; }
 
         public string Serialize()
         {

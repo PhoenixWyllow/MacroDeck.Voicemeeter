@@ -1,15 +1,8 @@
 ﻿using PW.VoicemeeterPlugin.Properties;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
-using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using VoicemeeterControl = PW.VoicemeeterPlugin.Services.Voicemeeter.Control;
 
@@ -17,12 +10,12 @@ namespace PW.VoicemeeterPlugin.Views
 {
     public class StatusButtonControl : ContentSelectorButton
     {
-        private bool? isConnected;
+        private bool? _isConnected;
         private readonly ToolTip _statusToolTip;
 
         public StatusButtonControl() : base()
         {
-            _statusToolTip = new ToolTip();
+            _statusToolTip = new();
             UpdateStatusButton();
             Click += StatusButton_Click;
             VoicemeeterControl.Polling += VoicemeeterControl_Polling;
@@ -47,9 +40,9 @@ namespace PW.VoicemeeterPlugin.Views
             {
                 bool connected = VoicemeeterControl.CheckConnected(out string connectedVersion);
 
-                if (isConnected is null || isConnected != connected)
+                if (_isConnected is null || _isConnected != connected)
                 {
-                    isConnected = connected;
+                    _isConnected = connected;
                     BackgroundImage = connected ? Resources.VoiceMeeterConnected : Resources.VoiceMeeterDisconnected;
                     string toolip = connected
                                   ? $"{LocalizationManager.Instance.VoiceMeeterConnected}{Environment.NewLine}{connectedVersion} ({AvailableValues.ConnectedType})"

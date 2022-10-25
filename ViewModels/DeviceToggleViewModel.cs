@@ -1,12 +1,8 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PW.VoicemeeterPlugin.ViewModels
 {
@@ -16,9 +12,9 @@ namespace PW.VoicemeeterPlugin.ViewModels
         {
         }
 
-        protected override string[] GetAvailableActionsForDevice(VmIOInfo device)
+        protected override string[] GetAvailableActionsForDevice(VmIoInfo device)
         {
-            return AvailableValues.IOOptions.Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Bool)
+            return AvailableValues.IoOptions.Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Bool)
                                           .Select(opt => opt.Option)
                                           .ToArray();
         }

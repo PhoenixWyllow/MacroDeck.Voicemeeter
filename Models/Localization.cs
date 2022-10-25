@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata;
-using System.Text.Json.Serialization;
-
-namespace PW.VoicemeeterPlugin.Models
+﻿namespace PW.VoicemeeterPlugin.Models
 {
     internal sealed class Localization
     {

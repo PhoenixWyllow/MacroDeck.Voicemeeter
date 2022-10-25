@@ -1,16 +1,9 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 
 namespace PW.VoicemeeterPlugin.Views
 {
@@ -51,7 +44,7 @@ namespace PW.VoicemeeterPlugin.Views
 
         private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _viewModel.ChangeDevice((VmIOInfo)deviceSelectorBox.SelectedItem);
+            _viewModel.ChangeDevice((VmIoInfo)deviceSelectorBox.SelectedItem);
             actionSelectorBox.Items.Clear();
             actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
         }

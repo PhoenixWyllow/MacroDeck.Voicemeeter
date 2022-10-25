@@ -1,4 +1,5 @@
-﻿using PW.VoicemeeterPlugin.Models;
+﻿using System.Linq;
+using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using PW.VoicemeeterPlugin.ViewModels;
@@ -7,11 +8,10 @@ using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
-using System;
 
 namespace PW.VoicemeeterPlugin.Actions
 {
-    public class DeviceToggleAction : PluginAction
+    public sealed class DeviceToggleAction : PluginAction
     {
         /// <summary>
         /// Name of the action
@@ -49,7 +49,7 @@ namespace PW.VoicemeeterPlugin.Actions
                 return;
             }
             var config = DeviceConfigModel.Deserialize(Configuration);
-            var value = VariableManager.ListVariables.FirstOrDefault(v => v.Name == config.Option.AsVariable);
+            var value = VariableManager.GetVariables(PluginInstance.Plugin).FirstOrDefault(v => v.Name.Equals(config.Option.AsVariable));
             PluginInstance.VoicemeeterControl.SetParameter(config.Option.AsParameter, value.Value.Equals(bool.FalseString) ? Constants.On : Constants.Off);
         }
     }

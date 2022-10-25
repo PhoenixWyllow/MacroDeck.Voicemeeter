@@ -13,9 +13,9 @@ using System.Text.Json;
 
 namespace PW.VoicemeeterPlugin.Services
 {
-    internal sealed class LocalizationManager
+    internal static class LocalizationManager
     {
-        private static readonly object key = new object();
+        private static readonly object key = new();
 
         public static Localization Instance { get; private set; }
 
@@ -34,7 +34,7 @@ namespace PW.VoicemeeterPlugin.Services
                 string languageName = LanguageManager.GetLanguageName();
                 if (Instance != null)
                 {
-                    LanguageManager.LanguageChanged -= (s, e) => GetLocalization();
+                    LanguageManager.LanguageChanged -= (_, _) => GetLocalization();
                 }
                 try
                 {
@@ -43,11 +43,11 @@ namespace PW.VoicemeeterPlugin.Services
                 catch
                 {
                     //fallback - should never occur if things are done properly
-                    Instance = new Localization();
+                    Instance = new();
                 }
                 finally
                 {
-                    LanguageManager.LanguageChanged += (s, e) => GetLocalization();
+                    LanguageManager.LanguageChanged += (_, _) => GetLocalization();
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace PW.VoicemeeterPlugin.Services
             string languageFileName = $"PW.Macrodeck.Voicemeeter.Languages.{languageName}.json";
 
             using var resourceStream = assembly.GetManifestResourceStream(languageFileName);
-            using var streamReader = new StreamReader(resourceStream);
+            using var streamReader = new StreamReader(resourceStream!);
             return streamReader.ReadToEnd();
         }
     }

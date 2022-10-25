@@ -1,15 +1,9 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using MessageBox = SuchByte.MacroDeck.GUI.CustomControls.MessageBox;
 
@@ -56,7 +50,7 @@ namespace PW.VoicemeeterPlugin.Views
 
         private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var command = (VmIOCommand)commandSelectorBox.SelectedItem;
+            var command = (VmIoCommand)commandSelectorBox.SelectedItem;
             _viewModel.ChangeCommand(command);
             commandValueBox.Enabled = command.RequiresValue;
         }

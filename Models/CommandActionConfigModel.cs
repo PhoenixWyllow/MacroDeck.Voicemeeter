@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
+﻿using System.Diagnostics;
 using System.Text.Json;
 
 namespace PW.VoicemeeterPlugin.Models
 {
     [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-    public class CommandActionConfigModel : ISerializableConfiguration
+    public sealed class CommandActionConfigModel : ISerializableConfiguration
     {
-        public VmIOCommand Command { get; set; } = new VmIOCommand();
+        public VmIoCommand Command { get; set; } = new();
         public string CommandValue { get; set; } = string.Empty;
 
         public string Serialize()

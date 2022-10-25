@@ -7,17 +7,17 @@ using System.Reflection;
 namespace PW.VoicemeeterPlugin.Models
 {
     [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-    public class VmIOCommand : IEquatable<VmIOCommand>
+    public sealed class VmIoCommand : IEquatable<VmIoCommand>
     {
-        public Commands? CommandType { get; set; }
-        public bool RequiresValue { get; set; }
+        public Commands? CommandType { get; init; }
+        public bool RequiresValue { get; init; }
 
         public override bool Equals(object obj)
         {
-            return obj is VmIOCommand command && Equals(command);
+            return obj is VmIoCommand command && Equals(command);
         }
 
-        public bool Equals(VmIOCommand other)
+        public bool Equals(VmIoCommand other)
         {
             return CommandType == other?.CommandType;
         }

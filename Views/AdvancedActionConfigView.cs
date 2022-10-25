@@ -2,12 +2,6 @@
 using PW.VoicemeeterPlugin.Services;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace PW.VoicemeeterPlugin.Views
 {
@@ -32,7 +26,7 @@ namespace PW.VoicemeeterPlugin.Views
         public override bool OnActionSave()
         {
             _action.Configuration = commandsBox.Text;
-            var commands = _action.Configuration.Split(new string[] { Environment.NewLine, ";", "," }, StringSplitOptions.RemoveEmptyEntries);
+            var commands = _action.Configuration.Split(new[] { Environment.NewLine, ";", "," }, StringSplitOptions.RemoveEmptyEntries);
             _action.ConfigurationSummary = commands.Length switch
             {
                 0 => LocalizationManager.Instance.NoCommandsMsg,
