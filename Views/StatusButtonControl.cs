@@ -1,63 +1,55 @@
 ﻿using PW.VoicemeeterPlugin.Properties;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
-using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using VoicemeeterControl = PW.VoicemeeterPlugin.Services.Voicemeeter.Control;
 
-namespace PW.VoicemeeterPlugin.Views
+namespace PW.VoicemeeterPlugin.Views;
+
+public class StatusButtonControl : ContentSelectorButton
 {
-    public class StatusButtonControl : ContentSelectorButton
+    private bool? _isConnected;
+    private readonly ToolTip _statusToolTip;
+
+    public StatusButtonControl() : base()
     {
-        private bool? isConnected;
-        private readonly ToolTip _statusToolTip;
+        _statusToolTip = new();
+        UpdateStatusButton();
+        Click += StatusButton_Click;
+        VoicemeeterControl.Polling += VoicemeeterControl_Polling;
+        SuchByte.MacroDeck.MacroDeck.MainWindow.FormClosed += MainWindow_FormClosed;
+    }
 
-        public StatusButtonControl() : base()
+    private void MainWindow_FormClosed(object sender, FormClosedEventArgs e) => VoicemeeterControl.Polling -= VoicemeeterControl_Polling;
+
+    private void StatusButton_Click(object sender, EventArgs e)
+    {
+        if (PluginInstance.Plugin.CanConfigure)
         {
-            _statusToolTip = new ToolTip();
-            UpdateStatusButton();
-            Click += StatusButton_Click;
-            VoicemeeterControl.Polling += VoicemeeterControl_Polling;
-            SuchByte.MacroDeck.MacroDeck.MainWindow.FormClosed += MainWindow_FormClosed;
+            PluginInstance.Plugin.OpenConfigurator();
         }
+    }
 
-        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e) => VoicemeeterControl.Polling -= VoicemeeterControl_Polling;
+    private void VoicemeeterControl_Polling(object sender, EventArgs e) => UpdateStatusButton();
 
-        private void StatusButton_Click(object sender, EventArgs e)
+    private void UpdateStatusButton()
+    {
+        try
         {
-            if (PluginInstance.Plugin.CanConfigure)
+            bool connected = VoicemeeterControl.CheckConnected(out string connectedVersion);
+
+            if (_isConnected is null || _isConnected != connected)
             {
-                PluginInstance.Plugin.OpenConfigurator();
+                _isConnected = connected;
+                BackgroundImage = connected ? Resources.VoiceMeeterConnected : Resources.VoiceMeeterDisconnected;
+                string toolip = connected
+                    ? $"{LocalizationManager.Instance.VoiceMeeterConnected}{Environment.NewLine}{connectedVersion} ({AvailableValues.ConnectedType})"
+                    : LocalizationManager.Instance.VoiceMeeterDisconnected;
+                _statusToolTip.SetToolTip(this, toolip);
             }
         }
-
-        private void VoicemeeterControl_Polling(object sender, EventArgs e) => UpdateStatusButton();
-
-        private void UpdateStatusButton()
-        {
-            try
-            {
-                bool connected = VoicemeeterControl.CheckConnected(out string connectedVersion);
-
-                if (isConnected is null || isConnected != connected)
-                {
-                    isConnected = connected;
-                    BackgroundImage = connected ? Resources.VoiceMeeterConnected : Resources.VoiceMeeterDisconnected;
-                    string toolip = connected
-                                  ? $"{LocalizationManager.Instance.VoiceMeeterConnected}{Environment.NewLine}{connectedVersion} ({AvailableValues.ConnectedType})"
-                                  : LocalizationManager.Instance.VoiceMeeterDisconnected;
-                    _statusToolTip.SetToolTip(this, toolip);
-                }
-            }
-            catch { }
-        }
+        catch { }
     }
 }

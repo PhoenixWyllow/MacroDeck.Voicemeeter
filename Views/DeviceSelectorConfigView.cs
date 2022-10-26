@@ -1,64 +1,71 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
-using PW.VoicemeeterPlugin.Services.Voicemeeter;
 using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using SuchByte.MacroDeck.Language;
 
-namespace PW.VoicemeeterPlugin.Views
+namespace PW.VoicemeeterPlugin.Views;
+
+public partial class DeviceSelectorConfigView : ActionConfigControl
 {
-    public partial class DeviceSelectorConfigView : ActionConfigControl
+    private readonly DeviceSelectorViewModel _viewModel;
+
+    public DeviceSelectorConfigView(DeviceSelectorViewModel viewModel)
     {
-        private readonly DeviceSelectorViewModel _viewModel;
+        _viewModel = viewModel;
 
-        public DeviceSelectorConfigView(DeviceSelectorViewModel viewModel)
+        InitializeComponent();
+        ApplyLocalization();
+
+        actionSliderValue.Visible = _viewModel.IsSlider;
+        if (_viewModel.IsSlider)
         {
-            _viewModel = viewModel;
-
-            InitializeComponent();
-            ApplyLocalization();
-
-            deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
-            if (_viewModel.SelectedDevice != null)
-            {
-                deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;
-            }
-            if (_viewModel.SelectedAction != null)
-            {
-                actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
-            }
+            actionSliderValue.Value = (decimal)_viewModel.SliderValue;
+            actionSliderValue.ValueChanged += (s, _) => _viewModel.SliderValue = (float)((NumericUpDown)s).Value;
         }
-
-        private void ApplyLocalization()
+        deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
+        if (_viewModel.SelectedDevice != null)
         {
-            labelAction.Text = LocalizationManager.Instance.Action;
-            labelDevice.Text = LocalizationManager.Instance.Device;
+            deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;
         }
-
-        public override bool OnActionSave()
+        if (_viewModel.SelectedAction != null)
         {
-            _viewModel.SaveConfig();
-
-            return base.OnActionSave();
+            actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
         }
+    }
 
-        private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+    private void ApplyLocalization()
+    {
+        labelAction.Text = LocalizationManager.Instance.Action;
+        labelDevice.Text = LocalizationManager.Instance.Device;
+        labelSlider.Text = LocalizationManager.Instance.SliderValue;
+    }
+
+    public override bool OnActionSave()
+    {
+        if (_viewModel.IsSlider && _viewModel.SliderValue == 0)
         {
-            _viewModel.ChangeDevice((VmIOInfo)deviceSelectorBox.SelectedItem);
-            actionSelectorBox.Items.Clear();
-            actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
+            using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
+            _ = msgBox.ShowDialog(LanguageManager.Strings.Error, LocalizationManager.Instance.ErrorZeroSliderValue, MessageBoxButtons.OK);
+            return false;
         }
+        _viewModel.SaveConfig();
 
-        private void ActionSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _viewModel.ChangeAction((string)actionSelectorBox.SelectedItem);
-        }
+        return base.OnActionSave();
+    }
+
+    private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        _viewModel.ChangeDevice((VmIoInfo)deviceSelectorBox.SelectedItem);
+        actionSelectorBox.Items.Clear();
+        actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
+    }
+
+    private void ActionSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        _viewModel.ChangeAction((string)actionSelectorBox.SelectedItem);
     }
 }

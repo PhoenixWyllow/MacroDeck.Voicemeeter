@@ -14,20 +14,20 @@ Create a button and configure how you want to control Voicemeeter.
 ## Features
 #### Available actions
 
-| Action | Function | Description |
-| --- | --- | --- |
-| Toggle | Toggle a button on a strip, a bus, or the recorder(cassette) | The most common toggles are implemented and can be selected by device name and option <br/> (Mute, A1-B3, Record/Play/Stop cassette, etc) |
-| Slider control | coming soon... | not implemented yet! |
-| Program commands | Execute Voicemeeter commands | Shutdown, Restart, Show, Reset/Load/Save configuration, Load/Eject cassette |
-| Advanced/Custom | Send a custom command to Voicemeeter | This option allows configuring custom commands using the Voicemeeter API language. <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
+| Action           | Function                                                     | Description                                                                                                                                                                                                                       |
+|------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Toggle           | Toggle a button on a strip, a bus, or the recorder(cassette) | The most common toggles are implemented and can be selected by device name and option <br/> (Mute, A1-B3, Record/Play/Stop cassette, etc)                                                                                         |
+| Slider control   | Change a slider by a given amount                            | Change slider by a relative amount (between -10 and +10)                                                                                                                                                                          |
+| Program commands | Execute Voicemeeter commands                                 | Shutdown, Restart, Show, Reset/Load/Save configuration, Load/Eject cassette                                                                                                                                                       |
+| Advanced/Custom  | Send a custom command to Voicemeeter                         | This option allows configuring custom commands using the Voicemeeter API language. <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
 
 #### Available parameters/variables
 
-| Device | Toggles | Ranges | Strings |
-| --- | --- | --- |
-| Strip | Mute, Mono, Solo, A1-B3* | Gain | Label |
-| Bus | Mute, Mono, Eq.On*, Sel* | Gain | Label |
-| Recorder* | Stop, Play, Record, Pause | Gain | - |
+| Device    | Toggles                   | Ranges | Strings |
+|-----------|---------------------------|--------|---------|
+| Strip     | Mute, Mono, Solo, A1-B3*  | Gain   | Label   |
+| Bus       | Mute, Mono, Eq.On*, Sel*  | Gain   | Label   |
+| Recorder* | Stop, Play, Record, Pause | Gain   | -       |
 
 **Availablity of these varies with your Voicemeeter installation. Some features can only be accessed with Banana or Potato*
 
@@ -59,6 +59,7 @@ Currently available languages:
 - English
 - Italian
 - Spanish (by Danivar)
+- Chinese (by PENC)
 
 ***
 ## Third party licenses

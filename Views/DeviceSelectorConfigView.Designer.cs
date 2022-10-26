@@ -32,6 +32,8 @@
             this.deviceSelectorBox = new SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox();
             this.labelAction = new System.Windows.Forms.Label();
             this.actionSelectorBox = new SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox();
+            this.labelSlider = new System.Windows.Forms.Label();
+            this.actionSliderValue = new System.Windows.Forms.NumericUpDown();
             this.SuspendLayout();
             // 
             // labelDevice
@@ -70,6 +72,28 @@
             this.actionSelectorBox.TabIndex = 0;
             this.actionSelectorBox.SelectedIndexChanged += ActionSelectorBox_SelectedIndexChanged;
             // 
+            // labelSlider
+            // 
+            this.labelSlider.AutoSize = true;
+            this.labelSlider.Location = new System.Drawing.Point(40, 195);
+            this.labelSlider.Name = "labelSlider";
+            this.labelSlider.Size = new System.Drawing.Size(84, 23);
+            this.labelSlider.TabIndex = 0;
+            this.labelSlider.Text = "Value";
+            this.labelSlider.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // actionSliderValue
+            // 
+            this.actionSliderValue.Location = new System.Drawing.Point(60, 229);
+            this.actionSliderValue.Name = "actionSliderValue";
+            this.actionSliderValue.DecimalPlaces = 1;
+            this.actionSliderValue.Increment = (decimal)0.5;
+            this.actionSliderValue.Minimum = -10;
+            this.actionSliderValue.Maximum = 10;
+            this.actionSliderValue.Size = new System.Drawing.Size(75, 31);
+            this.actionSliderValue.Font = new(this.actionSliderValue.Font.FontFamily, 14);
+            this.actionSliderValue.TabIndex = 0;
+            // 
             // DeviceSelectorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -78,6 +102,8 @@
             this.Controls.Add(this.deviceSelectorBox);
             this.Controls.Add(this.labelAction);
             this.Controls.Add(this.actionSelectorBox);
+            this.Controls.Add(this.labelSlider);
+            this.Controls.Add(this.actionSliderValue);
             this.Name = "DeviceSelectorView";
             this.ResumeLayout(false);
 
@@ -89,5 +115,7 @@
         private SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox deviceSelectorBox;
         private System.Windows.Forms.Label labelAction;
         private SuchByte.MacroDeck.GUI.CustomControls.RoundedComboBox actionSelectorBox;
+        private System.Windows.Forms.Label labelSlider;
+        private System.Windows.Forms.NumericUpDown actionSliderValue;
     }
 }
