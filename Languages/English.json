@@ -20,5 +20,9 @@
     "CommandActionDescription": "Select a Voicemeeter command to execute",
     "Command": "Command",
     "CommandValue": "Command value",
-    "CommandError": "An error occurred while validating the command."
+    "CommandError": "An error occurred while validating the command.",
+    "SliderActionName": "Slider control",
+    "SliderActionDescription": "Change a slider by a given amount",
+    "SliderValue": "Change slider by amount",
+    "ErrorZeroSliderValue": "Amount cannot be zero."
 }
