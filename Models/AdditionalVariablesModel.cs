@@ -2,31 +2,30 @@
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace PW.VoicemeeterPlugin.Models
+namespace PW.VoicemeeterPlugin.Models;
+
+[DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
+public sealed class AdditionalVariablesModel : ISerializableConfiguration
 {
-    [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-    public sealed class AdditionalVariablesModel : ISerializableConfiguration
+    public List<VmIoOptions> Options { get; init; }
+
+    public string Serialize()
     {
-        public List<VmIoOptions> Options { get; init; }
+        return JsonSerializer.Serialize(this);
+    }
 
-        public string Serialize()
-        {
-            return JsonSerializer.Serialize(this);
-        }
+    public static AdditionalVariablesModel Deserialize(string config)
+    {
+        return ISerializableConfiguration.Deserialize<AdditionalVariablesModel>(config);
+    }
 
-        public static AdditionalVariablesModel Deserialize(string config)
-        {
-            return ISerializableConfiguration.Deserialize<AdditionalVariablesModel>(config);
-        }
+    public override string ToString()
+    {
+        return Options.ToString();
+    }
 
-        public override string ToString()
-        {
-            return Options.ToString();
-        }
-
-        private string GetDebuggerDisplay()
-        {
-            return ToString();
-        }
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
     }
 }

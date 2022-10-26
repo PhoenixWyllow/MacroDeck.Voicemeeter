@@ -5,63 +5,62 @@ using SuchByte.MacroDeck.GUI.CustomControls;
 using VoicemeeterControl = PW.VoicemeeterPlugin.Services.Voicemeeter.Control;
 using PW.VoicemeeterPlugin.Services;
 
-namespace PW.VoicemeeterPlugin
+namespace PW.VoicemeeterPlugin;
+
+internal static class PluginInstance
 {
-    internal static class PluginInstance
+    public static MacroDeckPlugin Plugin { get; set; }
+    public static VoicemeeterControl VoicemeeterControl { get; set; }
+}
+
+public class VoicemeeterPlugin : MacroDeckPlugin
+{
+    public override bool CanConfigure => true;
+
+    /// <summary>
+    /// Gets called when Macro Deck enables the plugin
+    /// </summary>
+    public override void Enable()
     {
-        public static MacroDeckPlugin Plugin { get; set; }
-        public static VoicemeeterControl VoicemeeterControl { get; set; }
+        //optimised initilization - commented code adds 2s to program startup!
+        //PluginInstance.VoicemeeterControl = new VoicemeeterControl();
+        new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new()).Start();
+
+        Actions = new()
+        {
+            new DeviceToggleAction(),
+            new CommandAction(),
+            new AdvancedAction(),
+        };
     }
 
-    public class VoicemeeterPlugin : MacroDeckPlugin
+    /// <summary>
+    /// Gets called when the user wants to configure the plugin
+    /// </summary>
+    public override void OpenConfigurator()
     {
-        public override bool CanConfigure => true;
-
-        /// <summary>
-        /// Gets called when Macro Deck enables the plugin
-        /// </summary>
-        public override void Enable()
-        {
-            //optimised initilization - commented code adds 2s to program startup!
-            //PluginInstance.VoicemeeterControl = new VoicemeeterControl();
-            new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new()).Start();
-
-            Actions = new()
-            {
-                new DeviceToggleAction(),
-                new CommandAction(),
-                new AdvancedAction(),
-            };
-        }
-
-        /// <summary>
-        /// Gets called when the user wants to configure the plugin
-        /// </summary>
-        public override void OpenConfigurator()
-        {
-            //using var config = new Views.VoicemeeterGlobalConfigView(this);
-            using var config = new Views.AddAdditionalVariablesConfigView();
-            config.ShowDialog();
-        }
-
-        public VoicemeeterPlugin()
-        {
-            PluginInstance.Plugin ??= this;
-
-            LocalizationManager.CreateInstance();
-
-            SuchByte.MacroDeck.MacroDeck.OnMainWindowLoad += MacroDeck_OnMainWindowLoad;
-        }
-
-        private ContentSelectorButton _contentButton;
-        private void MacroDeck_OnMainWindowLoad(object sender, EventArgs e)
-        {
-            if (sender is SuchByte.MacroDeck.GUI.MainWindow mainWindow)
-            {
-                _contentButton = new Views.StatusButtonControl();
-                mainWindow.contentButtonPanel.Controls.Add(_contentButton);
-            }
-        }
-
+        //using var config = new Views.VoicemeeterGlobalConfigView(this);
+        using var config = new Views.AddAdditionalVariablesConfigView();
+        config.ShowDialog();
     }
+
+    public VoicemeeterPlugin()
+    {
+        PluginInstance.Plugin ??= this;
+
+        LocalizationManager.CreateInstance();
+
+        SuchByte.MacroDeck.MacroDeck.OnMainWindowLoad += MacroDeck_OnMainWindowLoad;
+    }
+
+    private ContentSelectorButton _contentButton;
+    private void MacroDeck_OnMainWindowLoad(object sender, EventArgs e)
+    {
+        if (sender is SuchByte.MacroDeck.GUI.MainWindow mainWindow)
+        {
+            _contentButton = new Views.StatusButtonControl();
+            mainWindow.contentButtonPanel.Controls.Add(_contentButton);
+        }
+    }
+
 }

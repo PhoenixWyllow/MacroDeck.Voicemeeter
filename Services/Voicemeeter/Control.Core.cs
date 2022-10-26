@@ -6,108 +6,107 @@ using SuchByte.MacroDeck.Variables;
 using System;
 using System.Linq;
 
-namespace PW.VoicemeeterPlugin.Services.Voicemeeter
+namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
+
+public sealed partial class Control
 {
-    public sealed partial class Control
+    private RemoteApiExtender VmrApi { get; }
+    private VoicemeeterGlobalConfigModel Config { get; }
+
+    public Control()
     {
-        private RemoteApiExtender VmrApi { get; }
-        private VoicemeeterGlobalConfigModel Config { get; }
-
-        public Control()
+        Config = VoicemeeterGlobalConfigModel.Deserialize(PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(VoicemeeterGlobalConfigModel)));
+        try
         {
-            Config = VoicemeeterGlobalConfigModel.Deserialize(PluginConfiguration.GetValue(PluginInstance.Plugin, nameof(VoicemeeterGlobalConfigModel)));
-            try
-            {
-                AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-                VmrApi = new(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
-                StartPolling();
-            }
-            catch (Exception ex)
-            {
-                MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
-                MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
-            }
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+            VmrApi = new(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
+            StartPolling();
         }
-
-        private void InitAvailableValues()
+        catch (Exception ex)
         {
-            AvailableValues.InitIoCommands();
-            AvailableValues.ConnectedType = ConnectedType;
+            MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
+            MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
+        }
+    }
+
+    private void InitAvailableValues()
+    {
+        AvailableValues.InitIoCommands();
+        AvailableValues.ConnectedType = ConnectedType;
+        if (!_connected)
+        {
+            AvailableValues.Reset();
+            return;
+        }
+        bool initValues = AvailableValues.IoInfo == null;
+        if (initValues)
+        {
+            AvailableValues.InitIoInfo(VmrApi);
+        }
+        if (initValues && AvailableValues.IoInfo != null)
+        {
+            AvailableValues.InitIoOptions();
+            RemoveUnavailableVariables();
+        }
+    }
+
+    private static void RemoveUnavailableVariables()
+    {
+        bool IsUnavailableVariable(Variable v) => !AvailableValues.IoOptions.Any(o => o.AsVariable.Equals(v.Name));
+        var variablesNotFound = VariableManager.GetVariables(PluginInstance.Plugin).Where(IsUnavailableVariable).Select(v => v.Name);
+
+        foreach (var variable in variablesNotFound)
+        {
+            VariableManager.DeleteVariable(variable);
+        }
+    }
+
+    private void UpdateVariables()
+    {
+        if (AvailableValues.IoOptions is null)
+        {
+            return;
+        }
+        foreach (var option in AvailableValues.IoOptions)
+        {
             if (!_connected)
             {
-                AvailableValues.Reset();
-                return;
+                break;
             }
-            bool initValues = AvailableValues.IoInfo == null;
-            if (initValues)
-            {
-                AvailableValues.InitIoInfo(VmrApi);
-            }
-            if (initValues && AvailableValues.IoInfo != null)
-            {
-                AvailableValues.InitIoOptions();
-                RemoveUnavailableVariables();
-            }
+            SetVariable(option.AsParameter, option.AsVariable, option.Type);
         }
+    }
 
-        private static void RemoveUnavailableVariables()
+    private void SetVariable(string parameter, string variable, VariableType type)
+    {
+        if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object val, infoOnly: true))
         {
-            bool IsUnavailableVariable(Variable v) => !AvailableValues.IoOptions.Any(o => o.AsVariable.Equals(v.Name));
-            var variablesNotFound = VariableManager.GetVariables(PluginInstance.Plugin).Where(IsUnavailableVariable).Select(v => v.Name);
-
-            foreach (var variable in variablesNotFound)
-            {
-                VariableManager.DeleteVariable(variable);
-            }
+            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin, null);
         }
+    }
 
-        private void UpdateVariables()
+    public bool TryGetValue(string parameter, VariableType type, out object val, bool infoOnly = false)
+    {
+        bool ok;
+        switch (type)
         {
-            if (AvailableValues.IoOptions is null)
-            {
-                return;
-            }
-            foreach (var option in AvailableValues.IoOptions)
-            {
-                if (!_connected)
-                {
-                    break;
-                }
-                SetVariable(option.AsParameter, option.AsVariable, option.Type);
-            }
+            case VariableType.Integer:
+            case VariableType.Float:
+                ok = GetParameter(parameter, out float valr, infoOnly);
+                val = valr;
+                break;
+            case VariableType.String:
+                ok = GetTextParameter(parameter, out string vals, infoOnly);
+                val = vals;
+                break;
+            case VariableType.Bool:
+                ok = GetParameter(parameter, out float valb, infoOnly);
+                val = valb == Constants.On;
+                break;
+            default:
+                val = null;
+                return false;
         }
-
-        private void SetVariable(string parameter, string variable, VariableType type)
-        {
-            if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object val, infoOnly: true))
-            {
-                VariableManager.SetValue(variable, val, type, PluginInstance.Plugin, null);
-            }
-        }
-
-        public bool TryGetValue(string parameter, VariableType type, out object val, bool infoOnly = false)
-        {
-            bool ok;
-            switch (type)
-            {
-                case VariableType.Integer:
-                case VariableType.Float:
-                    ok = GetParameter(parameter, out float valr, infoOnly);
-                    val = valr;
-                    break;
-                case VariableType.String:
-                    ok = GetTextParameter(parameter, out string vals, infoOnly);
-                    val = vals;
-                    break;
-                case VariableType.Bool:
-                    ok = GetParameter(parameter, out float valb, infoOnly);
-                    val = valb == Constants.On;
-                    break;
-                default:
-                    val = null;
-                    return false;
-            }
-            return ok;
-        }
+        return ok;
     }
 }

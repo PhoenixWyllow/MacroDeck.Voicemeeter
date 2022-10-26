@@ -1,13 +1,12 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 
-namespace PW.VoicemeeterPlugin.ViewModels
+namespace PW.VoicemeeterPlugin.ViewModels;
+
+public interface ISavableConfigViewModel
 {
-    public interface ISavableConfigViewModel
-    {
-        protected ISerializableConfiguration SerializableConfiguration { get; }
+    protected ISerializableConfiguration SerializableConfiguration { get; }
 
-        void SetConfig();
+    void SetConfig();
 
-        void SaveConfig();
-    }
+    void SaveConfig();
 }

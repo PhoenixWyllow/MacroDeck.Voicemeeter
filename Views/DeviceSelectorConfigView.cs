@@ -5,53 +5,52 @@ using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
 using System.Linq;
 
-namespace PW.VoicemeeterPlugin.Views
+namespace PW.VoicemeeterPlugin.Views;
+
+public partial class DeviceSelectorConfigView : ActionConfigControl
 {
-    public partial class DeviceSelectorConfigView : ActionConfigControl
+    private readonly DeviceSelectorViewModel _viewModel;
+
+    public DeviceSelectorConfigView(DeviceSelectorViewModel viewModel)
     {
-        private readonly DeviceSelectorViewModel _viewModel;
+        _viewModel = viewModel;
 
-        public DeviceSelectorConfigView(DeviceSelectorViewModel viewModel)
+        InitializeComponent();
+        ApplyLocalization();
+
+        deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
+        if (_viewModel.SelectedDevice != null)
         {
-            _viewModel = viewModel;
-
-            InitializeComponent();
-            ApplyLocalization();
-
-            deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
-            if (_viewModel.SelectedDevice != null)
-            {
-                deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;
-            }
-            if (_viewModel.SelectedAction != null)
-            {
-                actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
-            }
+            deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;
         }
-
-        private void ApplyLocalization()
+        if (_viewModel.SelectedAction != null)
         {
-            labelAction.Text = LocalizationManager.Instance.Action;
-            labelDevice.Text = LocalizationManager.Instance.Device;
+            actionSelectorBox.SelectedItem = _viewModel.SelectedAction;
         }
+    }
 
-        public override bool OnActionSave()
-        {
-            _viewModel.SaveConfig();
+    private void ApplyLocalization()
+    {
+        labelAction.Text = LocalizationManager.Instance.Action;
+        labelDevice.Text = LocalizationManager.Instance.Device;
+    }
 
-            return base.OnActionSave();
-        }
+    public override bool OnActionSave()
+    {
+        _viewModel.SaveConfig();
 
-        private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _viewModel.ChangeDevice((VmIoInfo)deviceSelectorBox.SelectedItem);
-            actionSelectorBox.Items.Clear();
-            actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
-        }
+        return base.OnActionSave();
+    }
 
-        private void ActionSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _viewModel.ChangeAction((string)actionSelectorBox.SelectedItem);
-        }
+    private void DeviceSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        _viewModel.ChangeDevice((VmIoInfo)deviceSelectorBox.SelectedItem);
+        actionSelectorBox.Items.Clear();
+        actionSelectorBox.Items.AddRange(_viewModel.AvailableActions);
+    }
+
+    private void ActionSelectorBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        _viewModel.ChangeAction((string)actionSelectorBox.SelectedItem);
     }
 }

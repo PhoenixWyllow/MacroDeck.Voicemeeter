@@ -35,7 +35,7 @@
 
 	<ItemGroup>
 		<Reference Include="Macro Deck 2">
-			<HintPath>E:\Code\source\repos\MD\Macro-Deck\bin\Debug\netcoreapp3.1\win-x64\Macro Deck 2.dll</HintPath>
+			<HintPath>E:\Code\Rider\Macro-Deck-2\bin\Debug\net6.0-windows10.0.22000.0\win-x64\Macro Deck 2.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 	</ItemGroup>

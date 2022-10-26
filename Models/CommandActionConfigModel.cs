@@ -1,36 +1,35 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
 
-namespace PW.VoicemeeterPlugin.Models
+namespace PW.VoicemeeterPlugin.Models;
+
+[DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
+public sealed class CommandActionConfigModel : ISerializableConfiguration
 {
-    [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-    public sealed class CommandActionConfigModel : ISerializableConfiguration
+    public VmIoCommand Command { get; set; } = new();
+    public string CommandValue { get; set; } = string.Empty;
+
+    public string Serialize()
     {
-        public VmIoCommand Command { get; set; } = new();
-        public string CommandValue { get; set; } = string.Empty;
+        return JsonSerializer.Serialize(this);
+    }
+    public static CommandActionConfigModel Deserialize(string config)
+    {
+        return ISerializableConfiguration.Deserialize<CommandActionConfigModel>(config);
+    }
 
-        public string Serialize()
+    public override string ToString()
+    {
+        string val = Command.ToString();
+        if (!string.IsNullOrWhiteSpace(CommandValue))
         {
-            return JsonSerializer.Serialize(this);
+            val += " = " + CommandValue;
         }
-        public static CommandActionConfigModel Deserialize(string config)
-        {
-            return ISerializableConfiguration.Deserialize<CommandActionConfigModel>(config);
-        }
+        return val;
+    }
 
-        public override string ToString()
-        {
-            string val = Command.ToString();
-            if (!string.IsNullOrWhiteSpace(CommandValue))
-            {
-                val += " = " + CommandValue;
-            }
-            return val;
-        }
-
-        private string GetDebuggerDisplay()
-        {
-            return ToString();
-        }
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
     }
 }
