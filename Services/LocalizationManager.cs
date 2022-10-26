@@ -61,7 +61,7 @@ internal static class LocalizationManager
             languageName = "English"; //This should always be present as default, otherwise the code goes to fallback implementation.
         }
 
-        string languageFileName = $"PW.Macrodeck.Voicemeeter.Languages.{languageName}.json";
+        string languageFileName = $"PW.VoicemeeterPlugin.Languages.{languageName}.json";
 
         using var resourceStream = assembly.GetManifestResourceStream(languageFileName);
         using var streamReader = new StreamReader(resourceStream!);
