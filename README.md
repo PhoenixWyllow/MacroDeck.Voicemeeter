@@ -59,6 +59,7 @@ Currently available languages:
 - English
 - Italian
 - Spanish (by Danivar)
+- Chinese (by PENC)
 
 ***
 ## Third party licenses
