@@ -4,6 +4,8 @@ using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.GUI.CustomControls;
 using System;
 using System.Linq;
+using System.Windows.Forms;
+using SuchByte.MacroDeck.Language;
 
 namespace PW.VoicemeeterPlugin.Views;
 
@@ -18,6 +20,12 @@ public partial class DeviceSelectorConfigView : ActionConfigControl
         InitializeComponent();
         ApplyLocalization();
 
+        actionSliderValue.Visible = _viewModel.IsSlider;
+        if (_viewModel.IsSlider)
+        {
+            actionSliderValue.Value = (decimal)_viewModel.SliderValue;
+            actionSliderValue.ValueChanged += (s, _) => _viewModel.SliderValue = (float)((NumericUpDown)s).Value;
+        }
         deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
         if (_viewModel.SelectedDevice != null)
         {
@@ -33,10 +41,17 @@ public partial class DeviceSelectorConfigView : ActionConfigControl
     {
         labelAction.Text = LocalizationManager.Instance.Action;
         labelDevice.Text = LocalizationManager.Instance.Device;
+        labelSlider.Text = LocalizationManager.Instance.SliderValue;
     }
 
     public override bool OnActionSave()
     {
+        if (_viewModel.IsSlider && _viewModel.SliderValue == 0)
+        {
+            using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
+            _ = msgBox.ShowDialog(LanguageManager.Strings.Error, LocalizationManager.Instance.ErrorZeroSliderValue, MessageBoxButtons.OK);
+            return false;
+        }
         _viewModel.SaveConfig();
 
         return base.OnActionSave();

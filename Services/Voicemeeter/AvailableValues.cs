@@ -3,6 +3,7 @@ using PW.VoicemeeterPlugin.Models;
 using SuchByte.MacroDeck.Variables;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
 
@@ -173,7 +174,7 @@ internal static class AvailableValues
         }
     }
 
-    private static bool IsBananaOrPotato => ConnectedType == VoicemeeterType.Banana || ConnectedType == VoicemeeterType.Potato || ConnectedType == VoicemeeterType.Potato64;
+    private static bool IsBananaOrPotato => ConnectedType is VoicemeeterType.Banana or VoicemeeterType.Potato or VoicemeeterType.Potato64;
 
     public static List<VmIoCommand> IoCommands { get; private set; }
 
@@ -181,17 +182,13 @@ internal static class AvailableValues
     {
         if (IoCommands is null)
         {
-            List<VmIoCommand> availableCommands = new();
             var commands = Enum.GetValues(typeof(Commands));
-            foreach (Commands command in commands)
-            {
-                availableCommands.Add(new()
+            IoCommands = (from Commands command in commands
+                select new VmIoCommand()
                 {
                     CommandType = command,
-                    RequiresValue = command.Equals(Commands.ConfigLoad) || command.Equals(Commands.ConfigSave) || command.Equals(Commands.RecorderLoad),
-                });
-            }
-            IoCommands = availableCommands;
+                    RequiresValue = command is Commands.ConfigLoad or Commands.ConfigSave or Commands.RecorderLoad,
+                }).ToList();
         }
     }
 }

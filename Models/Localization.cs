@@ -24,4 +24,8 @@ internal sealed class Localization
     public string Command { get; set; } = "Command";
     public string CommandValue { get; set; } = "Command value";
     public string CommandError { get; set; } = "An error occurred while validating the command.";
+    public string SliderActionName { get; set; } = "Slider control";
+    public string SliderActionDescription { get; set; } = "Change a slider by a given amount";
+    public string SliderValue { get; set; } = "Change slider by amount";
+    public string ErrorZeroSliderValue { get; set; } = "Amount cannot be zero.";
 }

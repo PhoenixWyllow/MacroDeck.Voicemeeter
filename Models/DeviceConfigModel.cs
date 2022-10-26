@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace PW.VoicemeeterPlugin.Models;
@@ -23,7 +24,12 @@ public sealed class DeviceConfigModel : ISerializableConfiguration
 
     public override string ToString()
     {
-        string value = Value == 0 ? string.Empty : $" {Value}";
+        string value = Value switch
+        {
+            0 => string.Empty,
+            < 0 => $" -={Math.Abs(Value)}",
+            _ => $" +={Value}"
+        };
         return $"{Name}: {Action}{value}";
     }
 

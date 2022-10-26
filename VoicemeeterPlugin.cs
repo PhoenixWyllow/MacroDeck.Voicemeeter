@@ -29,6 +29,7 @@ public class VoicemeeterPlugin : MacroDeckPlugin
         Actions = new()
         {
             new DeviceToggleAction(),
+            new DeviceSliderAction(),
             new CommandAction(),
             new AdvancedAction(),
         };

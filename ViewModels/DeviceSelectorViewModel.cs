@@ -5,6 +5,7 @@ using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PW.VoicemeeterPlugin.Actions;
 
 namespace PW.VoicemeeterPlugin.ViewModels;
 
@@ -32,6 +33,13 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
     public IEnumerable<VmIoInfo> AvailableDevices { get; } = AvailableValues.IoInfo;
     public VmIoInfo SelectedDevice { get; private set; }
     public string SelectedAction { get; private set; }
+    public bool IsSlider => _action is DeviceSliderAction;
+
+    public float SliderValue
+    {
+        get => _configuration.Value; 
+        set => _configuration.Value = value;
+    }
 
     public void ChangeDevice(VmIoInfo selectedDevice)
     {
@@ -68,6 +76,9 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
 
         _action.ConfigurationSummary = _configuration.ToString();
         _action.Configuration = _configuration.Serialize();
-        _action.BindableVariable = _configuration.Option.AsVariable;
+        if (!IsSlider)
+        {
+            _action.BindableVariable = _configuration.Option.AsVariable;
+        }
     }
 }

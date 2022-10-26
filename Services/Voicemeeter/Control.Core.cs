@@ -81,7 +81,7 @@ public sealed partial class Control
     {
         if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object val, infoOnly: true))
         {
-            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin, null);
+            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin);
         }
     }
 
