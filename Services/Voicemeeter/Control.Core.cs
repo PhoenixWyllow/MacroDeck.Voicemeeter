@@ -5,6 +5,7 @@ using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 using System;
 using System.Linq;
+using AtgDev.Voicemeeter.Types;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
 
@@ -47,6 +48,7 @@ public sealed partial class Control
         {
             AvailableValues.InitIoOptions();
             RemoveUnavailableVariables();
+            AvailableValues.InitIoLevels();
         }
     }
 
@@ -75,11 +77,22 @@ public sealed partial class Control
             }
             SetVariable(option.AsParameter, option.AsVariable, option.Type);
         }
+
+        foreach (var ioLevel in AvailableValues.IoLevels)
+        {
+            if (!_connected)
+            {
+                break;
+            }
+            var level = ioLevel;
+            GetLevel(ref level);
+            VariableManager.SetValue($"vmlevel_{level.channel}_{level.type}", level.Value, VariableType.Float, PluginInstance.Plugin);
+        }
     }
 
     private void SetVariable(string parameter, string variable, VariableType type)
     {
-        if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object val, infoOnly: true))
+        if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out var val, infoOnly: true))
         {
             VariableManager.SetValue(variable, val, type, PluginInstance.Plugin);
         }
