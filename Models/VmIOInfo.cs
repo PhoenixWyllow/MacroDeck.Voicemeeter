@@ -1,51 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace PW.VoicemeeterPlugin.Models
+namespace PW.VoicemeeterPlugin.Models;
+
+public sealed record VmIoInfo(string Id, string Name, VmIoType Type, bool IsPhysical)
 {
-    public class VmIOInfo : IEquatable<VmIOInfo>
+
+    public bool Equals(VmIoInfo? other)
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public VmIOType Type { get; set; }
-        public bool IsPhysical { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as VmIOInfo);
-        }
-
-        public bool Equals(VmIOInfo other)
-        {
-            return !(other is null) &&
-                   Id == other.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Id);
-        }
-
-        public override string ToString()
-        {
-            if (string.IsNullOrEmpty(Name))
-            {
-                return Id;
-            }
-            return string.Format("{0} \"{1}\"", Id, Name);
-        }
-
-        public static bool operator ==(VmIOInfo left, VmIOInfo right)
-        {
-            return EqualityComparer<VmIOInfo>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(VmIOInfo left, VmIOInfo right)
-        {
-            return !(left == right);
-        }
+        return other is not null && Id == other.Id;
     }
 
-    public enum VmIOType { Strip, Bus, Recorder }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id);
+    }
+
+    public override string ToString()
+    {
+        return string.IsNullOrEmpty(Name) ? Id : $"{Id} \"{Name}\"";
+    }
 }
+
+public enum VmIoType { Strip, Bus, Recorder }

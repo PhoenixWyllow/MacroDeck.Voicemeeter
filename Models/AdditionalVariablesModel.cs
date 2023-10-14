@@ -1,37 +1,31 @@
-﻿using AtgDev.Voicemeeter.Types;
-using SuchByte.MacroDeck.Variables;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
-namespace PW.VoicemeeterPlugin.Models
+namespace PW.VoicemeeterPlugin.Models;
+
+[DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
+public sealed class AdditionalVariablesModel : ISerializableConfiguration
 {
-    [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-    public class AdditionalVariablesModel : ISerializableConfiguration
+    public List<VmIoOptions> Options { get; init; } = new();
+
+    public string Serialize()
     {
-        public List<VmIOOptions> Options { get; set; }
+        return JsonSerializer.Serialize(this);
+    }
 
-        public string Serialize()
-        {
-            return JsonSerializer.Serialize(this);
-        }
+    public static AdditionalVariablesModel Deserialize(string config)
+    {
+        return ISerializableConfiguration.Deserialize<AdditionalVariablesModel>(config);
+    }
 
-        public static AdditionalVariablesModel Deserialize(string config)
-        {
-            return ISerializableConfiguration.Deserialize<AdditionalVariablesModel>(config);
-        }
+    public override string ToString()
+    {
+        return Options.ToString() ?? string.Empty;
+    }
 
-        public override string ToString()
-        {
-            return Options.ToString();
-        }
-
-        private string GetDebuggerDisplay()
-        {
-            return ToString();
-        }
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
     }
 }
