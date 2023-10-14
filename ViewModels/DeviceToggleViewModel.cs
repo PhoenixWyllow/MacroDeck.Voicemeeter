@@ -12,9 +12,9 @@ internal class DeviceToggleViewModel : DeviceSelectorViewModel
     {
     }
 
-    protected override string[] GetAvailableActionsForDevice(VmIoInfo device)
+    protected override string[] GetAvailableActionsForDevice(VmIoInfo? device)
     {
-        return AvailableValues.IoOptions.Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Bool)
+        return AvailableValues.IoOptions!.Where(opt => opt.Id.Equals(device?.Id) && opt.Type == VariableType.Bool)
             .Select(opt => opt.Option)
             .ToArray();
     }

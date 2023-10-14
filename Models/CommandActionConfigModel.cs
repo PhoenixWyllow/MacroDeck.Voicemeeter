@@ -6,8 +6,8 @@ namespace PW.VoicemeeterPlugin.Models;
 [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
 public sealed class CommandActionConfigModel : ISerializableConfiguration
 {
-    public VmIoCommand Command { get; set; } = new();
-    public string CommandValue { get; set; } = string.Empty;
+    public VmIoCommand? Command { get; set; }
+    public string? CommandValue { get; set; } = string.Empty;
 
     public string Serialize()
     {
@@ -20,6 +20,10 @@ public sealed class CommandActionConfigModel : ISerializableConfiguration
 
     public override string ToString()
     {
+        if (Command is null)
+        {
+            return string.Empty;
+        }
         string val = Command.ToString();
         if (!string.IsNullOrWhiteSpace(CommandValue))
         {

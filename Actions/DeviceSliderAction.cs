@@ -28,10 +28,10 @@ public sealed class DeviceSliderAction : PluginAction
             return;
         }
         var config = DeviceConfigModel.Deserialize(Configuration);
-        var value = VariableManager.GetVariables(PluginInstance.Plugin).FirstOrDefault(v => v.Name.Equals(config.Option.AsVariable));
-        if (float.TryParse(value.Value, out float valueF))
+        var value = VariableManager.GetVariables(PluginInstance.Plugin).FirstOrDefault(v => v.Name.Equals(config.Option?.AsVariable));
+        if (float.TryParse(value?.Value, out float valueF))
         {
-            PluginInstance.VoicemeeterControl.SetParameter(config.Option.AsParameter, valueF + config.Value);
+            PluginInstance.VoicemeeterControl.SetParameter(config.Option!.AsParameter, valueF + config.Value);
         }
     }
 }

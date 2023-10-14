@@ -7,7 +7,7 @@ namespace PW.VoicemeeterPlugin.Models;
 [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
 public sealed class AdditionalVariablesModel : ISerializableConfiguration
 {
-    public List<VmIoOptions> Options { get; init; }
+    public List<VmIoOptions> Options { get; init; } = new();
 
     public string Serialize()
     {
@@ -21,7 +21,7 @@ public sealed class AdditionalVariablesModel : ISerializableConfiguration
 
     public override string ToString()
     {
-        return Options.ToString();
+        return Options.ToString() ?? string.Empty;
     }
 
     private string GetDebuggerDisplay()

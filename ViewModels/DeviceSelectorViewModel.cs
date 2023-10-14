@@ -23,16 +23,16 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
         _configuration = DeviceConfigModel.Deserialize(action.Configuration);
         if (_configuration.Option != null)
         {
-            SelectedDevice = AvailableDevices.FirstOrDefault(d => d.Id.Equals(_configuration.Option.Id));
+            SelectedDevice = AvailableDevices?.FirstOrDefault(d => d.Id.Equals(_configuration.Option.Id));
             AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
             ChangeAction(_configuration.Action);
         }
     }
 
-    public string[] AvailableActions { get; private set; }
-    public IEnumerable<VmIoInfo> AvailableDevices { get; } = AvailableValues.IoInfo;
-    public VmIoInfo SelectedDevice { get; private set; }
-    public string SelectedAction { get; private set; }
+    public string[] AvailableActions { get; private set; } = Array.Empty<string>();
+    public IEnumerable<VmIoInfo>? AvailableDevices { get; } = AvailableValues.IoInfo;
+    public VmIoInfo? SelectedDevice { get; private set; }
+    public string? SelectedAction { get; private set; }
     public bool IsSlider => _action is DeviceSliderAction;
 
     public float SliderValue
@@ -43,13 +43,13 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
 
     public void ChangeDevice(VmIoInfo selectedDevice)
     {
-        SelectedDevice = AvailableDevices.FirstOrDefault(device => device.Equals(selectedDevice));
+        SelectedDevice = AvailableDevices?.FirstOrDefault(device => device.Equals(selectedDevice));
         AvailableActions = GetAvailableActionsForDevice(SelectedDevice);
     }
 
-    protected abstract string[] GetAvailableActionsForDevice(VmIoInfo device);
+    protected abstract string[] GetAvailableActionsForDevice(VmIoInfo? device);
 
-    public void ChangeAction(string selectedAction)
+    public void ChangeAction(string? selectedAction)
     {
         SelectedAction = selectedAction;
     }
@@ -70,15 +70,15 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
 
     public void SetConfig()
     {
-        _configuration.Name = SelectedDevice.ToString();
+        _configuration.Name = SelectedDevice!.ToString();
         _configuration.Action = SelectedAction;
-        _configuration.Option = AvailableValues.IoOptions.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
+        _configuration.Option = AvailableValues.IoOptions!.Find(option => option.Option.Equals(SelectedAction) && option.Id.Equals(SelectedDevice.Id));
 
         _action.ConfigurationSummary = _configuration.ToString();
         _action.Configuration = _configuration.Serialize();
         if (!IsSlider)
         {
-            _action.BindableVariable = _configuration.Option.AsVariable;
+            _action.BindableVariable = _configuration.Option!.AsVariable;
         }
     }
 }

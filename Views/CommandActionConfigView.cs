@@ -20,7 +20,7 @@ public partial class CommandActionConfigView : ActionConfigControl
         InitializeComponent();
         ApplyLocalization();
 
-        commandSelectorBox.Items.AddRange(_viewModel.AvailableCommands.ToArray());
+        commandSelectorBox.Items.AddRange(_viewModel.AvailableCommands?.ToArray() ?? Array.Empty<VmIoCommand>());
         if (_viewModel.SelectedCommand != null)
         {
             commandSelectorBox.SelectedItem = _viewModel.SelectedCommand;

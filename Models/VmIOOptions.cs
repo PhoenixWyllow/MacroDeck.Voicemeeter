@@ -7,12 +7,8 @@ using System.Text.Json.Serialization;
 namespace PW.VoicemeeterPlugin.Models;
 
 [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-public sealed class VmIoOptions
+public sealed record VmIoOptions(string Id, string Option, VariableType Type)
 {
-    public string Id { get; set; }
-    public string Option { get; set; }
-    public VariableType Type { get; init; }
-
     [JsonIgnore]
     public string AsParameter => $"{Id}.{Option}";
 
@@ -29,24 +25,13 @@ public sealed class VmIoOptions
         return AsParameter;
     }
 
-    public override bool Equals(object obj)
+    public bool Equals(VmIoOptions? options)
     {
-        return obj is VmIoOptions options &&
-               AsParameter == options.AsParameter;
+        return options is not null && AsParameter == options.AsParameter;
     }
 
     public override int GetHashCode()
     {
         return HashCode.Combine(AsParameter);
-    }
-
-    public static bool operator ==(VmIoOptions left, VmIoOptions right)
-    {
-        return EqualityComparer<VmIoOptions>.Default.Equals(left, right);
-    }
-
-    public static bool operator !=(VmIoOptions left, VmIoOptions right)
-    {
-        return !(left == right);
     }
 }

@@ -20,24 +20,20 @@ public class CommandActionConfigViewModel : ISavableConfigViewModel
     {
         _action = action;
         _configuration = CommandActionConfigModel.Deserialize(action.Configuration);
-        if (_configuration.Command != null)
+        if (_configuration.Command is not null)
         {
             ChangeCommand(_configuration.Command);
-            CommandValue = _configuration.CommandValue;
         }
+        CommandValue = _configuration.CommandValue ?? string.Empty;
     }
-    public IEnumerable<VmIoCommand> AvailableCommands { get; } = AvailableValues.IoCommands;
-    public VmIoCommand SelectedCommand { get; private set; } = new();
+    public IEnumerable<VmIoCommand>? AvailableCommands { get; } = AvailableValues.IoCommands;
+    public VmIoCommand? SelectedCommand { get; private set; }
     public string CommandValue { get; set; }
 
     public void ChangeCommand(VmIoCommand selectedCommand)
     {
-        if (selectedCommand.CommandType is null)
-        {
-            return;
-        }
-        SelectedCommand = AvailableCommands.FirstOrDefault(command => command.Equals(selectedCommand));
-        if (!SelectedCommand.RequiresValue)
+        SelectedCommand = AvailableCommands?.FirstOrDefault(command => command.Equals(selectedCommand));
+        if (SelectedCommand is not null && !SelectedCommand.RequiresValue)
         {
             CommandValue = string.Empty;
         }
@@ -45,7 +41,7 @@ public class CommandActionConfigViewModel : ISavableConfigViewModel
 
     public void SetConfig()
     {
-        ValidConfig = SelectedCommand.CommandType is not null || !SelectedCommand.RequiresValue || !string.IsNullOrWhiteSpace(CommandValue);
+        ValidConfig = SelectedCommand is not null && (!SelectedCommand.RequiresValue || !string.IsNullOrWhiteSpace(CommandValue));
         if (!ValidConfig)
         {
             return;

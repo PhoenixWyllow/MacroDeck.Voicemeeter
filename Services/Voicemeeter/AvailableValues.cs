@@ -53,21 +53,15 @@ internal static class AvailableValues
         IoCommands = null;
     }
 
-    public static List<VmIoInfo> IoInfo { get; private set; }
+    public static List<VmIoInfo>? IoInfo { get; private set; }
 
     internal static void InitIoInfo(AtgDev.Voicemeeter.RemoteApiExtender vmrApi)
     {
-        void AddChannel(List<VmIoInfo> ioInfo, VmIoType type, int num)
+        void AddChannel(ICollection<VmIoInfo> ioInfo, VmIoType type, int num)
         {
             var channelId = $"{type}({num})";
             _ = vmrApi.GetParameter($"{channelId}.Label", out string label);
-            VmIoInfo channel = new()
-            {
-                Id = channelId,
-                Name = label,
-                Type = type,
-                IsPhysical = num < (type == VmIoType.Strip ? MaxPhysicalStrips : MaxPhysicalBuses),
-            };
+            VmIoInfo channel = new(channelId, label, type, num < (type == VmIoType.Strip ? MaxPhysicalStrips : MaxPhysicalBuses));
             ioInfo.Add(channel);
         }
 
@@ -85,55 +79,59 @@ internal static class AvailableValues
             }
 
 
-            ioInfo.Add(new()
-            {
-                Id = nameof(VmIoType.Recorder),
-                Type = VmIoType.Recorder,
-                IsPhysical = false,
-            });
+            ioInfo.Add(new(nameof(VmIoType.Recorder), string.Empty, VmIoType.Recorder, false));
             IoInfo = ioInfo;
         }
     }
 
-    public static List<VmIoOptions> IoOptions { get; private set; }
+    public static List<VmIoOptions>? IoOptions { get; private set; }
 
     internal static void InitIoOptions()
     {
+        void AddOption(ICollection<VmIoOptions> ioOptions, string channelId, string option, VariableType type)
+        {
+            ioOptions.Add(new(channelId, option, type));
+        }
+
         if (IoOptions is null)
         {
             int maxPhysical = MaxPhysicalBuses;
             List<VmIoOptions> ioOptions = new();
+            if (IoInfo is null)
+            {
+                return;
+            }
             foreach (var channel in IoInfo)
             {
                 string channelId = channel.Id;
                 if (channel.Type != VmIoType.Recorder)
                 {
-                    ioOptions.Add(new() { Id = channelId, Option = "Mute", Type = VariableType.Bool });
-                    ioOptions.Add(new() { Id = channelId, Option = "Mono", Type = VariableType.Bool });
-                    ioOptions.Add(new() { Id = channelId, Option = "Gain", Type = VariableType.Float });
-                    ioOptions.Add(new() { Id = channelId, Option = "Label", Type = VariableType.String });
+                    AddOption(ioOptions, channelId, "Mute", VariableType.Bool);
+                    AddOption(ioOptions, channelId, "Mono", VariableType.Bool);
+                    AddOption(ioOptions, channelId, "Gain", VariableType.Float);
+                    AddOption(ioOptions, channelId, "Label", VariableType.String);
                     if (channel.Type == VmIoType.Strip)
                     {
                         if (channel.IsPhysical)
                         {
-                            ioOptions.Add(new() { Id = channelId, Option = "Solo", Type = VariableType.Bool });
+                            AddOption(ioOptions, channelId,  "Solo", VariableType.Bool);
                         }
 
                         for (int i = 1; i <= MaxBuses; i++)
                         {
                             string busOut = i <= maxPhysical ? $"A{i}" : $"B{i - maxPhysical}";
-                            ioOptions.Add(new() { Id = channelId, Option = busOut, Type = VariableType.Bool });
+                            AddOption(ioOptions, channelId, busOut, VariableType.Bool);
                         }
                     }
                     else
                     {
                         if (IsBananaOrPotato)
                         {
-                            ioOptions.Add(new() { Id = channelId, Option = "EQ.on", Type = VariableType.Bool });
+                            AddOption(ioOptions, channelId,  "EQ.on", VariableType.Bool);
 
                             if (ConnectedType == VoicemeeterType.Potato || ConnectedType == VoicemeeterType.Potato64)
                             {
-                                ioOptions.Add(new() { Id = channelId, Option = "Sel", Type = VariableType.Bool });
+                                AddOption(ioOptions, channelId,  "Sel", VariableType.Bool);
                             }
                         }
                     }
@@ -146,13 +144,13 @@ internal static class AvailableValues
                         for (int i = 1; i <= MaxBuses; i++)
                         {
                             string busOut = i <= maxPhysical ? $"A{i}" : $"B{i - maxPhysical}";
-                            ioOptions.Add(new() { Id = channelId, Option = busOut, Type = VariableType.Bool });
+                            AddOption(ioOptions, channelId, busOut, VariableType.Bool);
                         }
-                        ioOptions.Add(new() { Id = channelId, Option = "Stop", Type = VariableType.Bool });
-                        ioOptions.Add(new() { Id = channelId, Option = "Play", Type = VariableType.Bool });
-                        ioOptions.Add(new() { Id = channelId, Option = "Record", Type = VariableType.Bool });
-                        ioOptions.Add(new() { Id = channelId, Option = "Pause", Type = VariableType.Bool });
-                        ioOptions.Add(new() { Id = channelId, Option = "Gain", Type = VariableType.Float });
+                        AddOption(ioOptions, channelId, "Stop", VariableType.Bool);
+                        AddOption(ioOptions, channelId, "Play", VariableType.Bool);
+                        AddOption(ioOptions, channelId, "Record", VariableType.Bool);
+                        AddOption(ioOptions, channelId, "Pause", VariableType.Bool);
+                        AddOption(ioOptions, channelId, "Gain", VariableType.Float);
                     }
                 }
             }
@@ -173,10 +171,10 @@ internal static class AvailableValues
             IoOptions = ioOptions;
         }
     }
-
+    
     private static bool IsBananaOrPotato => ConnectedType is VoicemeeterType.Banana or VoicemeeterType.Potato or VoicemeeterType.Potato64;
 
-    public static List<VmIoCommand> IoCommands { get; private set; }
+    public static List<VmIoCommand>? IoCommands { get; private set; }
 
     internal static void InitIoCommands()
     {
@@ -184,11 +182,7 @@ internal static class AvailableValues
         {
             var commands = Enum.GetValues(typeof(Commands));
             IoCommands = (from Commands command in commands
-                select new VmIoCommand()
-                {
-                    CommandType = command,
-                    RequiresValue = command is Commands.ConfigLoad or Commands.ConfigSave or Commands.RecorderLoad,
-                }).ToList();
+                select new VmIoCommand(command, command is Commands.ConfigLoad or Commands.ConfigSave or Commands.RecorderLoad)).ToList();
         }
     }
 }

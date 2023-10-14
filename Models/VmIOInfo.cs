@@ -3,22 +3,12 @@ using System.Collections.Generic;
 
 namespace PW.VoicemeeterPlugin.Models;
 
-public sealed class VmIoInfo : IEquatable<VmIoInfo>
+public sealed record VmIoInfo(string Id, string Name, VmIoType Type, bool IsPhysical)
 {
-    public string Id { get; init; }
-    public string Name { get; init; }
-    public VmIoType Type { get; init; }
-    public bool IsPhysical { get; init; }
 
-    public override bool Equals(object obj)
+    public bool Equals(VmIoInfo? other)
     {
-        return Equals(obj as VmIoInfo);
-    }
-
-    public bool Equals(VmIoInfo other)
-    {
-        return !(other is null) &&
-               Id == other.Id;
+        return other is not null && Id == other.Id;
     }
 
     public override int GetHashCode()
@@ -28,21 +18,7 @@ public sealed class VmIoInfo : IEquatable<VmIoInfo>
 
     public override string ToString()
     {
-        if (string.IsNullOrEmpty(Name))
-        {
-            return Id;
-        }
-        return $"{Id} \"{Name}\"";
-    }
-
-    public static bool operator ==(VmIoInfo left, VmIoInfo right)
-    {
-        return EqualityComparer<VmIoInfo>.Default.Equals(left, right);
-    }
-
-    public static bool operator !=(VmIoInfo left, VmIoInfo right)
-    {
-        return !(left == right);
+        return string.IsNullOrEmpty(Name) ? Id : $"{Id} \"{Name}\"";
     }
 }
 

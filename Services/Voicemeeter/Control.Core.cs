@@ -10,7 +10,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
 
 public sealed partial class Control
 {
-    private RemoteApiExtender VmrApi { get; }
+    private RemoteApiExtender? VmrApi { get; }
     private VoicemeeterGlobalConfigModel Config { get; }
 
     public Control()
@@ -25,7 +25,7 @@ public sealed partial class Control
         catch (Exception ex)
         {
             MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
-            MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace);
+            MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace ?? "No stack");
         }
     }
 
@@ -41,7 +41,7 @@ public sealed partial class Control
         bool initValues = AvailableValues.IoInfo == null;
         if (initValues)
         {
-            AvailableValues.InitIoInfo(VmrApi);
+            AvailableValues.InitIoInfo(VmrApi!);
         }
         if (initValues && AvailableValues.IoInfo != null)
         {
@@ -52,12 +52,19 @@ public sealed partial class Control
 
     private static void RemoveUnavailableVariables()
     {
-        bool IsUnavailableVariable(Variable v) => !AvailableValues.IoOptions.Any(o => o.AsVariable.Equals(v.Name));
-        var variablesNotFound = VariableManager.GetVariables(PluginInstance.Plugin).Where(IsUnavailableVariable).Select(v => v.Name);
-
-        foreach (var variable in variablesNotFound)
+        try
         {
-            VariableManager.DeleteVariable(variable);
+            bool IsUnavailableVariable(Variable v) => !AvailableValues.IoOptions!.Any(o => o.AsVariable.Equals(v.Name));
+            var variablesNotFound = VariableManager.GetVariables(PluginInstance.Plugin).Where(IsUnavailableVariable).Select(v => v.Name);
+
+            foreach (var variable in variablesNotFound)
+            {
+                VariableManager.DeleteVariable(variable);
+            }
+        }
+        catch (Exception ex)
+        {
+            MacroDeckLogger.Warning(PluginInstance.Plugin, typeof(Control), $"{nameof(RemoveUnavailableVariables)}: {ex.Message}");
         }
     }
 
@@ -79,13 +86,13 @@ public sealed partial class Control
 
     private void SetVariable(string parameter, string variable, VariableType type)
     {
-        if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object val, infoOnly: true))
+        if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object? val, infoOnly: true))
         {
-            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin);
+            VariableManager.SetValue(variable, val!, type, PluginInstance.Plugin, Array.Empty<string>());
         }
     }
 
-    public bool TryGetValue(string parameter, VariableType type, out object val, bool infoOnly = false)
+    public bool TryGetValue(string parameter, VariableType type, out object? val, bool infoOnly = false)
     {
         bool ok;
         switch (type)
@@ -101,7 +108,7 @@ public sealed partial class Control
                 break;
             case VariableType.Bool:
                 ok = GetParameter(parameter, out float valb, infoOnly);
-                val = valb == Constants.On;
+                val = Constants.On.Equals(valb);
                 break;
             default:
                 val = null;

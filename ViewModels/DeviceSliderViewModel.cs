@@ -12,10 +12,10 @@ internal class DeviceSliderViewModel : DeviceSelectorViewModel
     {
     }
 
-    protected override string[] GetAvailableActionsForDevice(VmIoInfo device)
+    protected override string[] GetAvailableActionsForDevice(VmIoInfo? device)
     {
-        return AvailableValues.IoOptions
-            .Where(opt => opt.Id.Equals(device.Id) && opt.Type == VariableType.Float)
+        return AvailableValues.IoOptions!
+            .Where(opt => opt.Id.Equals(device?.Id) && opt.Type == VariableType.Float)
             .Select(opt => opt.Option)
             .ToArray();
     }

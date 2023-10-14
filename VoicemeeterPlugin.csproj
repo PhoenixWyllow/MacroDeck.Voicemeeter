@@ -5,12 +5,12 @@
 		<VersionMinor>0</VersionMinor>
 		<VersionPatch>0</VersionPatch>
 		<VersionRevision Condition="'$(VersionRevision)' == ''">$([System.DateTime]::UtcNow.ToString("yy"))$([System.DateTime]::UtcNow.DayOfYear.ToString("000")).$([System.DateTime]::UtcNow.ToString("HHmm"))</VersionRevision>
-		<PluginFolder>E:\Code\Rider\Macro-Deck-2\bin\Debug\net6.0-windows10.0.22000.0\win-x64\Data\plugins</PluginFolder>
+		<PluginFolder>E:\Code\source\repos\MD\Macro-Deck\MacroDeck\bin\Debug\net7.0-windows10.0.22000.0\win-x64\Data\plugins</PluginFolder>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<AssemblyName>Voicemeeter Plugin</AssemblyName>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<Platforms>AnyCPU;x86;x64</Platforms>
 		<LangVersion>default</LangVersion>
 		<UseWindowsForms>true</UseWindowsForms>
@@ -27,6 +27,7 @@
 		<FileVersion>$(AssemblyVersion)</FileVersion>
 		<Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
 		<IsPublishable>False</IsPublishable>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -35,7 +36,7 @@
 
 	<ItemGroup>
 		<Reference Include="Macro Deck 2">
-			<HintPath>E:\Code\Rider\Macro-Deck-2\bin\Debug\net6.0-windows10.0.22000.0\win-x64\Macro Deck 2.dll</HintPath>
+			<HintPath>E:\Code\source\repos\MD\Macro-Deck\MacroDeck\bin\Debug\net7.0-windows10.0.22000.0\win-x64\Macro Deck 2.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
@@ -70,9 +71,7 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\CommandActionConfigView.cs">
-	    <SubType>UserControl</SubType>
-	  </Compile>
+	  <Compile Update="Views\CommandActionConfigView.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,18 +80,12 @@
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
-
-	<ItemGroup>
-		<PluginFiles Include="$(OutDir)\*.dll;$(OutDir)\ExtensionManifest.json;$(OutDir)\ExtensionIcon.png" />
-	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<PluginFiles Include="$(OutDir)\*.dll;$(OutDir)\ExtensionManifest.json;$(OutDir)\ExtensionIcon.png" />
+		</ItemGroup>
 		<Copy DestinationFolder="$(PluginFolder)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" SourceFiles="@(PluginFiles)" />
 	</Target>
 
-	<Target Name="PostBuildZipRelease" AfterTargets="PostBuildEvent" Condition="'$(ConfigurationName)' == 'Release'">
-		<Copy DestinationFolder="$(SolutionDir)releases\temp\" SourceFiles="@(PluginFiles)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
-		<ZipDirectory SourceDirectory="$(SolutionDir)releases\temp\" DestinationFile="$(SolutionDir)releases\$(TargetName.Replace(' ', '')_$(Version).zip" Overwrite="true" />
-		<RemoveDir Directories="$(SolutionDir)releases\temp\" />
-	</Target>
 </Project>

@@ -27,5 +27,6 @@ internal sealed class Localization
     public string SliderActionName { get; set; } = "Slider control";
     public string SliderActionDescription { get; set; } = "Change a slider by a given amount";
     public string SliderValue { get; set; } = "Change slider by amount";
-    public string ErrorZeroSliderValue { get; set; } = "Amount cannot be zero.";
+    public string ErrorZeroSliderValue { get; set; } = "Amount cannot be zero";
+    public string ErrorNoDeviceSelected { get; set; } = "No device selected";
 }

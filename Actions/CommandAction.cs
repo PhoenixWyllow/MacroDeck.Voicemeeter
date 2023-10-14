@@ -28,7 +28,7 @@ public sealed class CommandAction : PluginAction
             return;
         }
         var config = CommandActionConfigModel.Deserialize(Configuration);
-        switch (config.Command.CommandType)
+        switch (config.Command?.CommandType)
         {
             case Commands.Shutdown:
                 PluginInstance.VoicemeeterControl.Shutdown();
@@ -43,16 +43,16 @@ public sealed class CommandAction : PluginAction
                 PluginInstance.VoicemeeterControl.Reset();
                 break;
             case Commands.ConfigSave:
-                PluginInstance.VoicemeeterControl.Save(config.CommandValue);
+                PluginInstance.VoicemeeterControl.Save(config.CommandValue!);
                 break;
             case Commands.ConfigLoad:
-                PluginInstance.VoicemeeterControl.Load(config.CommandValue);
+                PluginInstance.VoicemeeterControl.Load(config.CommandValue!);
                 break;
             case Commands.RecorderEject:
                 PluginInstance.VoicemeeterControl.Eject();
                 break;
             case Commands.RecorderLoad:
-                PluginInstance.VoicemeeterControl.RecLoad(config.CommandValue);
+                PluginInstance.VoicemeeterControl.RecLoad(config.CommandValue!);
                 break;
             default:
                 MacroDeckLogger.Warning(PluginInstance.Plugin, "No command. Check button configuration.");

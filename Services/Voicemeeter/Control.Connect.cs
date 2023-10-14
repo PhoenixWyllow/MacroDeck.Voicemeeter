@@ -10,7 +10,7 @@ public sealed partial class Control
     private static readonly object key = new();
     private bool _loginCalled;
     private bool _connected;
-    private Timer _timer;
+    private Timer? _timer;
     private string ConnectedVersion => TryGetVoicemeeterVersion(out string version) ? version : ControlHelpers.ErrorStr;
     private VoicemeeterType ConnectedType
     {
@@ -30,10 +30,10 @@ public sealed partial class Control
     private bool TryGetVoicemeeterVersion(out string version)
     {
         version = string.Empty;
-        return VmrApi?.GetVoicemeeterVersion(out version) == ResultCodes.Ok;
+        return VmrApi is not null && VmrApi.GetVoicemeeterVersion(out version) == ResultCodes.Ok;
     }
 
-    private void CurrentDomain_ProcessExit(object sender, EventArgs e)
+    private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
     {
         Close();
     }
@@ -57,7 +57,7 @@ public sealed partial class Control
 
     private void Login()
     {
-        if (!_connected && !_loginCalled)
+        if (!_connected && !_loginCalled && VmrApi is not null)
         {
             ControlHelpers.TestLogin(
                 VmrApi.Login(),
@@ -100,7 +100,7 @@ public sealed partial class Control
         _timer.Start();
     }
 
-    private void Poll(object sender, ElapsedEventArgs e)
+    private void Poll(object? sender, ElapsedEventArgs e)
     {
         if (VmrApi is null)
         {
@@ -113,25 +113,18 @@ public sealed partial class Control
             Login();
             InitAvailableValues();
         }
-        Polling?.Invoke(this, null);
+        Polling?.Invoke(this, EventArgs.Empty);
         if (_connected && VmrApi.IsParametersDirty() > 0)
         {
             UpdateVariables();
         }
     }
 
-    internal static event EventHandler Polling;
+    internal static event EventHandler? Polling;
 
     public static bool CheckConnected(out string connectedVersion)
     {
-        bool connected = false;
-        connectedVersion = ControlHelpers.ErrorStr;
-
-        if (PluginInstance.VoicemeeterControl != null)
-        {
-            connectedVersion = PluginInstance.VoicemeeterControl.ConnectedVersion;
-            connected = !connectedVersion.Equals(ControlHelpers.ErrorStr);
-        }
-        return connected;
+        connectedVersion = PluginInstance.VoicemeeterControl.ConnectedVersion;
+        return !connectedVersion.Equals(ControlHelpers.ErrorStr);
     }
 }
