@@ -6,6 +6,6 @@
   "packageId": "PhoenixWyllow.VoicemeeterPlugin",
   "version": "2.0.0",
   "target-plugin-api-version": 40,
-  "target-plugin-macro-deck-version": "2.13.0",
+  "target-macro-deck-version": "2.13.0",
   "dll": "Voicemeeter Plugin.dll"
 }
