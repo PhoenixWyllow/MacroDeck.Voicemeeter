@@ -43,35 +43,39 @@ public partial class AddAdditionalVariablesConfigView : DialogForm
         Reset();
     }
 
-    private bool CheckOption(VmIoOptions opt)
+    private bool CheckOption(ReadOnlySpan<char> id, string option, ReadOnlySpan<char> typeStr, out VmIoOptions opt)
     {
-        opt.Id = opt.Id.Replace('[', '(').Replace('{', '(').Replace(']', ')').Replace('}', ')');
-        opt.Option = opt.Option.Split(';')[0];
+        Span<char> optId = stackalloc char[id.Length];
+        for (int i = 0; i < id.Length; i++)
+        {
+            optId[i] = id[i] switch
+            {
+                '[' or '{' => '(',
+                ']' or '}' => ')',
+                _ => id[i],
+            };
+        }
+        opt = new(optId.ToString(), option.Split(';')[0], Enum.Parse<VariableType>(typeStr));
         int idxBracket = opt.Id.IndexOf('(');
-        if (idxBracket < -1 && !int.TryParse(opt.Id.AsSpan(idxBracket + 1, 1), out _))
+        if (idxBracket < -1 && !int.TryParse(optId[idxBracket + 1].ToString(), out _))
         {
             return false;
         }
-        if (!PluginInstance.VoicemeeterControl.TryGetValue(opt.AsParameter, opt.Type, out _, infoOnly: true))
-        {
-            return false;
-        }
-        return true;
+        return PluginInstance.VoicemeeterControl.TryGetValue(opt.AsParameter, opt.Type, out _, infoOnly: true);
     }
 
     private void ButtonSave_Click(object sender, EventArgs e)
     {
         //test parameter
         var param = parameterValue.Text.Split('.');
-        var opt = new VmIoOptions() { Id = param[0], Option = string.Join('.', param[1..]), Type = Enum.Parse<VariableType>(variableType.Text) };
-        if (!CheckOption(opt))
+        if (!CheckOption(param[0], string.Join('.', param[1..]), variableType.Text, out var opt))
         {
             using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
             _ = msgBox.ShowDialog(LanguageManager.Strings.Error, LocalizationManager.Instance.ParameterError, MessageBoxButtons.OK);
             return;
         }
 
-        if (listParameters.Items.Contains(opt) || AvailableValues.IoOptions.Contains(opt))
+        if (listParameters.Items.Contains(opt) || (AvailableValues.IoOptions?.Contains(opt) ?? false))
         {
             using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
             _ = msgBox.ShowDialog(LanguageManager.Strings.Info, LocalizationManager.Instance.ParameterExists, MessageBoxButtons.OK);
@@ -111,9 +115,9 @@ public partial class AddAdditionalVariablesConfigView : DialogForm
         _activeIndex = listParameters.SelectedIndex;
         if (_activeIndex >= 0)
         {
-            var opt = listParameters.Items[_activeIndex] as VmIoOptions;
+            var opt = (VmIoOptions)listParameters.Items[_activeIndex];
             parameterValue.Text = opt.AsParameter;
-            variableType.SelectedItem = Enum.GetName(typeof(VariableType), opt.Type);
+            variableType.SelectedItem = Enum.GetName(typeof(VariableType), opt.Type)!;
         }
     }
 

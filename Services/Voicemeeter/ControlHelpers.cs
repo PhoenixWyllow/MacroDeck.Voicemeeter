@@ -9,7 +9,7 @@ internal static class ControlHelpers
 {
     public const string ErrorStr = "Communication Error";
 
-    public static void TestLogin(int loginResult, Action<int> onLoginSuccess = null, Action onLoginFail = null)
+    public static void TestLogin(int loginResult, Action<int>? onLoginSuccess = default, Action? onLoginFail = default)
     {
         switch (loginResult)
         {

@@ -6,6 +6,7 @@ using PW.VoicemeeterPlugin.ViewModels;
 using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
+using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 
@@ -49,7 +50,12 @@ public sealed class DeviceToggleAction : PluginAction
             return;
         }
         var config = DeviceConfigModel.Deserialize(Configuration);
-        var value = VariableManager.GetVariables(PluginInstance.Plugin).FirstOrDefault(v => v.Name.Equals(config.Option.AsVariable));
+        var value = VariableManager.GetVariables(PluginInstance.Plugin).FirstOrDefault(v => v.Name.Equals(config.Option!.AsVariable));
+        if (value is null)
+        {
+            MacroDeckLogger.Info(PluginInstance.Plugin, typeof(DeviceToggleAction), $"Please report a bug to the developer of the plugin. Expected value: {Configuration}");
+            return;
+        }
         PluginInstance.VoicemeeterControl.SetParameter(config.Option.AsParameter, value.Value.Equals(bool.FalseString) ? Constants.On : Constants.Off);
     }
 }

@@ -7,9 +7,9 @@ namespace PW.VoicemeeterPlugin.Models;
 [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
 public sealed class DeviceConfigModel : ISerializableConfiguration
 {
-    public string Name { get; set; }
-    public string Action { get; set; }
-    public VmIoOptions Option { get; set; }
+    public string? Name { get; set; }
+    public string? Action { get; set; }
+    public VmIoOptions? Option { get; set; }
     public float Value { get; set; } = 0;
 
     public string Serialize()

@@ -24,9 +24,9 @@ public partial class DeviceSelectorConfigView : ActionConfigControl
         if (_viewModel.IsSlider)
         {
             actionSliderValue.Value = (decimal)_viewModel.SliderValue;
-            actionSliderValue.ValueChanged += (s, _) => _viewModel.SliderValue = (float)((NumericUpDown)s).Value;
+            actionSliderValue.ValueChanged += (s, _) => _viewModel.SliderValue = (float)((NumericUpDown)s!).Value;
         }
-        deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices.ToArray());
+        deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices?.ToArray() ?? Array.Empty<VmIoInfo>());
         if (_viewModel.SelectedDevice != null)
         {
             deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;
@@ -50,6 +50,13 @@ public partial class DeviceSelectorConfigView : ActionConfigControl
         {
             using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
             _ = msgBox.ShowDialog(LanguageManager.Strings.Error, LocalizationManager.Instance.ErrorZeroSliderValue, MessageBoxButtons.OK);
+            return false;
+        }
+
+        if (_viewModel.SelectedDevice is null)
+        {
+            using var msgBox = new SuchByte.MacroDeck.GUI.CustomControls.MessageBox();
+            _ = msgBox.ShowDialog(LanguageManager.Strings.Error, LocalizationManager.Instance.ErrorNoDeviceSelected, MessageBoxButtons.OK);
             return false;
         }
         _viewModel.SaveConfig();

@@ -7,19 +7,11 @@ using System.Reflection;
 namespace PW.VoicemeeterPlugin.Models;
 
 [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
-public sealed class VmIoCommand : IEquatable<VmIoCommand>
+public sealed record VmIoCommand(Commands CommandType, bool RequiresValue)
 {
-    public Commands? CommandType { get; init; }
-    public bool RequiresValue { get; init; }
-
-    public override bool Equals(object obj)
+    public bool Equals(VmIoCommand? other)
     {
-        return obj is VmIoCommand command && Equals(command);
-    }
-
-    public bool Equals(VmIoCommand other)
-    {
-        return CommandType == other?.CommandType;
+        return other is not null && CommandType == other.CommandType;
     }
 
     public override int GetHashCode()
@@ -32,7 +24,7 @@ public sealed class VmIoCommand : IEquatable<VmIoCommand>
         return CommandType.GetType()
             .GetMember(CommandType.ToString())
             .FirstOrDefault()?.GetCustomAttribute<DisplayAttribute>()
-            .GetDescription() ?? CommandType.ToString();
+            ?.GetDescription() ?? CommandType.ToString();
     }
 
     private string GetDebuggerDisplay()

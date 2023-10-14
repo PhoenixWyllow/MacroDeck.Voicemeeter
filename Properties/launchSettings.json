@@ -7,6 +7,11 @@
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\Macro Deck\\Macro Deck 2.exe",
       "commandLineArgs": "--show --log-level 0 --debug-console"
+    },
+    "MD-dev": {
+      "commandName": "Executable",
+      "executablePath": "E:\\Code\\source\\repos\\MD\\Macro-Deck\\MacroDeck\\bin\\Debug\\net7.0-windows10.0.22000.0\\win-x64\\Macro Deck 2.exe",
+      "commandLineArgs": "--show --log-level 0 --debug-console"
     }
   }
 }

@@ -38,7 +38,7 @@ internal static class LocalizationManager
             }
             try
             {
-                Instance = JsonSerializer.Deserialize<Localization>(GetJsonLanguageResource(languageName));
+                Instance = JsonSerializer.Deserialize<Localization>(GetJsonLanguageResource(languageName))!;
             }
             catch
             {
