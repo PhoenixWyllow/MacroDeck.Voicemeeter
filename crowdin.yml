@@ -1,3 +1,5 @@
+commit_message: "Crowdin: Edited %language%"
+append_commit_message: false
 files:
   - source: /Languages/English.json
     translation: /Languages/%language%.json
