@@ -53,7 +53,7 @@ This plugin has its own localization files, independent of Macro Deck.
 If your language is not available, the plugin will default to English.
 
 Check the files available in source under [Languages](MacroDeck.Voicemeeter/MacroDeck.Voicemeeter/Languages).
-If your language is missing or incomplete, please consider [helping me out by translating](https://poeditor.com/join/project/I1exM7PsOc)! 
+If your language is missing or incomplete, please consider [helping me out by translating](https://crowdin.com/project/macrodeckvoicemeeter/invite?h=8621e5f95ad1b35909a94b844d0734fd2001474)! 
 
 Currently available languages:
 - English
