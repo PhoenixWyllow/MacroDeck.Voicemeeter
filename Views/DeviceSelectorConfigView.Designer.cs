@@ -91,7 +91,7 @@
             this.actionSliderValue.Minimum = -10;
             this.actionSliderValue.Maximum = 10;
             this.actionSliderValue.Size = new System.Drawing.Size(75, 31);
-            this.actionSliderValue.Font = new(this.actionSliderValue.Font.FontFamily, 14);
+            this.actionSliderValue.Font = new System.Drawing.Font("Tahoma", 12f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.actionSliderValue.TabIndex = 0;
             // 
             // DeviceSelectorView

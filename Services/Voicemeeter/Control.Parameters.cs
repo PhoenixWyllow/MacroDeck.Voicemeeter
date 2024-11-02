@@ -1,4 +1,5 @@
 ﻿using AtgDev.Voicemeeter.Types;
+using AtgDev.Voicemeeter.Extensions;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
 
@@ -65,14 +66,14 @@ public sealed partial class Control
         ControlHelpers.TestResult(VmrApi.SetParameters(parameters));
     }
 
-    public void GetLevel(ref VoicemeeterLevel type)
+    public void GetLevel(ref VoicemeeterLevel level)
     {
-        ControlHelpers.TestLevelResult(VmrApi.GetLevel(ref type));
+        ControlHelpers.TestLevelResult(VmrApi.GetLevel(ref level));
     }
 
-    public float GetLevel(VoicemeeterLevelType type, VoicemeeterChannel channel)
+    public float GetLevel(VoicemeeterLevelType levelType, VoicemeeterChannel channel)
     {
-        ControlHelpers.TestLevelResult(VmrApi.GetLevel(type, channel, out float value));
+        ControlHelpers.TestLevelResult(VmrApi.GetLevel(levelType, channel, out float value));
         return value;
     }
 }

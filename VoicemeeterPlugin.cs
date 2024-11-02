@@ -1,11 +1,8 @@
 ﻿using SuchByte.MacroDeck.Plugins;
 using PW.VoicemeeterPlugin.Actions;
 using System;
-using SuchByte.MacroDeck.GUI.CustomControls;
 using VoicemeeterControl = PW.VoicemeeterPlugin.Services.Voicemeeter.Control;
 using PW.VoicemeeterPlugin.Services;
-using System.Net.Sockets;
-using System.Windows.Forms;
 
 namespace PW.VoicemeeterPlugin;
 
@@ -33,6 +30,7 @@ public class VoicemeeterPlugin : MacroDeckPlugin
             new DeviceSliderAction(),
             new CommandAction(),
             new AdvancedAction(),
+            new MacroButtonAction(),
         };
     }
 

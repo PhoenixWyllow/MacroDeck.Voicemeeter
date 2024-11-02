@@ -21,6 +21,7 @@ public partial class DeviceSelectorConfigView : ActionConfigControl
         ApplyLocalization();
 
         actionSliderValue.Visible = _viewModel.IsSlider;
+        labelSlider.Visible = _viewModel.IsSlider;
         if (_viewModel.IsSlider)
         {
             actionSliderValue.Value = (decimal)_viewModel.SliderValue;

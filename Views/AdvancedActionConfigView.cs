@@ -26,7 +26,7 @@ public partial class AdvancedActionConfigView : ActionConfigControl
     public override bool OnActionSave()
     {
         _action.Configuration = commandsBox.Text;
-        var commands = _action.Configuration.Split(new[] { Environment.NewLine, ";", "," }, StringSplitOptions.RemoveEmptyEntries);
+        var commands = _action.Configuration.Split([Environment.NewLine, ";", ","], StringSplitOptions.RemoveEmptyEntries);
         _action.ConfigurationSummary = commands.Length switch
         {
             0 => LocalizationManager.Instance.NoCommandsMsg,

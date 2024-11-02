@@ -2,17 +2,18 @@
 
 	<PropertyGroup>
 		<VersionMajor>2</VersionMajor>
-		<VersionMinor>0</VersionMinor>
+		<VersionMinor>1</VersionMinor>
 		<VersionPatch>0</VersionPatch>
 		<VersionRevision Condition="'$(VersionRevision)' == ''">$([System.DateTime]::UtcNow.ToString("yy"))$([System.DateTime]::UtcNow.DayOfYear.ToString("000")).$([System.DateTime]::UtcNow.ToString("HHmm"))</VersionRevision>
-		<PluginFolder>E:\Code\source\repos\MD\Macro-Deck\MacroDeck\bin\Debug\net7.0-windows10.0.22000.0\win-x64\Data\plugins</PluginFolder>
+<!--		<PluginFolder>E:\Code\source\repos\MD\Macro-Deck\MacroDeck\bin\Debug\net7.0-windows10.0.22000.0\win-x64\Data\plugins</PluginFolder>-->
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Platforms>AnyCPU;x64</Platforms>
+		<LangVersion>latest</LangVersion>
 		<AssemblyName>Voicemeeter Plugin</AssemblyName>
-		<TargetFramework>net7.0-windows</TargetFramework>
-		<Platforms>AnyCPU;x86;x64</Platforms>
-		<LangVersion>default</LangVersion>
 		<UseWindowsForms>true</UseWindowsForms>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<RootNamespace>PW.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
@@ -31,13 +32,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="a-tg.VmrapiDynWrapExt" Version="1.1.3" />
+	  <PackageReference Include="a-tg.VmrapiDynWrapExt" Version="2.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="Macro Deck 2">
-			<HintPath>E:\Code\source\repos\MD\Macro-Deck\MacroDeck\bin\Debug\net7.0-windows10.0.22000.0\win-x64\Macro Deck 2.dll</HintPath>
-			<Private>false</Private>
+			<HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
+			<!--<Private>false</Private>-->
 		</Reference>
 	</ItemGroup>
 	
@@ -71,6 +72,9 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\MacroButtonActionConfigView.cs">
+	    <SubType>UserControl</SubType>
+	  </Compile>
 	  <Compile Update="Views\CommandActionConfigView.cs" />
 	</ItemGroup>
 
@@ -83,9 +87,10 @@
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
-			<PluginFiles Include="$(OutDir)\*.dll;$(OutDir)\ExtensionManifest.json;$(OutDir)\ExtensionIcon.png" />
+			<PluginFiles Include="$(OutDir)\Voicemeeter Plugin.dll;$(OutDir)\Vmrapi*.dll;$(OutDir)\UnmanagedLibWrap.dll;$(OutDir)\ExtensionManifest.json;$(OutDir)\ExtensionIcon.png" />
 		</ItemGroup>
-		<Copy DestinationFolder="$(PluginFolder)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" SourceFiles="@(PluginFiles)" />
+		<RemoveDir Directories="$(ProjectDir)releases\$(Configuration)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" />
+		<Copy DestinationFolder="$(ProjectDir)releases\$(Configuration)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" SourceFiles="@(PluginFiles)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
 	</Target>
 
 </Project>

@@ -55,6 +55,9 @@ internal class StatusButtonViewModel
                 _statusToolTip.SetToolTip(StatusButton, toolip);
             }
         }
-        catch { }
+        catch
+        {
+            // ignored
+        }
     }
 }

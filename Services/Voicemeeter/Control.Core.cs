@@ -5,12 +5,14 @@ using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 using System;
 using System.Linq;
+using AtgDev.Voicemeeter.Extensions;
+using AtgDev.Voicemeeter.Types;
 
 namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
 
 public sealed partial class Control
 {
-    private RemoteApiExtender? VmrApi { get; }
+    private RemoteApiWrapper? VmrApi { get; }
     private VoicemeeterGlobalConfigModel Config { get; }
 
     public Control()
@@ -19,7 +21,7 @@ public sealed partial class Control
         try
         {
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-            VmrApi = new(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
+            VmrApi = new RemoteApiWrapper(AtgDev.Voicemeeter.Utils.PathHelper.GetDllPath());
             StartPolling();
         }
         catch (Exception ex)
@@ -74,25 +76,26 @@ public sealed partial class Control
         {
             return;
         }
-        foreach (var option in AvailableValues.IoOptions)
-        {
+        _connected = CheckConnected(out _);
             if (!_connected)
             {
                 break;
             }
+        foreach (var option in AvailableValues.IoOptions)
+        {
             SetVariable(option.AsParameter, option.AsVariable, option.Type);
         }
     }
 
     private void SetVariable(string parameter, string variable, VariableType type)
     {
-        if ((_connected = CheckConnected(out _)) && TryGetValue(parameter, type, out object? val, infoOnly: true))
+        if (TryGetValue(parameter, type, out var val, infoOnly: true))
         {
-            VariableManager.SetValue(variable, val!, type, PluginInstance.Plugin, Array.Empty<string>());
+            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin, Array.Empty<string>());
         }
     }
 
-    public bool TryGetValue(string parameter, VariableType type, out object? val, bool infoOnly = false)
+    public bool TryGetValue(string parameter, VariableType type, out object val, bool infoOnly = false)
     {
         bool ok;
         switch (type)
@@ -111,7 +114,7 @@ public sealed partial class Control
                 val = Constants.On.Equals(valb);
                 break;
             default:
-                val = null;
+                val = string.Empty;
                 return false;
         }
         return ok;
