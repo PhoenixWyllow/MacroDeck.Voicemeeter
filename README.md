@@ -69,6 +69,7 @@ Currently available languages:
 - Italian
 - Spanish (by Danivar)
 - Chinese (by PENC)
+- Polish (by szopen)
 
 ***
 ## Third party licenses
