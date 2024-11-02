@@ -55,7 +55,7 @@ public partial class AddAdditionalVariablesConfigView : DialogForm
                 _ => id[i],
             };
         }
-        opt = new(optId.ToString(), option.Split(';')[0], Enum.Parse<VariableType>(typeStr));
+        opt = new VmIoOptions(optId.ToString(), option.Split(';')[0], Enum.Parse<VariableType>(typeStr));
         int idxBracket = opt.Id.IndexOf('(');
         if (idxBracket < -1 && !int.TryParse(optId[idxBracket + 1].ToString(), out _))
         {
@@ -123,10 +123,7 @@ public partial class AddAdditionalVariablesConfigView : DialogForm
 
     private void ButtonOk_Click(object sender, EventArgs e)
     {
-        AdditionalVariablesModel variables = new()
-        {
-            Options = new()
-        };
+        AdditionalVariablesModel variables = new();
         foreach (var item in listParameters.Items)
         {
             variables.Options.Add((VmIoOptions)item);

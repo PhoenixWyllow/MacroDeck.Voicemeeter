@@ -1,4 +1,5 @@
 ﻿using AtgDev.Voicemeeter;
+using AtgDev.Voicemeeter.Extensions;
 using AtgDev.Voicemeeter.Types;
 using System;
 using System.Timers;
@@ -91,7 +92,7 @@ public sealed partial class Control
 
     private void StartPolling()
     {
-        _timer ??= new()
+        _timer ??= new Timer
         {
             Interval = 300,
             AutoReset = true,
@@ -117,6 +118,10 @@ public sealed partial class Control
         if (_connected && VmrApi.IsParametersDirty() > 0)
         {
             UpdateVariables();
+        }
+        if (_connected && VmrApi.MacroButtonIsDirty() > 0)
+        {
+            UpdateButtonStates();
         }
     }
 

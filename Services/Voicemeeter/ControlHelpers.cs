@@ -84,19 +84,24 @@ internal static class ControlHelpers
     }
 
     //0: OK(no error).
+    //>0: error in line
     //-1: error
-    //-2: no server.
+    //-2: no server
     //-3: unknown parameter
     //-4: structure mismatch
-    internal static void TestResultThrow(int result)
+    private static void TestResultThrow(int result)
     {
+        if (result > 0)
+        {
+            throw new Exception("Error in line " + result);
+        }
         switch (result)
         {
             case ResultCodes.Ok: break;
-            case ResultCodes.Error: throw new("Parameter Error");
-            case ResultCodes.NoServer: throw new("Not Connected");
+            case ResultCodes.Error: throw new Exception("Parameter Error");
+            case ResultCodes.NoServer: throw new Exception("Not Connected");
             case ResultCodes.UnexpectedError1: throw new ArgumentException("Parameter not found");
-            case ResultCodes.UnexpectedError2: throw new("Structure mismatch");
+            case ResultCodes.UnexpectedError2: throw new Exception("Structure mismatch");
             default: throw UnknownError(result);
         }
     }

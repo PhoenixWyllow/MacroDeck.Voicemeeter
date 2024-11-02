@@ -7,7 +7,7 @@ namespace PW.VoicemeeterPlugin.Models;
 [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
 public sealed class AdditionalVariablesModel : ISerializableConfiguration
 {
-    public List<VmIoOptions> Options { get; init; } = new();
+    public List<VmIoOptions> Options { get; init; } = [];
 
     public string Serialize()
     {

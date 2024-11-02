@@ -20,6 +20,7 @@ Create a button and configure how you want to control Voicemeeter.
 | Slider control   | Change a slider by a given amount                            | Change slider by a relative amount (between -10 and +10)                                                                                                                                                                          |
 | Program commands | Execute Voicemeeter commands                                 | Shutdown, Restart, Show, Reset/Load/Save configuration, Load/Eject cassette                                                                                                                                                       |
 | Advanced/Custom  | Send a custom command to Voicemeeter                         | This option allows configuring custom commands using the Voicemeeter API language. <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
+| Use Macro Button | Activate/Toggle a Macro Button (Voicemeeter)                 | Activate or toggle a Voicemeeter Macro Button. Ids are 0-79 and you will need to find and confugure them separately, according to the documentation for your Voicemeeter version.                              |
 
 #### Available parameters/variables
 
@@ -45,7 +46,15 @@ Clicking on an option that you've already included allows you to edit or delete 
 >- **Restart Macro Deck** to refresh with the variables you've added or removed
 >- I can only provide minimal support for this since it's all your own stuff being added. Use it wisely.
 
-*More features/actions coming soon...*
+#### Use Voicemeeter Macro Buttons
+
+Macro Buttons are a feature of Voicemeeter that allows you to execute a series of commands with a single button press.\
+Some actions are only possible with Macro Buttons, like sending special commands (SendText, Wait, etc.).
+
+To use a Macro Button, you must first create it in Voicemeeter and then configure the plugin to use it.\
+The plugin will only activate or toggle the button, it will not create or edit the button for you.
+
+The Macro Button ID is a number between 0 and 79, and you can find it in the Voicemeeter Macro Buttons editor window as "Logical ID".\
 
 ***
 ## Need this in your language?
@@ -60,6 +69,7 @@ Currently available languages:
 - Italian
 - Spanish (by Danivar)
 - Chinese (by PENC)
+- Polish (by szopen)
 
 ***
 ## Third party licenses

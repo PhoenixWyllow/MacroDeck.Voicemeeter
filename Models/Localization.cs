@@ -29,4 +29,9 @@ internal sealed class Localization
     public string SliderValue { get; set; } = "Change slider by amount";
     public string ErrorZeroSliderValue { get; set; } = "Amount cannot be zero";
     public string ErrorNoDeviceSelected { get; set; } = "No device selected";
+    public string MacroButtonActionName { get; set; } = "Use Macro Button";
+    public string MacroButtonActionDescription { get; set; } = "Use a Voicemeeter Macro Button";
+    public string MacroButtonButtonId { get; set; } = "Button ID";
+    public string MacroButtonButtonType { get; set; } = "Button Type";
+    public string MacroButtonIdError { get; set; } = "Button Id is not valid. Valid values are 0 to 79";
 }
