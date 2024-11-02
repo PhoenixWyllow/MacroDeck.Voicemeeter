@@ -55,7 +55,7 @@ internal static class AvailableValues
 
     public static List<VmIoInfo>? IoInfo { get; private set; }
 
-    internal static void InitIoInfo(AtgDev.Voicemeeter.RemoteApiExtender vmrApi)
+    internal static void InitIoInfo(AtgDev.Voicemeeter.RemoteApiWrapper vmrApi)
     {
         void AddChannel(ICollection<VmIoInfo> ioInfo, VmIoType type, int num)
         {

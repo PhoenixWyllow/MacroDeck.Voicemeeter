@@ -44,6 +44,7 @@ public sealed partial class Control
         if (initValues)
         {
             AvailableValues.InitIoInfo(VmrApi!);
+            UpdateButtonStates();
         }
         if (initValues && AvailableValues.IoInfo != null)
         {
@@ -56,7 +57,7 @@ public sealed partial class Control
     {
         try
         {
-            bool IsUnavailableVariable(Variable v) => !AvailableValues.IoOptions!.Any(o => o.AsVariable.Equals(v.Name));
+            bool IsUnavailableVariable(Variable v) => !v.Name.StartsWith("vm_macrobutton") && !AvailableValues.IoOptions!.Any(o => o.AsVariable.Equals(v.Name));
             var variablesNotFound = VariableManager.GetVariables(PluginInstance.Plugin).Where(IsUnavailableVariable).Select(v => v.Name);
 
             foreach (var variable in variablesNotFound)
@@ -77,10 +78,10 @@ public sealed partial class Control
             return;
         }
         _connected = CheckConnected(out _);
-            if (!_connected)
-            {
-                break;
-            }
+        if (!_connected)
+        {
+            return;
+        }
         foreach (var option in AvailableValues.IoOptions)
         {
             SetVariable(option.AsParameter, option.AsVariable, option.Type);
@@ -118,5 +119,57 @@ public sealed partial class Control
                 return false;
         }
         return ok;
+    }
+
+    private void UpdateButtonStates()
+    {
+        _connected = CheckConnected(out _);
+        if (!_connected)
+        {
+            return;
+        }
+        foreach (var btnId in Enumerable.Range(0, 80))
+        {   
+            SetButtonStateVariable(btnId);
+        }
+    }
+
+    private void SetButtonStateVariable(int btnId)
+    {
+        var variable = MacroButtonActionConfigModel.GetVariable(btnId);
+        var isOn = GetButtonState(btnId);
+        VariableManager.SetValue(variable, isOn, VariableType.Bool, PluginInstance.Plugin, Array.Empty<string>());
+    }
+
+    private bool GetButtonState(int btnId)
+    {
+        var val = false;
+        if (VmrApi!.MacroButtonGetStatus(btnId, out bool state, MacrobuttonMode.Default) == 0)
+        {
+            val = state;
+        }
+        return val;
+    }
+    
+    public void SetButtonState(int btnId, bool state, ButtonType buttonType)
+    {
+        _connected = CheckConnected(out _);
+        if (!_connected)
+        {
+            return;
+        }
+        if (VmrApi!.MacroButtonSetStatus(btnId, state,MacrobuttonMode.Default) != 0)
+        {
+            MacroDeckLogger.Warning(PluginInstance.Plugin, $"Failed to set button state: {btnId}, {state}");
+        }
+        
+        if (buttonType == ButtonType.Push)
+        {
+            VmrApi.WaitForMacroNewParams();
+            if (VmrApi!.MacroButtonSetStatus(btnId, !state, MacrobuttonMode.Default) != 0)
+            {
+                MacroDeckLogger.Warning(PluginInstance.Plugin, $"Failed to set button state: {btnId}, {state}");
+            }
+        }
     }
 }

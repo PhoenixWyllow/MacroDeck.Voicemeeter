@@ -119,6 +119,10 @@ public sealed partial class Control
         {
             UpdateVariables();
         }
+        if (_connected && VmrApi.MacroButtonIsDirty() > 0)
+        {
+            UpdateButtonStates();
+        }
     }
 
     internal static event EventHandler? Polling;
