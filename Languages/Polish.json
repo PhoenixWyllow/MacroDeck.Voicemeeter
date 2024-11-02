@@ -24,5 +24,10 @@
     "SliderActionName": "Sterowanie suwakiem",
     "SliderActionDescription": "Przesuń suwak o daną wartość",
     "SliderValue": "Przesuń suwak o wartość",
-    "ErrorZeroSliderValue": "Wartość nie może być równa zeru."
+    "ErrorZeroSliderValue": "Wartość nie może być równa zeru.",
+    "MacroButtonActionName": "Use Macro Button",
+    "MacroButtonActionDescription": "Use a Voicemeeter Macro Button",
+    "MacroButtonButtonId": "Logical ID",
+    "MacroButtonButtonType": "Button Type",
+    "MacroButtonIdError": "Button Id is not valid. Valid values are 0 to 79"
 }
