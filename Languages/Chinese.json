@@ -24,5 +24,10 @@
     "SliderActionName": "Slider control",
     "SliderActionDescription": "Change a slider by a given amount",
     "SliderValue": "Change slider by amount",
-    "ErrorZeroSliderValue": "Amount cannot be zero."
+    "ErrorZeroSliderValue": "Amount cannot be zero.",
+    "MacroButtonActionName": "Use Macro Button",
+    "MacroButtonActionDescription": "Use a Voicemeeter Macro Button",
+    "MacroButtonButtonId": "Logical ID",
+    "MacroButtonButtonType": "Button Type",
+    "MacroButtonIdError": "Button Id is not valid. Valid values are 0 to 79"
 }

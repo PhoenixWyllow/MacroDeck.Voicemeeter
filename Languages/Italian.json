@@ -24,5 +24,10 @@
     "SliderActionName": "Controllo slider",
     "SliderActionDescription": "Varia slider per una determinata quantità",
     "SliderValue": "Variazione",
-    "ErrorZeroSliderValue": "La quantità non può essere pari a zero."
+    "ErrorZeroSliderValue": "La quantità non può essere pari a zero.",
+    "MacroButtonActionName": "Usa Macro Button",
+    "MacroButtonActionDescription": "Usa una macro di Voicemeeter",
+    "MacroButtonButtonId": "ID Logico",
+    "MacroButtonButtonType": "Tipo Bottone",
+    "MacroButtonIdError": "L'ID non è valido. I valori validi sono da 0 a 79"
 }
