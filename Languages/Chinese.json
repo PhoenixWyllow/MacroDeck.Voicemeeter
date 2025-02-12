@@ -25,9 +25,9 @@
     "SliderActionDescription": "Change a slider by a given amount",
     "SliderValue": "Change slider by amount",
     "ErrorZeroSliderValue": "Amount cannot be zero.",
-    "MacroButtonActionName": "Use Macro Button",
-    "MacroButtonActionDescription": "Use a Voicemeeter Macro Button",
-    "MacroButtonButtonId": "Logical ID",
-    "MacroButtonButtonType": "Button Type",
-    "MacroButtonIdError": "Button Id is not valid. Valid values are 0 to 79"
+    "MacroButtonActionName": "使用Macro按钮",
+    "MacroButtonActionDescription": "使用 Voicemeeter Macro 按钮",
+    "MacroButtonButtonId": "逻辑ID",
+    "MacroButtonButtonType": "按钮样式",
+    "MacroButtonIdError": "按钮ID无效。有效值为 0 到 79"
 }
