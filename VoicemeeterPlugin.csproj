@@ -2,15 +2,14 @@
 
 	<PropertyGroup>
 		<VersionMajor>2</VersionMajor>
-		<VersionMinor>1</VersionMinor>
+		<VersionMinor>2</VersionMinor>
 		<VersionPatch>0</VersionPatch>
 		<VersionRevision Condition="'$(VersionRevision)' == ''">$([System.DateTime]::UtcNow.ToString("yy"))$([System.DateTime]::UtcNow.DayOfYear.ToString("000")).$([System.DateTime]::UtcNow.ToString("HHmm"))</VersionRevision>
-<!--		<PluginFolder>E:\Code\source\repos\MD\Macro-Deck\MacroDeck\bin\Debug\net7.0-windows10.0.22000.0\win-x64\Data\plugins</PluginFolder>-->
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-		<TargetFramework>net8.0-windows</TargetFramework>
+		<TargetFramework>net10.0-windows10.0.22000.0</TargetFramework>
 		<Platforms>AnyCPU;x64</Platforms>
 		<LangVersion>latest</LangVersion>
 		<AssemblyName>Voicemeeter Plugin</AssemblyName>
@@ -32,14 +31,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="a-tg.VmrapiDynWrapExt" Version="2.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="Macro Deck 2">
-			<HintPath>C:\Program Files\Macro Deck\Macro Deck 2.dll</HintPath>
-			<!--<Private>false</Private>-->
-		</Reference>
+	  <PackageReference Include="a-tg.VmrapiDynWrapExt" Version="2.0.1" />
+	  <PackageReference Include="SuchByte.MacroDeck" Version="2.15.0" />
 	</ItemGroup>
 	
 	<ItemGroup>

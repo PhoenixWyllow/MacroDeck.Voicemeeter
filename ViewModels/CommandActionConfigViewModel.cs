@@ -58,12 +58,11 @@ public class CommandActionConfigViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            MacroDeckLogger.Info(PluginInstance.Plugin, $"{GetType().Name}: config saved");
+            PluginLogger.Information(nameof(CommandActionConfigViewModel), "config saved");
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Error(PluginInstance.Plugin, $"{GetType().Name}: config NOT saved");
-            MacroDeckLogger.Error(PluginInstance.Plugin, $"{GetType().Name}: {ex.Message}");
+            PluginLogger.Error(nameof(CommandActionConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
         }
     }
 

@@ -26,8 +26,8 @@ public sealed partial class Control
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
-            MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace ?? "No stack");
+            PluginLogger.Warning(nameof(Control), "{ExceptionMessage}", ex.Message);
+            PluginLogger.Debug(nameof(Control), "{ExceptionStackTrace}", ex.StackTrace ?? "No stack");
         }
     }
 
@@ -67,7 +67,7 @@ public sealed partial class Control
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Warning(PluginInstance.Plugin, typeof(Control), $"{nameof(RemoveUnavailableVariables)}: {ex.Message}");
+            PluginLogger.Warning(nameof(Control), "{MethodName}: {ExceptionMessage}", nameof(RemoveUnavailableVariables), ex.Message);
         }
     }
 
@@ -92,7 +92,7 @@ public sealed partial class Control
     {
         if (TryGetValue(parameter, type, out var val, infoOnly: true))
         {
-            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin, Array.Empty<string>());
+            VariableManager.SetValue(variable, val, type, PluginInstance.Plugin, []);
         }
     }
 
@@ -138,7 +138,7 @@ public sealed partial class Control
     {
         var variable = MacroButtonActionConfigModel.GetVariable(btnId);
         var isOn = GetButtonState(btnId);
-        VariableManager.SetValue(variable, isOn, VariableType.Bool, PluginInstance.Plugin, Array.Empty<string>());
+        VariableManager.SetValue(variable, isOn, VariableType.Bool, PluginInstance.Plugin, []);
     }
 
     private bool GetButtonState(int btnId)
@@ -160,7 +160,7 @@ public sealed partial class Control
         }
         if (VmrApi!.MacroButtonSetStatus(btnId, state,MacrobuttonMode.Default) != 0)
         {
-            MacroDeckLogger.Warning(PluginInstance.Plugin, $"Failed to set button state: {btnId}, {state}");
+            PluginLogger.Warning(nameof(Control), "Failed to set button state: {ButtonId}, {State}", btnId, state);
         }
         
         if (buttonType == ButtonType.Push)
@@ -168,7 +168,7 @@ public sealed partial class Control
             VmrApi.WaitForMacroNewParams();
             if (VmrApi!.MacroButtonSetStatus(btnId, !state, MacrobuttonMode.Default) != 0)
             {
-                MacroDeckLogger.Warning(PluginInstance.Plugin, $"Failed to set button state: {btnId}, {state}");
+                PluginLogger.Warning(nameof(Control), "Failed to set button state: {ButtonId}, {State}", btnId, state);
             }
         }
     }

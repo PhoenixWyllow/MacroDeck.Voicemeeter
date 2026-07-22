@@ -53,7 +53,7 @@ public class MacroButtonAction : PluginAction
         var value = VariableManager.GetVariable(PluginInstance.Plugin, config.AsVariable());
         if (value is null)
         {
-            MacroDeckLogger.Info(PluginInstance.Plugin, typeof(DeviceToggleAction), $"Please report a bug to the developer of the plugin. Expected value: {Configuration}");
+            PluginLogger.Information(nameof(MacroButtonAction), "Please report a bug to the developer of the plugin. Expected value: {Configuration}", Configuration);
             return;
         }
         PluginInstance.VoicemeeterControl.SetButtonState(config.ButtonId, value.Value.Equals(bool.FalseString), config.ButtonType);

@@ -51,8 +51,8 @@ public class MacroButtonActionConfigViewModel : ISavableConfigViewModel
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
-            MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace ?? "No stack");
+            PluginLogger.Warning(nameof(MacroButtonActionConfigViewModel), "{ExceptionMessage}", ex.Message);
+            PluginLogger.DebugException(ex);
         }
     } 
 

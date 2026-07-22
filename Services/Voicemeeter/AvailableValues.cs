@@ -67,7 +67,7 @@ internal static class AvailableValues
 
         if (IoInfo is null)
         {
-            List<VmIoInfo> ioInfo = new();
+            List<VmIoInfo> ioInfo = [];
             for (int i = 0; i < MaxStrips; i++)
             {
                 AddChannel(ioInfo, VmIoType.Strip, i);
@@ -88,7 +88,7 @@ internal static class AvailableValues
 
     internal static void InitIoOptions()
     {
-        void AddOption(ICollection<VmIoOptions> ioOptions, string channelId, string option, VariableType type)
+        static void AddOption(ICollection<VmIoOptions> ioOptions, string channelId, string option, VariableType type)
         {
             ioOptions.Add(new(channelId, option, type));
         }
@@ -96,7 +96,7 @@ internal static class AvailableValues
         if (IoOptions is null)
         {
             int maxPhysical = MaxPhysicalBuses;
-            List<VmIoOptions> ioOptions = new();
+            List<VmIoOptions> ioOptions = [];
             if (IoInfo is null)
             {
                 return;
@@ -180,7 +180,7 @@ internal static class AvailableValues
     {
         if (IoCommands is null)
         {
-            var commands = Enum.GetValues(typeof(Commands));
+            var commands = Enum.GetValues<Commands>();
             IoCommands = (from Commands command in commands
                 select new VmIoCommand(command, command is Commands.ConfigLoad or Commands.ConfigSave or Commands.RecorderLoad)).ToList();
         }

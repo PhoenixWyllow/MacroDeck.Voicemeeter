@@ -53,9 +53,9 @@ public sealed class DeviceToggleAction : PluginAction
         var value = VariableManager.GetVariables(PluginInstance.Plugin).FirstOrDefault(v => v.Name.Equals(config.Option!.AsVariable));
         if (value is null)
         {
-            MacroDeckLogger.Info(PluginInstance.Plugin, typeof(DeviceToggleAction), $"Please report a bug to the developer of the plugin. Expected value: {Configuration}");
+            PluginLogger.Information(nameof(DeviceToggleAction), "Please report a bug to the developer of the plugin. Expected value: {Configuration}", Configuration);
             return;
         }
-        PluginInstance.VoicemeeterControl.SetParameter(config.Option.AsParameter, value.Value.Equals(bool.FalseString) ? Constants.On : Constants.Off);
+        PluginInstance.VoicemeeterControl.SetParameter(config.Option!.AsParameter, value.Value.Equals(bool.FalseString) ? Constants.On : Constants.Off);
     }
 }

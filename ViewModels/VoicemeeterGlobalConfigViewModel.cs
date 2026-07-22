@@ -28,12 +28,11 @@ public class VoicemeeterGlobalConfigViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            MacroDeckLogger.Info(_plugin, $"{GetType().Name}: config saved");
+            PluginLogger.Information(nameof(VoicemeeterGlobalConfigViewModel), "config saved");
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Error(_plugin, $"{GetType().Name}: config NOT saved");
-            MacroDeckLogger.Error(_plugin, $"{GetType().Name}: {ex.Message}");
+            PluginLogger.Error(nameof(VoicemeeterGlobalConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
         }
     }
 

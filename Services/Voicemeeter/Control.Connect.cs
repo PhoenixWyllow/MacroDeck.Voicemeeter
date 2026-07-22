@@ -8,7 +8,7 @@ namespace PW.VoicemeeterPlugin.Services.Voicemeeter;
 
 public sealed partial class Control
 {
-    private static readonly object key = new();
+    private static readonly System.Threading.Lock key = new();
     private bool _loginCalled;
     private bool _connected;
     private Timer? _timer;
@@ -106,10 +106,10 @@ public sealed partial class Control
         if (VmrApi is null)
         {
             Close();
-            SuchByte.MacroDeck.Logging.MacroDeckLogger.Warning(PluginInstance.Plugin, "Voicemeeter plugin has stopped. You will need to restart Macro Deck to use the features.");
+            PluginLogger.Warning(nameof(Control), "Voicemeeter plugin has stopped. You will need to restart Macro Deck to use the features.");
             return;
         }
-        lock (key)
+        using (key.EnterScope())
         {
             Login();
             InitAvailableValues();

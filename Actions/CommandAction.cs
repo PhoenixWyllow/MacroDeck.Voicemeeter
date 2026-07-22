@@ -55,7 +55,7 @@ public sealed class CommandAction : PluginAction
                 PluginInstance.VoicemeeterControl.RecLoad(config.CommandValue!);
                 break;
             default:
-                MacroDeckLogger.Warning(PluginInstance.Plugin, "No command. Check button configuration.");
+                PluginLogger.Warning(nameof(CommandAction), "No command. Check button configuration.");
                 break;
         }
     }

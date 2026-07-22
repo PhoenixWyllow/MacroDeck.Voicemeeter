@@ -29,7 +29,7 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
         }
     }
 
-    public string[] AvailableActions { get; private set; } = Array.Empty<string>();
+    public string[] AvailableActions { get; private set; } = [];
     public IEnumerable<VmIoInfo>? AvailableDevices { get; } = AvailableValues.IoInfo;
     public VmIoInfo? SelectedDevice { get; private set; }
     public string? SelectedAction { get; private set; }
@@ -59,12 +59,11 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            MacroDeckLogger.Info(PluginInstance.Plugin, $"{GetType().Name}: config saved");
+            PluginLogger.Information(nameof(DeviceSelectorViewModel), "config saved");
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Error(PluginInstance.Plugin, $"{GetType().Name}: config NOT saved");
-            MacroDeckLogger.Error(PluginInstance.Plugin, $"{GetType().Name}: {ex.Message}");
+            PluginLogger.Error(nameof(DeviceSelectorViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
         }
     }
 

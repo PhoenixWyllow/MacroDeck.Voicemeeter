@@ -8,8 +8,10 @@ namespace PW.VoicemeeterPlugin;
 
 internal static class PluginInstance
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public static MacroDeckPlugin Plugin { get; set; }
     public static VoicemeeterControl VoicemeeterControl { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 }
 
 public class VoicemeeterPlugin : MacroDeckPlugin
@@ -24,14 +26,13 @@ public class VoicemeeterPlugin : MacroDeckPlugin
         //optimized initialization
         new System.Threading.Tasks.Task(() => PluginInstance.VoicemeeterControl = new()).Start();
 
-        Actions = new()
-        {
+        Actions = [
             new DeviceToggleAction(),
             new DeviceSliderAction(),
             new CommandAction(),
             new AdvancedAction(),
             new MacroButtonAction(),
-        };
+        ];
     }
 
     /// <summary>
