@@ -1,14 +1,12 @@
 using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
 using PW.VoicemeeterPlugin.ViewModels;
+
 using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
-using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
-
-using System.Diagnostics;
 
 namespace PW.VoicemeeterPlugin.Actions;
 

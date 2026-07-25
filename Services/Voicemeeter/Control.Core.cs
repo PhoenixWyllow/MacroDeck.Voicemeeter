@@ -1,6 +1,5 @@
 ﻿using AtgDev.Voicemeeter;
 using PW.VoicemeeterPlugin.Models;
-using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
 using System;

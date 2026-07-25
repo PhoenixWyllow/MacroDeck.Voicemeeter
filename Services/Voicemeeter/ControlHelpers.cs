@@ -1,5 +1,5 @@
 ﻿using AtgDev.Voicemeeter;
-using SuchByte.MacroDeck.Logging;
+
 using System;
 using System.Runtime.CompilerServices;
 

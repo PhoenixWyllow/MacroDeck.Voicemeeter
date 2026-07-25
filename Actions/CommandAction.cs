@@ -4,7 +4,6 @@ using SuchByte.MacroDeck.GUI.CustomControls;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.Plugins;
 using PW.VoicemeeterPlugin.Models;
-using SuchByte.MacroDeck.Logging;
 
 namespace PW.VoicemeeterPlugin.Actions;
 

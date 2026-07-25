@@ -1,6 +1,5 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using System;
 using System.Collections.Generic;
