@@ -51,7 +51,7 @@ public class MacroButtonActionConfigViewModel : ISavableConfigViewModel
         }
         catch (Exception ex)
         {
-            PluginLogger.Warning(nameof(MacroButtonActionConfigViewModel), "{ExceptionMessage}", ex.Message);
+            PluginLogger.Warning(nameof(MacroButtonActionConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
             PluginLogger.DebugException(ex);
         }
     } 

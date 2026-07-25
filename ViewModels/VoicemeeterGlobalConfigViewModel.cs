@@ -28,11 +28,11 @@ public class VoicemeeterGlobalConfigViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            PluginLogger.Information(nameof(VoicemeeterGlobalConfigViewModel), "config saved");
         }
         catch (Exception ex)
         {
-            PluginLogger.Error(nameof(VoicemeeterGlobalConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.Warning(nameof(VoicemeeterGlobalConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.DebugException(ex);
         }
     }
 

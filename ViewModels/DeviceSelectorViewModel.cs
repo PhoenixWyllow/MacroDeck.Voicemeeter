@@ -59,11 +59,11 @@ public abstract class DeviceSelectorViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            PluginLogger.Information(nameof(DeviceSelectorViewModel), "config saved");
         }
         catch (Exception ex)
         {
-            PluginLogger.Error(nameof(DeviceSelectorViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.Warning(nameof(DeviceSelectorViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.DebugException(ex);
         }
     }
 

@@ -58,11 +58,11 @@ public class CommandActionConfigViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            PluginLogger.Information(nameof(CommandActionConfigViewModel), "config saved");
         }
         catch (Exception ex)
         {
-            PluginLogger.Error(nameof(CommandActionConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.Warning(nameof(CommandActionConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.DebugException(ex);
         }
     }
 
