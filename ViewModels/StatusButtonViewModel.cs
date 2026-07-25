@@ -48,7 +48,7 @@ internal class StatusButtonViewModel
             if (_isConnected is null || _isConnected != connected)
             {
                 _isConnected = connected;
-                StatusButton.BackgroundImage = connected ? Resources.VoiceMeeterConnected : Resources.VoiceMeeterDisconnected;
+                StatusButton.BackgroundImage = connected ? Resources.VoiceMeeterEnabled: Resources.VoiceMeeterDisabled;
                 string toolip = connected
                     ? $"{LocalizationManager.Instance.VoiceMeeterConnected}{Environment.NewLine}{connectedVersion} ({AvailableValues.ConnectedType})"
                     : LocalizationManager.Instance.VoiceMeeterDisconnected;
