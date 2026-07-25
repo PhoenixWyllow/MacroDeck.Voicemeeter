@@ -4,7 +4,7 @@
   "author": "PhoenixWyllow",
   "repository": "https://github.com/PhoenixWyllow/MacroDeck.Voicemeeter",
   "packageId": "PhoenixWyllow.VoicemeeterPlugin",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "target-plugin-api-version": 41,
   "target-macro-deck-version": "2.15.0",
   "dll": "Voicemeeter Plugin.dll"
