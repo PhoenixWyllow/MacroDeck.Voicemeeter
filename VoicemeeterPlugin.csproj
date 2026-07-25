@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionMajor>2</VersionMajor>
-		<VersionMinor>2</VersionMinor>
-		<VersionPatch>0</VersionPatch>
 		<VersionRevision Condition="'$(VersionRevision)' == ''">$([System.DateTime]::UtcNow.ToString("yy"))$([System.DateTime]::UtcNow.DayOfYear.ToString("000")).$([System.DateTime]::UtcNow.ToString("HHmm"))</VersionRevision>
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<Version>2.2.0</Version>
+		<AssemblyVersion>2.$(VersionRevision)</AssemblyVersion>
 		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 		<TargetFramework>net10.0-windows10.0.22000.0</TargetFramework>
 		<Platforms>AnyCPU;x64</Platforms>
@@ -23,9 +22,6 @@
 		<Authors>PhoenixWyllow (pw.dev@outlook.com)</Authors>
 		<Copyright>PhoenixWyllow (pw.dev@outlook.com)</Copyright>
 		<Description>A Voicemeeter plugin for Macro Deck 2</Description>
-		<AssemblyVersion>$(VersionMajor).$(VersionMinor).$(VersionRevision)</AssemblyVersion>
-		<FileVersion>$(AssemblyVersion)</FileVersion>
-		<Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
 		<IsPublishable>False</IsPublishable>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
@@ -83,7 +79,12 @@
 			<PluginFiles Include="$(OutDir)\Voicemeeter Plugin.dll;$(OutDir)\Vmrapi*.dll;$(OutDir)\UnmanagedLibWrap.dll;$(OutDir)\ExtensionManifest.json;$(OutDir)\ExtensionIcon.png" />
 		</ItemGroup>
 		<RemoveDir Directories="$(ProjectDir)releases\$(Configuration)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" />
-		<Copy DestinationFolder="$(ProjectDir)releases\$(Configuration)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\" SourceFiles="@(PluginFiles)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
+		<Copy
+			DestinationFolder="$(ProjectDir)releases\$(Configuration)\PhoenixWyllow.$(TargetName.Replace(' ', ''))\"
+			SourceFiles="@(PluginFiles)"
+			OverwriteReadOnlyFiles="true"
+			SkipUnchangedFiles="true"
+			/>
 	</Target>
 
 </Project>
