@@ -27,7 +27,7 @@ public partial class DeviceSelectorConfigView : ActionConfigControl
             actionSliderValue.Value = (decimal)_viewModel.SliderValue;
             actionSliderValue.ValueChanged += (s, _) => _viewModel.SliderValue = (float)((NumericUpDown)s!).Value;
         }
-        deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices?.ToArray() ?? Array.Empty<VmIoInfo>());
+        deviceSelectorBox.Items.AddRange(_viewModel.AvailableDevices?.ToArray() ?? []);
         if (_viewModel.SelectedDevice != null)
         {
             deviceSelectorBox.SelectedItem = _viewModel.SelectedDevice;

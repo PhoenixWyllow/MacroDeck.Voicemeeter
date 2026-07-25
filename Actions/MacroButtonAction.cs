@@ -1,14 +1,12 @@
 using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services;
 using PW.VoicemeeterPlugin.ViewModels;
+
 using SuchByte.MacroDeck.ActionButton;
 using SuchByte.MacroDeck.GUI;
 using SuchByte.MacroDeck.GUI.CustomControls;
-using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 using SuchByte.MacroDeck.Variables;
-
-using System.Diagnostics;
 
 namespace PW.VoicemeeterPlugin.Actions;
 
@@ -53,7 +51,7 @@ public class MacroButtonAction : PluginAction
         var value = VariableManager.GetVariable(PluginInstance.Plugin, config.AsVariable());
         if (value is null)
         {
-            MacroDeckLogger.Info(PluginInstance.Plugin, typeof(DeviceToggleAction), $"Please report a bug to the developer of the plugin. Expected value: {Configuration}");
+            PluginLogger.Information(nameof(MacroButtonAction), "Please report a bug to the developer of the plugin. Expected value: {Configuration}", Configuration);
             return;
         }
         PluginInstance.VoicemeeterControl.SetButtonState(config.ButtonId, value.Value.Equals(bool.FalseString), config.ButtonType);

@@ -15,8 +15,8 @@ public sealed partial class Control
     public bool GetTextParameter(string parameter, out string buffer, bool infoOnly = false)
     {
         bool ok = infoOnly
-            ? ControlHelpers.TestResultInfo(VmrApi.GetParameter(parameter, out buffer), parameter)
-            : ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out buffer), parameter);
+            ? ControlHelpers.TestResultInfo(VmrApi!.GetParameter(parameter, out buffer), parameter)
+            : ControlHelpers.TestResult(VmrApi!.GetParameter(parameter, out buffer), parameter);
         return ok;
     }
 
@@ -28,7 +28,7 @@ public sealed partial class Control
     /// <returns></returns>
     public void SetTextParameter(string parameter, string value)
     {
-        ControlHelpers.TestResult(VmrApi.SetParameter(parameter, value));
+        ControlHelpers.TestResult(VmrApi!.SetParameter(parameter, value));
     }
 
     /// <summary>
@@ -41,8 +41,8 @@ public sealed partial class Control
     public bool GetParameter(string parameter, out float value, bool infoOnly = false)
     {
         bool ok = infoOnly
-            ? ControlHelpers.TestResultInfo(VmrApi.GetParameter(parameter, out value), parameter)
-            : ControlHelpers.TestResult(VmrApi.GetParameter(parameter, out value), parameter);
+            ? ControlHelpers.TestResultInfo(VmrApi!.GetParameter(parameter, out value), parameter)
+            : ControlHelpers.TestResult(VmrApi!.GetParameter(parameter, out value), parameter);
         return ok;
     }
 
@@ -53,7 +53,7 @@ public sealed partial class Control
     /// <param name="value">float value</param>
     public void SetParameter(string parameter, float value)
     {
-        ControlHelpers.TestResult(VmrApi.SetParameter(parameter, value));
+        ControlHelpers.TestResult(VmrApi!.SetParameter(parameter, value));
     }
 
 
@@ -63,17 +63,17 @@ public sealed partial class Control
     /// <param name="parameters">One or more instructions separated by comma, semicolon or newline</param>
     public void SetParameters(string parameters)
     {
-        ControlHelpers.TestResult(VmrApi.SetParameters(parameters));
+        ControlHelpers.TestResult(VmrApi!.SetParameters(parameters));
     }
 
     public void GetLevel(ref VoicemeeterLevel level)
     {
-        ControlHelpers.TestLevelResult(VmrApi.GetLevel(ref level));
+        ControlHelpers.TestLevelResult(VmrApi!.GetLevel(ref level));
     }
 
     public float GetLevel(VoicemeeterLevelType levelType, VoicemeeterChannel channel)
     {
-        ControlHelpers.TestLevelResult(VmrApi.GetLevel(levelType, channel, out float value));
+        ControlHelpers.TestLevelResult(VmrApi!.GetLevel(levelType, channel, out float value));
         return value;
     }
 }

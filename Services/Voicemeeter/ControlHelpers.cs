@@ -1,5 +1,5 @@
 ﻿using AtgDev.Voicemeeter;
-using SuchByte.MacroDeck.Logging;
+
 using System;
 using System.Runtime.CompilerServices;
 
@@ -18,11 +18,11 @@ internal static class ControlHelpers
                 onLoginSuccess?.Invoke(loginResult);
                 break;
             case ResultCodes.Error:
-                MacroDeckLogger.Trace(PluginInstance.Plugin, "Not installed or could not connect.");
+                PluginLogger.Debug(nameof(TestLogin), "Not installed or could not connect.");
                 break;//throw new Exception("Not installed or could not connect.");
             default:
                 onLoginFail?.Invoke();
-                MacroDeckLogger.Trace(PluginInstance.Plugin, "Unexpected connection. Connection was not correctly closed previously.");
+                PluginLogger.Debug(nameof(TestLogin), "Unexpected connection. Connection was not correctly closed previously.");
                 break;//throw new Exception("Unexpected connection. Connection was not correctly closed previously.");
         }
     }
@@ -59,7 +59,7 @@ internal static class ControlHelpers
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Warning(PluginInstance.Plugin, typeof(Control), $"{callerName}: {ex.Message}");
+            PluginLogger.Warning(nameof(TestResult), "{CallerName}: {ExceptionMessage}", callerName, ex.Message);
         }
         return false;
     }
@@ -78,7 +78,7 @@ internal static class ControlHelpers
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Info(PluginInstance.Plugin, typeof(Control), $"{callerName}: {ex.Message}");
+            PluginLogger.Information(nameof(TestResultInfo), "{CallerName}: {ExceptionMessage}", callerName, ex.Message);
         }
         return false;
     }

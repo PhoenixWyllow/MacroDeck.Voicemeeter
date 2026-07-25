@@ -12,7 +12,7 @@ Create a button and configure how you want to control Voicemeeter.
 
 ***
 ## Features
-#### Available actions
+### Available actions
 
 | Action           | Function                                                     | Description                                                                                                                                                                                                                       |
 |------------------|--------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -22,7 +22,7 @@ Create a button and configure how you want to control Voicemeeter.
 | Advanced/Custom  | Send a custom command to Voicemeeter                         | This option allows configuring custom commands using the Voicemeeter API language. <br/> Please see the official [VoicemeeterRemoteAPI pdf](https://download.vb-audio.com/Download_CABLE/VoicemeeterRemoteAPI.pdf) for more info. |
 | Use Macro Button | Activate/Toggle a Macro Button (Voicemeeter)                 | Activate or toggle a Voicemeeter Macro Button. Ids are 0-79 and you will need to find and confugure them separately, according to the documentation for your Voicemeeter version.                              |
 
-#### Available parameters/variables
+### Available parameters/variables
 
 | Device    | Toggles                   | Ranges | Strings |
 |-----------|---------------------------|--------|---------|
@@ -32,7 +32,7 @@ Create a button and configure how you want to control Voicemeeter.
 
 **Availablity of these varies with your Voicemeeter installation. Some features can only be accessed with Banana or Potato*
 
-#### Add custom parameters to variables
+### Add custom parameters to variables
 
 Any parameter in Voicemeeter that you want to monitor can be added with the same syntax as the Advanced/Custom action.\
 As a bonus, the parameters you add can also be used in the available actions as if they had been provided in the plugin! (must be related to a device)\
@@ -46,7 +46,7 @@ Clicking on an option that you've already included allows you to edit or delete 
 >- **Restart Macro Deck** to refresh with the variables you've added or removed
 >- I can only provide minimal support for this since it's all your own stuff being added. Use it wisely.
 
-#### Use Voicemeeter Macro Buttons
+### Use Voicemeeter Macro Buttons
 
 Macro Buttons are a feature of Voicemeeter that allows you to execute a series of commands with a single button press.\
 Some actions are only possible with Macro Buttons, like sending special commands (SendText, Wait, etc.).
@@ -61,8 +61,8 @@ The Macro Button ID is a number between 0 and 79, and you can find it in the Voi
 This plugin has its own localization files, independent of Macro Deck.
 If your language is not available, the plugin will default to English.
 
-Check the files available in source under [Languages](MacroDeck.Voicemeeter/MacroDeck.Voicemeeter/Languages).
-If your language is missing or incomplete, please consider [helping me out by translating](https://crowdin.com/project/macrodeckvoicemeeter/invite?h=8621e5f95ad1b35909a94b844d0734fd2001474)! 
+Check the files available in source under [Languages](/Languages).
+If your language is missing or incomplete, please consider [helping me out by translating](https://crowdin.com/project/macrodeckvoicemeeter/invite?h=8621e5f95ad1b35909a94b844d0734fd2001474)!
 
 Currently available languages:
 - English

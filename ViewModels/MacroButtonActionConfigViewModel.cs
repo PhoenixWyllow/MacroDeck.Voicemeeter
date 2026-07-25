@@ -1,6 +1,5 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 
-using SuchByte.MacroDeck.Logging;
 using SuchByte.MacroDeck.Plugins;
 
 using System;
@@ -51,8 +50,8 @@ public class MacroButtonActionConfigViewModel : ISavableConfigViewModel
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Warning(PluginInstance.Plugin, ex.Message);
-            MacroDeckLogger.Trace(PluginInstance.Plugin, ex.StackTrace ?? "No stack");
+            PluginLogger.Warning(nameof(MacroButtonActionConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.DebugException(ex);
         }
     } 
 

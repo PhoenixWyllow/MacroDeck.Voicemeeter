@@ -1,7 +1,8 @@
 ﻿using PW.VoicemeeterPlugin.Models;
 using PW.VoicemeeterPlugin.Services.Voicemeeter;
-using SuchByte.MacroDeck.Logging;
+
 using SuchByte.MacroDeck.Plugins;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,12 +59,11 @@ public class CommandActionConfigViewModel : ISavableConfigViewModel
         try
         {
             SetConfig();
-            MacroDeckLogger.Info(PluginInstance.Plugin, $"{GetType().Name}: config saved");
         }
         catch (Exception ex)
         {
-            MacroDeckLogger.Error(PluginInstance.Plugin, $"{GetType().Name}: config NOT saved");
-            MacroDeckLogger.Error(PluginInstance.Plugin, $"{GetType().Name}: {ex.Message}");
+            PluginLogger.Warning(nameof(CommandActionConfigViewModel), "config NOT saved - {ExceptionMessage}", ex.Message);
+            PluginLogger.DebugException(ex);
         }
     }
 
