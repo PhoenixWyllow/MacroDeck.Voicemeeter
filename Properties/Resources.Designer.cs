@@ -19,7 +19,7 @@ namespace PW.VoicemeeterPlugin.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -73,9 +73,9 @@ namespace PW.VoicemeeterPlugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap VoiceMeeterConnected {
+        internal static System.Drawing.Bitmap VoiceMeeterDisabled {
             get {
-                object obj = ResourceManager.GetObject("VoiceMeeterConnected", resourceCulture);
+                object obj = ResourceManager.GetObject("VoiceMeeterDisabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace PW.VoicemeeterPlugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap VoiceMeeterDisconnected {
+        internal static System.Drawing.Bitmap VoiceMeeterEnabled {
             get {
-                object obj = ResourceManager.GetObject("VoiceMeeterDisconnected", resourceCulture);
+                object obj = ResourceManager.GetObject("VoiceMeeterEnabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
